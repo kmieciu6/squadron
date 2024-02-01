@@ -1,0 +1,17 @@
+@import 'generic/reset';
+
+@import 'settings/colors';
+@import 'settings/fonts';
+@import 'settings/mixins';
+@import "~bootstrap/scss/bootstrap";
+
+@import "components/home";
+@import "components/header";
+@import "components/footer";
+@import "components/about";
+@import "components/contact";
+@import "components/privacy_policy";
+@import "components/not_found_page";
+// @import "components/";
+
+@import 'generic/base';
