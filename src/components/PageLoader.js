@@ -36,7 +36,7 @@
 
 
 
-
+// PageLoader.js
 
 import React, { useState, useEffect } from 'react';
 
@@ -50,9 +50,40 @@ const PageLoader = ({ children }) => {
       setIsPageLoading(false);
     };
 
-    window.addEventListener('load', handleLoad);
+    if (document.readyState === 'complete') {
+      handleLoad();
+    } else {
+      window.addEventListener('load', handleLoad);
+    }
 
     return () => window.removeEventListener('load', handleLoad);
+  }, []);
+
+  useEffect(() => {
+    const resources = Array.from(document.querySelectorAll('img, script, link[rel="stylesheet"]'));
+    const totalResources = resources.length;
+    let loadedResources = 0;
+
+    const handleResourceLoad = () => {
+      loadedResources++;
+      if (loadedResources === totalResources) {
+        setIsPageLoading(false);
+      }
+    };
+
+    resources.forEach(resource => {
+      if ((resource.tagName === 'IMG' || resource.tagName === 'LINK' || resource.tagName === 'SCRIPT') && resource.readyState === 'complete') {
+        handleResourceLoad();
+      } else {
+        resource.addEventListener('load', handleResourceLoad);
+      }
+    });
+
+    return () => {
+      resources.forEach(resource => {
+        resource.removeEventListener('load', handleResourceLoad);
+      });
+    };
   }, []);
 
   return (
