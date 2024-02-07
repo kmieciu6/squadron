@@ -1,37 +1,3 @@
-// import React from "react";
-// import {Routes, Route, BrowserRouter} from "react-router-dom";
-// import './scss/main.scss';
-// import Header from "./components/header/Header";
-// import Home from './components/Home';
-// import NotFoundPage from './components/NotFoundPage';
-// import PrivacyPolicy from './components/PrivacyPolicy';
-// import About from './components/About';
-// import Contact from './components/Contact';
-// import Footer from "./components/Footer";
-// // import  from './components/';
-
-// function App() {
-//   return (
-//     <BrowserRouter>
-//       <Header/>
-//       <Routes>
-//         <Route exact path='/' element={<Home />}/>
-//         <Route exact path='/about' element={<About />}/>
-//         <Route exact path='/contact' element={<Contact />}/>
-//         <Route exact path='/privacy_policy' element={<PrivacyPolicy />}/>
-//         <Route path='/*' element={<NotFoundPage />}/>
-//       </Routes>
-//       <Footer/>
-//     </BrowserRouter>
-//   );
-// }
-
-// export default App;
-
-
-
-// App.js
-
 import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import './scss/main.scss';
@@ -45,55 +11,55 @@ import About from './components/About';
 import Contact from './components/Contact';
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route
-          path="/"
-          index
-          element={(
-            <PageLoader>
-              <Home />
-            </PageLoader>
-          )}
-        />
-        <Route
-          path="/about"
-          element={(
-            <PageLoader>
-              <About />
-            </PageLoader>
-          )}
-        />
-        <Route
-          path="/contact"
-          element={(
-            <PageLoader>
-              <Contact />
-            </PageLoader>
-          )}
-        />
-        <Route
-          path="/privacy_policy"
-          element={(
-            <PageLoader>
-              <PrivacyPolicy />
-            </PageLoader>
-          )}
-        />
-        <Route
-          path="*"
-          element={(
-            <PageLoader>
-              <NotFoundPage />
-            </PageLoader>
-          )}
-        />
-      </Routes>
-      <Footer />
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <Header />
+            <Routes>
+                <Route
+                path="/"
+                index
+                element={(
+                    <PageLoader>
+                    <Home />
+                    </PageLoader>
+                )}
+                />
+                <Route
+                path="/about"
+                element={(
+                    <PageLoader>
+                    <About />
+                    </PageLoader>
+                )}
+                />
+                <Route
+                path="/contact"
+                element={(
+                    <PageLoader>
+                    <Contact />
+                    </PageLoader>
+                )}
+                />
+                <Route
+                path="/privacy_policy"
+                element={(
+                    <PageLoader>
+                    <PrivacyPolicy />
+                    </PageLoader>
+                )}
+                />
+                <Route
+                path="*"
+                element={(
+                    <PageLoader>
+                    <NotFoundPage />
+                    </PageLoader>
+                )}
+                />
+            </Routes>
+            <Footer />
+        </BrowserRouter>
+    );
 }
 
 export default App;

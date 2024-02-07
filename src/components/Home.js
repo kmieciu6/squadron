@@ -1,71 +1,55 @@
-// import React, { useState, useEffect } from 'react';
-// import photo from '../assets/1.jpg';
-
-// const LoadingSpinner = () => <div className='loading-spinner'>Trwa ładowanie...</div>;
-
-// const Home = () => {
-
-//     const [isImageLoading, setIsImageLoading] = useState(true);
-
-//     useEffect(() => {
-//         const timeoutId = setTimeout(() => {
-//             setIsImageLoading(false);
-//         }, 5000); // Zwiększono czas opóźnienia do 5000 ms (czyli 5 sekund)
-
-//         return () => clearTimeout(timeoutId);
-//     }, []);
-
-//     const handleImageLoad = () => {
-//         setIsImageLoading(false);
-//     };
-
-//     const handleImageError = () => {
-//         setIsImageLoading(false);
-//         // Obsługa błędu ładowania obrazu (jeśli potrzebna)
-//     };
-
-//     return (
-//         <div>
-//             {isImageLoading && (
-//                 <div className='overlay'>
-//                     <LoadingSpinner />
-//                 </div>
-//             )}
-//             <div className='page-content'>
-//                 <h1>Strona z obrazkiem</h1>
-//                 <img
-//                     src={photo}
-//                     alt="Opis zdjęcia"
-//                     style={{ display: isImageLoading ? 'none' : 'block' }}
-//                     onLoad={handleImageLoad}
-//                     onError={handleImageError}
-//                 />
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default Home;
-
-
-
-
-
-
 import photo from '../assets/1.jpg';
 
 const Home = () => {
 
     return (
         <div>
-            
-            <div>
-                <h1>Home</h1>
-                <img
-                    src={photo}
-                    alt="Opis zdjęcia"
-                />
+            <div className='opening'> 
+                <img src={photo} alt="opening"/>
+                <p>
+                    Aliqua laboris aliquip nulla exercitation elit officia duis pariatur laborum dolor adipisicing dolor dolore. 
+                    In laborum et magna ipsum quis Lorem voluptate. Voluptate aute nostrud ut in est veniam qui anim excepteur 
+                    id Lorem cupidatat excepteur sunt. Amet exercitation veniam exercitation commodo reprehenderit enim do consectetur 
+                    magna deserunt irure. Deserunt eu duis officia minim eiusmod tempor nostrud ut reprehenderit. Incididunt eiusmod 
+                    Lorem sunt ex laboris ut quis laborum velit adipisicing mollit. Adipisicing occaecat amet nostrud amet et esse ea do aliquip.
+                </p>
             </div>
+            <p>
+                Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
+                aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
+                nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
+                consequat Lorem nulla nostrud.
+            </p>
+            <p>
+                Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
+                aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
+                nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
+                consequat Lorem nulla nostrud.
+            </p>
+            <p>
+                Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
+                aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
+                nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
+                consequat Lorem nulla nostrud.
+            </p>
+            <p>
+                Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
+                aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
+                nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
+                consequat Lorem nulla nostrud.
+            </p>
+            <p>
+                Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
+                aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
+                nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
+                consequat Lorem nulla nostrud.
+            </p>
+            <p>
+                Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
+                aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
+                nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
+                consequat Lorem nulla nostrud.
+            </p>
         </div>
     );
 };

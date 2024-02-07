@@ -1,30 +1,30 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
-
+  
 h1, h2, h3, h4, h5, p {
-  // font-family: $font-main;
+    // font-family: $font-main;
 }
 
 h1 {
 
-  @include mobile {
-    font-size: 1.8rem;
-  }
+    @include mobile {
+        font-size: 1.8rem;
+    }
 }
 
 h2 {
-  font-size: 2.2rem;
+font-size: 2.2rem;
 
-  @include mobile {
-    font-size: 1.6rem;
-  }
+    @include mobile {
+        font-size: 1.6rem;
+    }
 }
 
 p {
-  font-size: 1.2rem;
+    font-size: 1.2rem;
 
-  @include mobile {
-    font-size: 1rem;
-  }
+    @include mobile {
+        font-size: 1rem;
+    }
 }

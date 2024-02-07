@@ -1,0 +1,53 @@
+#back-to-top {
+    background: $main-color;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    position: fixed;
+    font-size: 2rem;
+    transform: scale(0);
+    border-radius: 50px;
+    border: none;
+    padding: 0.3rem 1rem;
+    z-index: 99;
+    right: 4rem;
+    bottom: 4rem;
+    transition: 0.3s;
+  
+    @include mobile {
+        right: 2rem;
+        bottom: 6rem;
+    }
+    
+    &:hover {
+        padding-bottom: 2rem;
+  
+        @include mobile {
+            &:hover {
+            padding-bottom: 0.5rem;
+            }
+    
+            &:active {
+            padding-bottom: 2rem;
+            }
+        }
+  
+        @include tablet {
+            &:hover {
+            padding-bottom: 0.5rem;
+            }
+    
+            &:active {
+            padding-bottom: 2rem;
+            }
+        }
+    }
+  
+    .arrow {
+        color: $accent-color;
+    }  
+}
+  
+#back-to-top.back-to-top-visible {
+    transform: scale(1);
+}

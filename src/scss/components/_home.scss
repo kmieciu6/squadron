@@ -1,3 +1,13 @@
-img {
+.opening {
+    display: flex;
     width: 100%;
+}
+
+img {
+    width: 60%;
+    // object-fit: cover;
+
+    @include desktop {
+        // height: 80vh;
+    }
 }

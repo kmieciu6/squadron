@@ -19,7 +19,7 @@ const Header = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 768) {
+      if (window.innerWidth > 1023) {
         setBurgerMenuOpen(false);
       }
     };
@@ -41,19 +41,21 @@ const Header = () => {
             <h1>Logo</h1>
           </Link>
         </div>
-        <div
-          ref={burgerMenuRef}
-          className={`burger-menu ${isBurgerMenuOpen ? 'open' : ''}`}
-          onClick={toggleBurgerMenu}
-        >
-          <div className="burger-line"></div>
-          <div className="burger-line"></div>
-          <div className="burger-line"></div>
-        </div>
-        <div className={`nav-links ${isBurgerMenuOpen ? 'open' : ''}`}>
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/contact">Contact</Link>
+        <div className='bookmarks'>
+          <div
+            ref={burgerMenuRef}
+            className={`burger-menu ${isBurgerMenuOpen ? 'open' : ''}`}
+            onClick={toggleBurgerMenu}
+          >
+            <div className="burger-line"></div>
+            <div className="burger-line"></div>
+            <div className="burger-line"></div>
+          </div>
+          <div className={`nav-links ${isBurgerMenuOpen ? 'open' : ''}`}>
+            <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
+            <Link to="/contact">Contact</Link>
+          </div>
         </div>
       </div>
       <Cookies />
