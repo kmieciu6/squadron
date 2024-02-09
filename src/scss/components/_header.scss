@@ -3,12 +3,11 @@
     justify-content: space-around;
     align-items: center;
     padding: 20px;
-    background-color: #7e7e7e;
+    // background-color: #7e7e7e;
     color: white;
     position: relative;
   
     .logo {
-        // width: 50%;
         display: flex;
         justify-content: center;
     
@@ -83,7 +82,7 @@
             top: 80px;
             left: 0;
             right: 0;
-            background-color: #7e7e7e;
+            background-color: #000000;
             overflow: hidden;
             max-height: 0;
             transition: max-height 0.3s ease-out;

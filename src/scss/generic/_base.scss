@@ -1,9 +1,14 @@
 * {
     box-sizing: border-box;
 }
-  
+
+body {
+    background: radial-gradient(circle, rgba(174,176,238,1) 0%, rgba(3,20,41,1) 100%);
+}
+
 h1, h2, h3, h4, h5, p {
     // font-family: $font-main;
+    color: white;
 }
 
 h1 {
