@@ -3,9 +3,15 @@ import photo from '../assets/1.jpg';
 const Home = () => {
 
     return (
-        <div>
-            <div className='opening'> 
-                <img src={photo} alt="opening"/>
+    <div>
+        <div className='opening'> 
+            <img
+                src="https://media.giphy.com/media/gclDx31xxzm81B0GaT/giphy.gif"
+                alt="Funny GIF"
+                width="480"
+                height="360"
+            />             
+            <img src={photo} alt="opening"/>
                 <p>
                     Aliqua laboris aliquip nulla exercitation elit officia duis pariatur laborum dolor adipisicing dolor dolore. 
                     In laborum et magna ipsum quis Lorem voluptate. Voluptate aute nostrud ut in est veniam qui anim excepteur 
