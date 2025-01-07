@@ -3,7 +3,7 @@ import photo from "../assets/1.jpg";
 const About = () => {
 
     return (
-        <div>
+        <div className="about page">
             <h1>About</h1>
             <p>
                 Ea fugiat fugiat minim ipsum culpa excepteur laboris dolore elit ipsum ipsum fugiat. Et pariatur qui duis Lorem 

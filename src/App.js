@@ -20,7 +20,7 @@ function App() {
                 index
                 element={(
                     <PageLoader>
-                    <Home />
+                        <Home />
                     </PageLoader>
                 )}
                 />
@@ -28,7 +28,7 @@ function App() {
                 path="/about"
                 element={(
                     <PageLoader>
-                    <About />
+                        <About />
                     </PageLoader>
                 )}
                 />
@@ -36,7 +36,7 @@ function App() {
                 path="/contact"
                 element={(
                     <PageLoader>
-                    <Contact />
+                        <Contact />
                     </PageLoader>
                 )}
                 />
@@ -44,7 +44,7 @@ function App() {
                 path="/privacy_policy"
                 element={(
                     <PageLoader>
-                    <PrivacyPolicy />
+                        <PrivacyPolicy />
                     </PageLoader>
                 )}
                 />
@@ -52,7 +52,7 @@ function App() {
                 path="*"
                 element={(
                     <PageLoader>
-                    <NotFoundPage />
+                        <NotFoundPage />
                     </PageLoader>
                 )}
                 />

@@ -1,62 +1,80 @@
-import photo from '../assets/1.jpg';
+import opening_photo from '../assets/dron2.jpg';
 
 const Home = () => {
 
     return (
-    <div>
+    <div className='home page'>
         <div className='opening'> 
             <img
-                src="https://media.giphy.com/media/gclDx31xxzm81B0GaT/giphy.gif"
-                alt="Funny GIF"
-                width="480"
-                height="360"
+                src={opening_photo}
+                alt="opening"
             />             
-            <img src={photo} alt="opening"/>
+            {/* <img src={photo} alt="opening"/> */}
+            <h1>
+                Aliqua laboris aliquip nulla exercitation elit officia duis.
+            </h1>
+        </div>
+        <div className="text">
+            <div className='text1 text_width'>
+                <h2>
+                    Do pariatur et elit cupidatat do ipsum mollit
+                </h2>
                 <p>
-                    Aliqua laboris aliquip nulla exercitation elit officia duis pariatur laborum dolor adipisicing dolor dolore. 
-                    In laborum et magna ipsum quis Lorem voluptate. Voluptate aute nostrud ut in est veniam qui anim excepteur 
-                    id Lorem cupidatat excepteur sunt. Amet exercitation veniam exercitation commodo reprehenderit enim do consectetur 
-                    magna deserunt irure. Deserunt eu duis officia minim eiusmod tempor nostrud ut reprehenderit. Incididunt eiusmod 
-                    Lorem sunt ex laboris ut quis laborum velit adipisicing mollit. Adipisicing occaecat amet nostrud amet et esse ea do aliquip.
+                    Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
+                    aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
+                    nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
+                    consequat Lorem nulla nostrud.
                 </p>
             </div>
-            <p>
-                Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
-                aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
-                nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
-                consequat Lorem nulla nostrud.
-            </p>
-            <p>
-                Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
-                aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
-                nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
-                consequat Lorem nulla nostrud.
-            </p>
-            <p>
-                Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
-                aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
-                nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
-                consequat Lorem nulla nostrud.
-            </p>
-            <p>
-                Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
-                aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
-                nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
-                consequat Lorem nulla nostrud.
-            </p>
-            <p>
-                Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
-                aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
-                nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
-                consequat Lorem nulla nostrud.
-            </p>
-            <p>
-                Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
-                aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
-                nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
-                consequat Lorem nulla nostrud.
-            </p>
+
+            <div className='text2'>
+                <div className='text_width'>
+                    <p>
+                        Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
+                        aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
+                        nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
+                        consequat Lorem nulla nostrud.
+                    </p>
+                </div>
+            </div>
+
+            <div className='text3 text_width'>
+                <p>
+                    Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
+                    aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
+                    nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
+                    consequat Lorem nulla nostrud.
+                </p>
+            </div>
+
+            <div className='text4 text_width'>
+                <p>
+                    Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
+                    aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
+                    nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
+                    consequat Lorem nulla nostrud.
+                </p>
+            </div>
+
+            <div className='text5 text_width'>
+                <p>
+                    Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
+                    aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
+                    nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
+                    consequat Lorem nulla nostrud.
+                </p>
+            </div>
+
+            <div className='text6 text_width'>
+                <p>
+                    Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
+                    aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
+                    nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
+                    consequat Lorem nulla nostrud.
+                </p>
+            </div>
         </div>
+    </div>
     );
 };
 

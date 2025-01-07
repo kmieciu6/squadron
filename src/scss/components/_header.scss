@@ -56,11 +56,11 @@
   
         .burger-line {
             width: 30px;
-            height: 3px;
+            height: 2.7px;
             background-color: white;
             margin: 3px 0;
             transition: 0.4s;
-            z-index: 1;
+            z-index: 2;
         }
     
         .burger-menu.open .burger-line:nth-child(1) {
