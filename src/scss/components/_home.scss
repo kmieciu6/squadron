@@ -22,6 +22,15 @@
             padding: 0 2rem;
             color: black;
             width: 50%;
+            opacity: 1;
+            transition: opacity 4s ease;
+
+            &.hidden {
+                opacity: 0;
+                transition: opacity 1s ease 1s; 
+                // 1s time + 1s delay (przykład)
+            }
+
 
             @include desktop {
                 padding: 0 5rem;
@@ -37,7 +46,7 @@
         width: 100%;
         align-items: center;
         opacity: 1;
-        transition: opacity 1s ease;
+        transition: opacity 1.5s ease;
         
         &.hidden {
             opacity: 0;

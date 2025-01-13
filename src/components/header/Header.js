@@ -1,67 +1,113 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import ScrollTop from "./ScrollTop";
+import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import Cookies from "./Cookies";
 
 const Header = () => {
-  const [isBurgerMenuOpen, setBurgerMenuOpen] = useState(false);
-  const burgerMenuRef = useRef(null);
+    const [dynamicVisible, setDynamicVisible] = useState(false); // Widoczność dynamicznego headera
+    const lastScrollY = useRef(0); // Ostatnia pozycja scrolla
+    const threshold = 20; // Próg w pikselach
+    const scrollTimeout = useRef(null); // Opóźnienie reakcji na przewijanie
 
-  const toggleBurgerMenu = () => {
-    setBurgerMenuOpen(!isBurgerMenuOpen);
-  };
+    const handleScroll = () => {
+        const currentScrollY = window.scrollY;
 
-  const closeBurgerMenu = (event) => {
-    if (burgerMenuRef.current && !burgerMenuRef.current.contains(event.target)) {
-      setBurgerMenuOpen(false);
-    }
-  };
+        if (scrollTimeout.current) {
+            clearTimeout(scrollTimeout.current);
+        }
+        
+        scrollTimeout.current = setTimeout(() => {
+            if (currentScrollY > threshold && currentScrollY < lastScrollY.current) {
+                setDynamicVisible(true); // Przewijanie w górę
+            } else if (currentScrollY > threshold && currentScrollY > lastScrollY.current) {
+                setDynamicVisible(false); // Przewijanie w dół
+            }
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 1023) {
-        setBurgerMenuOpen(false);
-      }
+            lastScrollY.current = currentScrollY;
+        }, 10); // 100 ms opóźnienia
     };
 
-    window.addEventListener('resize', handleResize);
-    document.addEventListener('click', closeBurgerMenu);
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      document.removeEventListener('click', closeBurgerMenu);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+        };
+    }, []);
+
+    return (
+        <>
+            {/* Statyczny header */}
+            <HeaderContent className="header static-header" />
+
+            {/* Dynamiczny header */}
+            <HeaderContent
+                className={`header dynamic-header ${dynamicVisible ? "visible" : "hidden"}`}
+            />
+        </>
+    );
+};
+
+const HeaderContent = ({ className }) => {
+    const [isBurgerMenuOpen, setBurgerMenuOpen] = useState(false); // Stan burger menu
+    const burgerMenuRef = useRef(null);
+
+    const toggleBurgerMenu = () => {
+        setBurgerMenuOpen(!isBurgerMenuOpen);
     };
-  }, []);
 
-  return (
-    <>
-      <div className="header">
-        <div className="logo">
-          <Link to="/">
-            <h1>Logo</h1>
-          </Link>
-        </div>
-        <div className='bookmarks'>
-          <div
-            ref={burgerMenuRef}
-            className={`burger-menu ${isBurgerMenuOpen ? 'open' : ''}`}
-            onClick={toggleBurgerMenu}
-          >
-            <div className="burger-line"></div>
-            <div className="burger-line"></div>
-            <div className="burger-line"></div>
-          </div>
-          <div className={`nav-links ${isBurgerMenuOpen ? 'open' : ''}`}>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-            <Link to="/contact">Contact</Link>
-          </div>
-        </div>
-      </div>
-      <Cookies />
-      <ScrollTop />
-    </>
-  );
+    const closeBurgerMenu = (event) => {
+        if (burgerMenuRef.current && !burgerMenuRef.current.contains(event.target)) {
+            setBurgerMenuOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        const handleResize = () => {
+
+            if (window.innerWidth > 1023) {
+                setBurgerMenuOpen(false);
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+        document.addEventListener("click", closeBurgerMenu);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+            document.removeEventListener("click", closeBurgerMenu);
+        };
+    }, []);
+
+    return (
+        <>
+            <div className={className}>
+                <div className="logo">
+                    <Link to="/">
+                        <h1>Logo</h1>
+                    </Link>
+                </div>
+                <div className="bookmarks">
+                    <div ref={burgerMenuRef} className="burger-wrapper">
+                        <div
+                            className={`burger-menu ${isBurgerMenuOpen ? "open" : ""}`}
+                            onClick={toggleBurgerMenu}
+                        >
+                            <div className="burger-line"></div>
+                            <div className="burger-line"></div>
+                            <div className="burger-line"></div>
+                        </div>
+                        <div className={`nav-links ${isBurgerMenuOpen ? "open" : ""}`}>
+                            <Link to="/">Home</Link>
+                            <Link to="/about">About</Link>
+                            <Link to="/contact">Contact</Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <Cookies />
+        </>
+    );
 };
 
 export default Header;

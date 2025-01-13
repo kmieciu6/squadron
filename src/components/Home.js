@@ -3,6 +3,8 @@ import useIntersectionHide from './hooks/useIntersectionHide';
 
 const Home = () => {
 
+    const [titleRef, isTitleHidden] = useIntersectionHide();
+
     const [sec1Ref, isSec1Hidden] = useIntersectionHide();
     const [sec2Ref, isSec2Hidden] = useIntersectionHide();
     const [sec3Ref, isSec3Hidden] = useIntersectionHide();
@@ -16,8 +18,11 @@ const Home = () => {
             <img
                 src={opening_photo}
                 alt="opening"
-            />             
-            <h1>
+            />      
+            <h1
+                ref={titleRef}
+                className={isTitleHidden ? 'hidden' : ''}
+            >
                 Aliqua laboris aliquip nulla exercitation elit officia duis.
             </h1>
         </div>

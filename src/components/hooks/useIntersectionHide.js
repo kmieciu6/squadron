@@ -1,4 +1,3 @@
-// useIntersectionHide.js
 import { useRef, useState, useEffect } from 'react';
 
 /**
@@ -6,10 +5,10 @@ import { useRef, useState, useEffect } from 'react';
  * @returns {[React.RefObject, boolean]} - tablica [ref, isHidden]
  * 
  * Przykład użycia:
- * const [myRef, isHidden] = useIntersectionHide({ threshold: 0.1 });
+ * const [myRef, isHidden] = useIntersectionHide({ threshold: 1.0 });
  * <div ref={myRef} className={isHidden ? 'hidden' : ''}>Treść</div>
  */
-export default function useIntersectionHide(options = { threshold: 0.1 }) {
+export default function useIntersectionHide(options = { threshold: 1.0 }) {
   const ref = useRef(null);
   // stan: na starcie element ukryty (true => .hidden)
   const [isHidden, setIsHidden] = useState(true);
