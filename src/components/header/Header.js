@@ -23,7 +23,7 @@ const Header = () => {
             }
 
             lastScrollY.current = currentScrollY;
-        }, 10); // 100 ms opóźnienia
+        }, 10); // 10 ms opóźnienia
     };
 
     useEffect(() => {

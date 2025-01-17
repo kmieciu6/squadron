@@ -1,5 +1,6 @@
-import opening_photo from '../assets/dron2.jpg';
 import useIntersectionHide from './hooks/useIntersectionHide';
+import opening_photo from '../assets/dron2.jpg';
+import turbine_photo from '../assets/turbiny.jpg';
 
 const Home = () => {
 
@@ -41,8 +42,9 @@ const Home = () => {
                 </p>
             </div>
 
-            <div ref={sec2Ref} className={`text text2 ${isSec2Hidden ? 'hidden' : ''}`}>
-                <div className='text_width'>
+
+            <div className='text_background'>
+                <div ref={sec2Ref} className={`text text2 text_width ${isSec2Hidden ? 'hidden' : ''}`}>
                     <p>
                         Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
                         aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
@@ -53,7 +55,10 @@ const Home = () => {
             </div>
 
             <div ref={sec3Ref} className={`text text3 text_width ${isSec3Hidden ? 'hidden' : ''}`}>
-                <p>
+                <img
+                    src={turbine_photo}
+                    alt="turbina"
+                />                    <p>
                     Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
                     aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
                     nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
