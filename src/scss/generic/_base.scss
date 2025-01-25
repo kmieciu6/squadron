@@ -3,7 +3,8 @@
 }
 
 body {
-    background: radial-gradient(circle, rgba(174,176,238,1) 0%, rgba(3,20,41,1) 100%);
+    background: radial-gradient(circle, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 100%);
+    // background-color: black;
 }
 
 .page {
@@ -20,7 +21,7 @@ h1, h2, h3, h4, h5, p {
 h1 {
 
     @include mobile {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
 }
 
@@ -28,7 +29,7 @@ h2 {
     font-size: 2.2rem;
 
     @include mobile {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
     }
 }
 

@@ -28,7 +28,7 @@ const Home = () => {
             </h1>
         </div>
 
-        <div className="text">
+        <div className="text text_container">
             
             <div ref={sec1Ref} className={`text text1 text_width ${isSec1Hidden ? 'hidden' : ''}`}>
                 <h2>
@@ -55,10 +55,18 @@ const Home = () => {
             </div>
 
             <div ref={sec3Ref} className={`text text3 text_width ${isSec3Hidden ? 'hidden' : ''}`}>
-                <img
-                    src={turbine_photo}
-                    alt="turbina"
-                />                    <p>
+                <div className='image_container'>
+                    <img
+                        src={turbine_photo}
+                        alt="turbina"
+                    />
+                    <div className='text_overlay'>   
+                        <h4>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.    
+                        </h4>
+                    </div>                    
+                </div>
+                <p>
                     Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
                     aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
                     nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 

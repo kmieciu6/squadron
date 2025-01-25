@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 20px;
+    padding: .5rem 1rem;
     width: 100%;
     z-index: 10;
   
@@ -24,7 +24,7 @@
   
     @include mobile {
         justify-content: space-between;
-        padding: 20px 30px;
+        padding: 1rem 3rem;
     }
   
     .nav-links {
@@ -41,7 +41,7 @@
     }
   
     .nav-links a:hover {
-        color: #188f28;
+        color: #0700c4;
     }
   
     .burger-menu {
@@ -78,10 +78,10 @@
             display: flex;
             flex-direction: column;
             position: absolute;
-            top: 80px;
+            top: 65px;
             left: 0;
             right: 0;
-            background-color: #000000;
+            background-color: rgba(0, 0, 0, 0.9);
             overflow: hidden;
             max-height: 0;
             transition: max-height 0.3s ease-out;
@@ -95,8 +95,10 @@
   
 .static-header {
     position: relative; // Statyczny header w przepływie dokumentu
-    background-color: #7e7e7e;
+    // background-color: #393737;
+    background-color: rgba(106, 106, 106, 0.5);
     color: white;
+    z-index: 5;
 }
   
 .dynamic-header {
@@ -104,9 +106,12 @@
     top: 0;
     left: 0;
     right: 0;
-    background-color: #7e7e7e;
+    // background-color: #7e7e7e;
+
+    background-color: rgba(106, 106, 106, 0.9);
     color: white;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease;
+    z-index: 3;
   
     &.visible {
         transform: translateY(0); // Widoczny
