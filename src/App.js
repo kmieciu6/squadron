@@ -9,56 +9,59 @@ import NotFoundPage from './components/NotFoundPage';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import About from './components/About';
 import Contact from './components/Contact';
+import { LanguageProvider } from "./components/translations/LanguageContext";
 
 function App() {
     return (
-        <BrowserRouter>
-            <Header />
-            <Routes>
-                <Route
-                path="/"
-                index
-                element={(
-                    <PageLoader>
-                        <Home />
-                    </PageLoader>
-                )}
-                />
-                <Route
-                path="/about"
-                element={(
-                    <PageLoader>
-                        <About />
-                    </PageLoader>
-                )}
-                />
-                <Route
-                path="/contact"
-                element={(
-                    <PageLoader>
-                        <Contact />
-                    </PageLoader>
-                )}
-                />
-                <Route
-                path="/privacy_policy"
-                element={(
-                    <PageLoader>
-                        <PrivacyPolicy />
-                    </PageLoader>
-                )}
-                />
-                <Route
-                path="*"
-                element={(
-                    <PageLoader>
-                        <NotFoundPage />
-                    </PageLoader>
-                )}
-                />
-            </Routes>
-            <Footer />
-        </BrowserRouter>
+        <LanguageProvider>
+            <BrowserRouter>
+                <Header />
+                <Routes>
+                    <Route
+                    path="/"
+                    index
+                    element={(
+                        <PageLoader>
+                            <Home />
+                        </PageLoader>
+                    )}
+                    />
+                    <Route
+                    path="/about"
+                    element={(
+                        <PageLoader>
+                            <About />
+                        </PageLoader>
+                    )}
+                    />
+                    <Route
+                    path="/contact"
+                    element={(
+                        <PageLoader>
+                            <Contact />
+                        </PageLoader>
+                    )}
+                    />
+                    <Route
+                    path="/privacy_policy"
+                    element={(
+                        <PageLoader>
+                            <PrivacyPolicy />
+                        </PageLoader>
+                    )}
+                    />
+                    <Route
+                    path="*"
+                    element={(
+                        <PageLoader>
+                            <NotFoundPage />
+                        </PageLoader>
+                    )}
+                    />
+                </Routes>
+                <Footer />
+            </BrowserRouter>
+        </LanguageProvider>
     );
 }
 

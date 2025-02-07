@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "./Cookies";
+import { getTranslation } from '../translations/LanguageUtils';
+import { useLanguage } from '../translations/LanguageContext';
+import flag_poland from '../../assets/pl.svg'
+import flag_england from '../../assets/gb.svg'
+import flag_germany from '../../assets/de.svg'
+import { NavDropdown } from "react-bootstrap";
 
 const Header = () => {
     const [dynamicVisible, setDynamicVisible] = useState(false); // Widoczność dynamicznego headera
@@ -49,6 +55,8 @@ const Header = () => {
 };
 
 const HeaderContent = ({ className }) => {
+    const { currentLanguage } = useLanguage();
+    const { changeLanguage } = useLanguage();
     const [isBurgerMenuOpen, setBurgerMenuOpen] = useState(false); // Stan burger menu
     const burgerMenuRef = useRef(null);
 
@@ -98,9 +106,25 @@ const HeaderContent = ({ className }) => {
                             <div className="burger-line"></div>
                         </div>
                         <div className={`nav-links ${isBurgerMenuOpen ? "open" : ""}`}>
-                            <Link to="/">Home</Link>
-                            <Link to="/about">About</Link>
-                            <Link to="/contact">Contact</Link>
+                            <Link to="/">{getTranslation('main_page', currentLanguage)}</Link>
+                            <Link to="/about">{getTranslation('about', currentLanguage)}</Link>
+                            <Link to="/contact">{getTranslation('contact', currentLanguage)}</Link>
+                            <NavDropdown
+                                id="nav-dropdown-dark-example"
+                                title={getTranslation('language', currentLanguage)}
+                                menuVariant="dark"
+                                className="nav_dropdown"
+                                >
+                                <NavDropdown.Item onClick={() => changeLanguage('pl')}>
+                                    {getTranslation('polish', currentLanguage)} <img src={flag_poland} className="flag" alt="polski"/>
+                                </NavDropdown.Item>
+                                <NavDropdown.Item onClick={() => changeLanguage('en')}>
+                                    {getTranslation('english', currentLanguage)} <img src={flag_england} className="flag" alt="english"/>
+                                </NavDropdown.Item>
+                                <NavDropdown.Item onClick={() => changeLanguage('de')}>
+                                    {getTranslation('german', currentLanguage)} <img src={flag_germany} className="flag" alt="deutsch"/>
+                                </NavDropdown.Item>
+                            </NavDropdown>
                         </div>
                     </div>
                 </div>
