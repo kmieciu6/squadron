@@ -1,9 +1,12 @@
+import { useLanguage } from './translations/LanguageContext';
+import { getTranslation } from "./translations/LanguageUtils";
 
 const NotFoundPage = () => {
+    const { currentLanguage } = useLanguage();
 
     return (
         <div>
-            <h1>Error 404</h1>
+            <h1>{getTranslation('Error 404', currentLanguage)}</h1>
             <p>
                 Cillum eiusmod deserunt minim laboris eiusmod. Aliqua adipisicing exercitation do proident cupidatat aute dolor esse proident
                 officia sint quis nisi proident. Laborum velit sit minim et irure non. Cupidatat minim duis incididunt minim sunt exercitation

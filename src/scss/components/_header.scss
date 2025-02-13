@@ -105,7 +105,7 @@
 .static-header {
     position: relative; // Statyczny header w przepływie dokumentu
     // background-color: #393737;
-    background-color: rgba(106, 106, 106, 0.5);
+    background-color: rgba(106, 106, 106, 1);
     color: white;
     z-index: 5;
 }
@@ -116,11 +116,11 @@
     left: 0;
     right: 0;
     // background-color: #7e7e7e;
+    z-index: 3;
 
     background-color: rgba(106, 106, 106, 0.9);
     color: white;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease;
-    z-index: 3;
   
     &.visible {
         transform: translateY(0); // Widoczny

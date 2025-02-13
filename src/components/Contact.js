@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useLanguage } from './translations/LanguageContext';
+import { getTranslation } from "./translations/LanguageUtils";
 
 const Contact = () => {
+    const { currentLanguage } = useLanguage();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
