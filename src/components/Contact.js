@@ -30,7 +30,7 @@ const Contact = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const errors = validateForm(formData);
+        const errors = validateForm(formData, currentLanguage);
         if (Object.keys(errors).length === 0) {
             console.log('Formularz przesłany: ', formData);
             setError({});
@@ -47,56 +47,57 @@ const Contact = () => {
         }
     };
 
-    const validateForm = (data) => {
+    const validateForm = (data, currentLanguage) => {
+
         const errors = {};
         if (!data.name.trim()) {
-            errors.name = 'Pole jest wymagane';
+            errors.name = getTranslation('field_required', currentLanguage);
         } else if (data.name.trim().length < 2) {
-            errors.name = 'Imię musi zawierać co najmniej dwie litery'
+            errors.name = getTranslation('must_contain_two_letters', currentLanguage);
         }
         if (!data.message.trim()) {
-            errors.message = 'Pole jest wymagane';
+            errors.message = getTranslation('field_required', currentLanguage);
         }
         if (!data.email.trim()) {
-            errors.email = 'Email jest wymagany';
+            errors.email = getTranslation('field_required', currentLanguage);
         } else if (!isValidEmail(data.email)) {
-            errors.email = 'Nieprawidłowy adres email';
+            errors.email = getTranslation('invalid_email', currentLanguage);
         }
         return errors;
     };
 
     const isValidEmail = (email) => {
-        // Prosta walidacja adresu email, można użyć bardziej zaawansowanych metod
+        // Prosta walidacja adresu email
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
       };
 
     return (
         <section className="contact">
-            <h1>Kontakt</h1>
+            <h1>{getTranslation('contact', currentLanguage)}</h1>
             {submitted && Object.keys(errors).length === 0 && (
-                <p>Formularz został pomyślnie przesłany!</p>
+                <p>{getTranslation('email', currentLanguage)}</p>
             )}
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">
-                    <p>Imię</p>
+                    <p>{getTranslation('name', currentLanguage)}</p>
                 </label>
                 <input type="text" id="name" name="name" className="input" value={formData.name} onChange={handleChange}/>
                 {errors.name && <span className="error">{errors.name}</span>}
                 <label htmlFor="email">
-                    <p>Email</p>
+                    <p>{getTranslation('email', currentLanguage)}</p>
                 </label>
                 <input type="text" id="email" name="email" className="input" value={formData.email} onChange={handleChange}/>
                 {errors.email && <span className="error">{errors.email}</span>}
                 <label htmlFor="phone">
-                    <p>Telefon</p>
+                    <p>{getTranslation('phone', currentLanguage)}</p>
                 </label>
                 <input type="text" id="phone" name="phone" className="input" value={formData.phone} onChange={handleChange}/>
                 <label htmlFor="message">
-                    <p>Wiadomość</p>    
+                    <p>{getTranslation('message', currentLanguage)}</p>
                 </label>
                 <textarea id="message" name="message" className="input" value={formData.message} onChange={handleChange}/>
                 {errors.message && <span className="error">{errors.message}</span>}
-                <button type='submit'>Wyślij</button>
+                <button type='submit'>{getTranslation('send', currentLanguage)}</button>
             </form>
         </section>
     )
