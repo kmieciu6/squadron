@@ -2,20 +2,30 @@
     box-sizing: border-box;
 }
 
-body {
-    background: radial-gradient(circle, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 100%);
-    // background-color: black;
-}
-
 .page {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-h1, h2, h3, h4, h5, p {
-    // font-family: $font-main;
-    color: white;
+.light-theme {
+    body {
+        background: radial-gradient(circle, rgb(159, 158, 158) 0%, rgb(228, 228, 228) 100%);
+    }
+    
+    h1, h2, h3, h4, h5, p, a, Link{
+        color: #000; 
+    }
+}
+
+.dark-theme {
+    body {
+        background: radial-gradient(circle, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 100%);
+    }
+
+    h1, h2, h3, h4, h5, p, a, Link {
+      color: #fff;
+    }
 }
 
 h1 {

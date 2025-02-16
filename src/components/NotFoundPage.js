@@ -1,17 +1,19 @@
+import { Link } from 'react-router-dom';
 import { useLanguage } from './translations/LanguageContext';
 import { getTranslation } from "./translations/LanguageUtils";
+import img_page_not_found from "../assets/page not found.jpg";
 
 const NotFoundPage = () => {
     const { currentLanguage } = useLanguage();
 
     return (
-        <div>
+        <div className='not_found_page'>
             <h1>{getTranslation('Error 404', currentLanguage)}</h1>
             <p>
-                Cillum eiusmod deserunt minim laboris eiusmod. Aliqua adipisicing exercitation do proident cupidatat aute dolor esse proident
-                officia sint quis nisi proident. Laborum velit sit minim et irure non. Cupidatat minim duis incididunt minim sunt exercitation
-                consequat ea duis cillum velit. Ex culpa amet consectetur nulla exercitation cupidatat qui tempor enim ipsum deserunt qui est deserunt.
+                {getTranslation('not_found_page', currentLanguage)}
             </p>
+            <Link to='/'><button>{getTranslation('main_page', currentLanguage)}</button></Link>
+            <img src={img_page_not_found} alt='not found'/>
         </div>
     )
 }

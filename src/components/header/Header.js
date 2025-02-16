@@ -7,8 +7,10 @@ import flag_poland from '../../assets/pl.svg'
 import flag_england from '../../assets/gb.svg'
 import flag_germany from '../../assets/de.svg'
 import { NavDropdown } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSun, faMoon, faA } from "@fortawesome/free-solid-svg-icons";
 
-const Header = () => {
+const Header = ({ onThemeChange, currentTheme }) => {
     const [dynamicVisible, setDynamicVisible] = useState(false); // Widoczność dynamicznego headera
     const lastScrollY = useRef(0); // Ostatnia pozycja scrolla
     const threshold = 20; // Próg w pikselach
@@ -44,17 +46,23 @@ const Header = () => {
     return (
         <>
             {/* Statyczny header */}
-            <HeaderContent className="header static-header" />
+            <HeaderContent 
+                className="header static-header" 
+                onThemeChange={onThemeChange}
+                currentTheme={currentTheme}
+            />
 
             {/* Dynamiczny header */}
             <HeaderContent
                 className={`header dynamic-header ${dynamicVisible ? "visible" : "hidden"}`}
+                onThemeChange={onThemeChange}
+                currentTheme={currentTheme}
             />
         </>
     );
 };
 
-const HeaderContent = ({ className }) => {
+const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
     const { currentLanguage } = useLanguage();
     const { changeLanguage } = useLanguage();
     const [isBurgerMenuOpen, setBurgerMenuOpen] = useState(false); // Stan burger menu
@@ -113,18 +121,24 @@ const HeaderContent = ({ className }) => {
                                 id="nav-dropdown-dark-example"
                                 title={getTranslation('language', currentLanguage)}
                                 menuVariant="dark"
-                                className="nav_dropdown"
+                                className="nav_dropdown language-dropdown"
                                 >
-                                <NavDropdown.Item onClick={() => changeLanguage('pl')}>
+                                <NavDropdown.Item onClick={() => changeLanguage('pl')} className="nav_dropdown_button">
                                     {getTranslation('polish', currentLanguage)} <img src={flag_poland} className="flag" alt="polski"/>
                                 </NavDropdown.Item>
-                                <NavDropdown.Item onClick={() => changeLanguage('en')}>
+                                <NavDropdown.Item onClick={() => changeLanguage('en')}className="nav_dropdown_button">
                                     {getTranslation('english', currentLanguage)} <img src={flag_england} className="flag" alt="english"/>
                                 </NavDropdown.Item>
-                                <NavDropdown.Item onClick={() => changeLanguage('de')}>
+                                <NavDropdown.Item onClick={() => changeLanguage('de')}className="nav_dropdown_button">
                                     {getTranslation('german', currentLanguage)} <img src={flag_germany} className="flag" alt="deutsch"/>
                                 </NavDropdown.Item>
                             </NavDropdown>
+                            <div>
+                                <ThemeSwitcher
+                                    currentTheme={currentTheme}
+                                    onThemeChange={onThemeChange}
+                                />                         
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -133,5 +147,34 @@ const HeaderContent = ({ className }) => {
         </>
     );
 };
+
+function ThemeSwitcher({ currentTheme, onThemeChange }) {
+    // Funkcja, która przechodzi w pętli:
+    // system -> light -> dark -> system
+    const cycleTheme = (theme) => {
+        if (theme === "system") return "light";
+        if (theme === "light") return "dark";
+        return "system"; // jeśli obecny to 'dark'
+    };
+  
+    // Wybranie właściwej ikony na podstawie obecnego tematu
+    const getIcon = (theme) => {
+        if (theme === "light") return faSun;
+        if (theme === "dark") return faMoon;
+        return faA; // 'system'
+    };
+  
+    // Gdy klikniemy przycisk, wyliczamy nowy tryb i wywołujemy onThemeChange
+    const handleClick = () => {
+        const nextTheme = cycleTheme(currentTheme);
+        onThemeChange(nextTheme);
+    };
+  
+    return (
+        <button onClick={handleClick} className="icon-button">
+            <FontAwesomeIcon className="icons_light" icon={getIcon(currentTheme)} />
+        </button>
+    );
+}
 
 export default Header;

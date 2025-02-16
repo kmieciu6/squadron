@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import './scss/main.scss';
 import Header from "./components/header/Header";
@@ -12,10 +12,43 @@ import Contact from './components/Contact';
 import { LanguageProvider } from "./components/translations/LanguageContext";
 
 function App() {
+    // Ustawiamy w stanie to, co mamy w localStorage lub domyślnie 'system'
+    const [theme, setTheme] = useState(() => {
+        return localStorage.getItem("theme") || "system";
+    });
+
+    useEffect(() => {
+        const htmlEl = document.documentElement; // <html>
+        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      
+        const applySystemTheme = () => {
+            const isDarkMode = mediaQuery.matches;
+            htmlEl.classList.toggle("dark-theme", isDarkMode);
+            htmlEl.classList.toggle("light-theme", !isDarkMode);
+        };
+      
+        if (theme === "system") {
+            applySystemTheme();
+            mediaQuery.addEventListener("change", applySystemTheme);
+        } else {
+            htmlEl.classList.toggle("dark-theme", theme === "dark");
+            htmlEl.classList.toggle("light-theme", theme === "light");
+        }
+        return () => {
+            mediaQuery.removeEventListener("change", applySystemTheme);
+        };
+    }, [theme]);
+      
+    // Funkcja do zmiany tematu, np. wywoływana przy kliknięciu przycisku
+    const handleThemeChange = (newTheme) => {
+        setTheme(newTheme);
+        localStorage.setItem("theme", newTheme);
+    };
+
     return (
         <LanguageProvider>
             <BrowserRouter>
-                <Header />
+                <Header onThemeChange={handleThemeChange} currentTheme={theme} />
                 <Routes>
                     <Route
                     path="/"
