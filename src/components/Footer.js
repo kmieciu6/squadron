@@ -11,26 +11,28 @@ const Footer = () => {
     return (
         <div className="footer">
             <h1>Logo</h1>
-            <div>
-                <h4>
-                    <a href="tel:+48xxxxxxxxx">
-                        <FontAwesomeIcon icon={faPhone} className="icon" />
-                        <p>
-                            +48 xxx xxx xxx
-                        </p>
-                    </a>
-                </h4>
-                <h4>  
-                    <a href="mailto:yourmail@domain.com">
-                        <FontAwesomeIcon icon={faEnvelope} className="icon" />
-                        <p>
-                            yourmail@domain.com
-                        </p>
-                    </a>
-                </h4>
+            <div className="contact_info">
+                <a href="tel:+48xxxxxxxxx">
+                    <FontAwesomeIcon icon={faPhone} className="icon" />
+                    <h5>
+                        +48 xxx xxx xxx
+                    </h5>
+                </a>
+                <a href="mailto:yourmail@domain.com">
+                    <FontAwesomeIcon icon={faEnvelope} className="icon" />
+                    <h5>
+                        yourmail@domain.com
+                    </h5>
+                </a>
             </div>
-            <img src={facebook} alt="logo facebook" className="fb"/>
-            <img src={linkedIn} alt="logo linkedIn" className="in"/>
+            <div className="social">
+                <a href="https://www.facebook.com/">
+                    <img src={facebook} alt="logo facebook" className="fb"/>
+                </a>
+                <a href="https://www.linkedin.com/">
+                    <img src={linkedIn} alt="logo linkedIn" className="in"/>
+                </a>
+            </div>
         </div>
     )
 };

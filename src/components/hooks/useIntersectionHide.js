@@ -1,25 +1,15 @@
 import { useRef, useState, useEffect } from 'react';
 
-/**
- * @param {object} options - obiekt konfiguracyjny IntersectionObserver (np. {threshold: 0.1})
- * @returns {[React.RefObject, boolean]} - tablica [ref, isHidden]
- * 
- * Przykład użycia:
- * const [myRef, isHidden] = useIntersectionHide({ threshold: 1.0 });
- * <div ref={myRef} className={isHidden ? 'hidden' : ''}>Treść</div>
- */
-export default function useIntersectionHide(options = { threshold: 1.0 }) {
+export default function useIntersectionHide(options = { threshold: 1.0, rootMargin: "0px" }) {
   const ref = useRef(null);
-  // stan: na starcie element ukryty (true => .hidden)
   const [isHidden, setIsHidden] = useState(true);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach((entry) => {
+        // console.log("Observed:", entry.target, "isIntersecting:", entry.isIntersecting); // Debug
         if (entry.isIntersecting) {
-          // Zdejmujemy "ukrycie"
           setIsHidden(false);
-          // Przestajemy obserwować, by nie zmieniać stanu w tę i nazad
           obs.unobserve(entry.target);
         }
       });
