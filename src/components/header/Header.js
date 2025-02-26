@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import Cookies from "./Cookies";
 import { getTranslation } from '../translations/LanguageUtils';
 import { useLanguage } from '../translations/LanguageContext';
+import NavLink from "./NavLink";
 import flag_poland from '../../assets/pl.svg'
 import flag_england from '../../assets/gb.svg'
 import flag_germany from '../../assets/de.svg'
@@ -99,9 +99,9 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
         <>
             <div className={className}>
                 <div className="logo">
-                    <Link to="/">
+                    <NavLink to="/"> 
                         <h1>Logo</h1>
-                    </Link>
+                    </NavLink>
                 </div>
                 <div className="bookmarks">
                     <div ref={burgerMenuRef} className="burger-wrapper">
@@ -114,9 +114,9 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
                             <div className="burger-line"></div>
                         </div>
                         <div className={`nav-links ${isBurgerMenuOpen ? "open" : ""}`}>
-                            <Link to="/">{getTranslation('main_page', currentLanguage)}</Link>
-                            <Link to="/about">{getTranslation('about', currentLanguage)}</Link>
-                            <Link to="/contact">{getTranslation('contact', currentLanguage)}</Link>
+                            <NavLink to="/">{getTranslation('main_page', currentLanguage)}</NavLink>
+                            <NavLink to="/about">{getTranslation('about', currentLanguage)}</NavLink>
+                            <NavLink to="/contact">{getTranslation('contact', currentLanguage)}</NavLink>
                             <NavDropdown
                                 id="nav-dropdown-dark-example"
                                 title={getTranslation('language', currentLanguage)}

@@ -9,6 +9,7 @@ import NotFoundPage from './components/NotFoundPage';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import About from './components/About';
 import Contact from './components/Contact';
+import ScrollToTop from "./components/header/ScrollToTop";
 import { LanguageProvider } from "./components/translations/LanguageContext";
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
         <LanguageProvider>
             <BrowserRouter>
                 <Header onThemeChange={handleThemeChange} currentTheme={theme} />
+                <ScrollToTop />
                 <Routes>
                     <Route
                     path="/"

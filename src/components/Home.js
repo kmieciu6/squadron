@@ -184,8 +184,7 @@ const Home = () => {
                 </p>
             </div>
 
-            {/* <div ref={sec5Ref} className={`text text5 text_width ${isSec5Hidden ? 'hidden' : ''}`} style={{ transform: `translateX(${offsetY * 0.5}px)` }}> */}
-            <div className='text5'>
+            <div ref={sec5Ref} className={`text text5 text_width ${isSec5Hidden ? 'hidden' : ''}`} style={{ transform: `translateX(${offsetY * 0.5}px)` }}>
                 <div className='text_overlay'>
                     <h3>Title</h3>
                     <p>
