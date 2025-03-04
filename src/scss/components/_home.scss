@@ -186,6 +186,7 @@
 
             h4 {
                 text-align: center;
+                color: white;
             }
 
             p {
@@ -216,23 +217,81 @@
         }
 
         .text5 {
-            transition: transform 0.1s;
-            position: relative; 
-            width: 200vw;
-            height: 100%;
-            z-index: 0;
-            background-image: url(../../assets/dron1.jpg);
-            background-size: cover;
-            background-position: center;
+            // position: relative; 
+            // width: 200vw;
+            // height: 100%;
+            // z-index: 0;
+            // background-image: url(../../assets/dron1.jpg);
+            // background-size: cover;
+            // background-position: center;
 
             .text_overlay {
-                opacity: 1; // Ustawienie widoczności tekstu
-                position: relative; // Upewnij się, że pozycjonowanie jest odpowiednie
-                z-index: 1;
-                color: white;
-                background: rgba(0, 0, 0, 0.4);
-                padding: 1rem;
+                // opacity: 1; // Ustawienie widoczności tekstu
+                // position: relative; // Upewnij się, że pozycjonowanie jest odpowiednie
+                // z-index: 1;
+                // color: white;
+                // background: rgba(0, 0, 0, 0.4);
+                // padding: 1rem;
             }
+
+            .carousel {
+                position: relative;
+                width: 100%;
+                max-width: 800px;
+                margin: auto;
+                overflow: hidden;
+                text-align: center;
+            
+                .slide {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+            
+                    img {
+                        width: 100%;
+                        height: auto;
+                        border-radius: 10px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                    }
+            
+                    h3 {
+                        margin: 15px 0 5px;
+                        font-size: 1.5rem;
+                    }
+            
+                    p {
+                        font-size: 1rem;
+                        max-width: 80%;
+                    }
+                }
+            
+                .prev-button, .next-button {
+                    position: absolute;
+                    top: 45%;
+                    transform: translateY(-50%);
+                    background: rgba(0, 0, 0, 0.5);
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    cursor: pointer;
+                    font-size: 1.5rem;
+                    border-radius: 50%;
+                    transition: 0.3s;
+            
+                    &:hover {
+                        background: rgba(0, 0, 0, 0.8);
+                    }
+                }
+            
+                .prev-button {
+                    left: 10px;
+                }
+            
+                .next-button {
+                    right: 10px;
+                }
+            }            
         }
     }
 }

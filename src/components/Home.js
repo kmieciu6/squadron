@@ -5,6 +5,9 @@ import turbine_photo from '../assets/turbiny.jpg';
 import droneBackground from '../assets/dron_background.png';
 import droneBackground1 from '../assets/dron_background1.png';
 import droneBackground2 from '../assets/dron_background2.png';
+import carousel1 from '../assets/dron.jpg';
+import carousel2 from '../assets/dron1.jpg';
+import carousel3 from '../assets/dron2.jpg';
 
 const Home = () => {
     const [titleRef, isTitleHidden] = useIntersectionHide();
@@ -15,10 +18,6 @@ const Home = () => {
     const [sec5Ref, isSec5Hidden] = useIntersectionHide();
     const [sec6Ref, isSec6Hidden] = useIntersectionHide();
     const [images, setImages] = useState([]);
-    const [offsetY, setOffsetY] = useState(0);
-    const sectionRef = useRef(null);
-    const [localOffset, setLocalOffset] = useState(0);
-
 
     const textContainerRef = useRef(null);
     const droneImages = [droneBackground, droneBackground1, droneBackground2];
@@ -81,25 +80,43 @@ const Home = () => {
         setImages(generatedDrones);
     }, []);
 
-    const handleScroll = () => setOffsetY(window.pageYOffset);
+    const slides = [
+        {
+            title: "Title 1",
+            content: "Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Est do reprehenderit mollit",
+            image: carousel1
+        },
+        {
+            title: "Title 2",
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae eros eget tellus tristique bibendum.",
+            image: carousel2
+        },
+        {
+            title: "Title 3",
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae eros eget tellus tristique bibendum.",
+            image: carousel3
+        },
+    ];
+
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [resetTimer, setResetTimer] = useState(false);
 
     useEffect(() => {
-        const handleScroll = () => {
-          if (sectionRef.current) {
-            const rect = sectionRef.current.getBoundingClientRect();
-            // Gdy sekcja znajduje się w widoku (gdy jej top jest mniejszy od wysokości viewportu)
-            const offset = window.innerHeight - rect.top;
-            // Ograniczamy wartość, żeby efekt był tylko w obrębie sekcji
-            const maxOffset = sectionRef.current.offsetHeight;
-            setLocalOffset(Math.min(Math.max(offset, 0), maxOffset));
-          }
-        };
-    
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-      }, []);
+        const interval = setInterval(() => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, [slides.length, resetTimer]);
 
-      const scrollFactor = 1; 
+    const nextSlide = () => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
+        setResetTimer((prev) => !prev);
+    };
+
+    const prevSlide = () => {
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
+        setResetTimer((prev) => !prev);
+    };
 
     return (
     <div className='home page'>
@@ -184,9 +201,9 @@ const Home = () => {
                 </p>
             </div>
 
-            <div ref={sec5Ref} className={`text text5 text_width ${isSec5Hidden ? 'hidden' : ''}`} style={{ transform: `translateX(${offsetY * 0.5}px)` }}>
+            <div ref={sec5Ref} className={`text text5 text_width ${isSec5Hidden ? 'hidden' : ''}`}>
                 <div className='text_overlay'>
-                    <h3>Title</h3>
+                    {/* <h3>Title</h3>
                     <p>
                         Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
                         aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
@@ -196,37 +213,18 @@ const Home = () => {
                     <h1>Przykładowy nagłówek</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae eros eget tellus tristique bibendum.</p>
                     <h1>Przykładowy nagłówek</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae eros eget tellus tristique bibendum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae eros eget tellus tristique bibendum.</p> */}
+                    <div className="carousel">
+                        <button onClick={prevSlide} className="prev-button">❮</button>
+                        <div className="slide">
+                            <img src={slides[currentIndex].image} alt={slides[currentIndex].title} className="slide-image" />
+                            <h3>{slides[currentIndex].title}</h3>
+                            <p>{slides[currentIndex].content}</p>
+                        </div>
+                        <button onClick={nextSlide} className="next-button">❯</button>
+                    </div>
                 </div>
             </div>
-            <section 
-                ref={sectionRef} 
-                style={{
-                    position: 'relative',
-                    height: '100vh',      // wysokość sekcji – dopasuj do potrzeb
-                    overflow: 'hidden'
-                }}
-                >
-                {/* Kontener, który będzie "przyklejony" */}
-                <div 
-                    style={{
-                    position: 'sticky',
-                    top: 0,
-                    transform: `translateX(-${localOffset * scrollFactor}px)`,
-                    width: '200vw',      // szerokość większa niż viewport, aby był zakres przesunięcia
-                    height: '100%',
-                    display: 'flex'
-                    }}
-                >
-                    {/* Przykładowe "slajdy" lub segmenty */}
-                    <div style={{ width: '50%', background: 'tomato', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <h2>Segment 1</h2>
-                    </div>
-                    <div style={{ width: '50%', background: 'teal', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <h2>Segment 2</h2>
-                    </div>
-                </div>
-            </section>
 
             <div ref={sec6Ref} className={`text text6 text_width ${isSec6Hidden ? 'hidden' : ''}`}>
                 <p>
