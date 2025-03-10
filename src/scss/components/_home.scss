@@ -87,7 +87,6 @@
         }
 
         div {
-            margin: 1rem 0;
 
             p {
                 text-align: justify;
@@ -96,16 +95,17 @@
             h2 {
                 text-align: center;
             }
-
-            @include desktop {
-                margin: 5rem 0;
-            }
         }
 
         .text1 {
             display: flex;
             align-items: center;
             flex-direction: column;
+            margin: 1rem 0;
+
+            @include desktop {
+                margin: 5rem 0;
+            }
 
             p {
                 
@@ -148,6 +148,7 @@
             width: 100%;
             justify-content: space-between;
             align-items: center; 
+            margin: 1rem 0;
 
             .image_container {
                 position: relative;
@@ -195,7 +196,7 @@
 
             @include desktop {
                 flex-direction: row;
-                margin: 5rem 0;
+                margin: 10rem 0;
 
                 .image_container {
                     width: 60%;
@@ -216,37 +217,50 @@
             }
         }
 
-        .text5 {
-            // position: relative; 
-            // width: 200vw;
-            // height: 100%;
-            // z-index: 0;
-            // background-image: url(../../assets/dron1.jpg);
-            // background-size: cover;
-            // background-position: center;
+        .text4 {
+            margin: 1rem 0;
 
-            .text_overlay {
-                // opacity: 1; // Ustawienie widoczności tekstu
-                // position: relative; // Upewnij się, że pozycjonowanie jest odpowiednie
-                // z-index: 1;
-                // color: white;
-                // background: rgba(0, 0, 0, 0.4);
-                // padding: 1rem;
+            @include desktop {
+                margin-bottom: 5rem;
+            }
+        }
+
+        .text5 {
+            max-width: 1500px;
+            margin: 1rem 0;
+
+            @include desktop {
+                margin: 5rem 0;
             }
 
             .carousel {
                 position: relative;
                 width: 100%;
-                max-width: 800px;
+                max-width: 1500px;
                 margin: auto;
                 overflow: hidden;
                 text-align: center;
             
-                .slide {
+                .carousel-inner {
                     display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
+                    width: 100%;
+                    transition: transform 0.8s ease-in-out;
+                }
+
+                .slide {
+                    flex: 0 0 100%;
+                    opacity: 0;
+                    transition: opacity 0.8s ease-in-out;
+                    position: absolute;
+                    width: 100%;
+                    height: auto;
+                    top: 0;
+                    left: 0;
+
+                    &.active {
+                        opacity: 1;
+                        position: relative;
+                    }
             
                     img {
                         width: 100%;
@@ -256,13 +270,11 @@
                     }
             
                     h3 {
-                        margin: 15px 0 5px;
-                        font-size: 1.5rem;
+                        margin: 1rem;
                     }
             
                     p {
-                        font-size: 1rem;
-                        max-width: 80%;
+                        text-align: center;
                     }
                 }
             
@@ -278,6 +290,7 @@
                     font-size: 1.5rem;
                     border-radius: 50%;
                     transition: 0.3s;
+                    z-index: 1;
             
                     &:hover {
                         background: rgba(0, 0, 0, 0.8);
@@ -292,6 +305,13 @@
                     right: 10px;
                 }
             }            
+        }
+        .text6 {
+            margin: 1rem 0;
+
+            @include desktop {
+                margin: 5rem 0;
+            }
         }
     }
 }

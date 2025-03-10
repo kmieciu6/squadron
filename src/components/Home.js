@@ -202,27 +202,21 @@ const Home = () => {
             </div>
 
             <div ref={sec5Ref} className={`text text5 text_width ${isSec5Hidden ? 'hidden' : ''}`}>
-                <div className='text_overlay'>
-                    {/* <h3>Title</h3>
-                    <p>
-                        Do pariatur et elit cupidatat do ipsum mollit. Ullamco est do reprehenderit mollit. Eiusmod aliqua eiusmod nulla 
-                        aute id id irure incididunt dolore. Eiusmod anim duis labore elit nisi ex nulla. Quis officia ut et veniam proident 
-                        nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
-                        consequat Lorem nulla nostrud.
-                    </p>
-                    <h1>Przykładowy nagłówek</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae eros eget tellus tristique bibendum.</p>
-                    <h1>Przykładowy nagłówek</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae eros eget tellus tristique bibendum.</p> */}
-                    <div className="carousel">
-                        <button onClick={prevSlide} className="prev-button">❮</button>
-                        <div className="slide">
-                            <img src={slides[currentIndex].image} alt={slides[currentIndex].title} className="slide-image" />
-                            <h3>{slides[currentIndex].title}</h3>
-                            <p>{slides[currentIndex].content}</p>
-                        </div>
-                        <button onClick={nextSlide} className="next-button">❯</button>
+                <div className="carousel">
+                    <button onClick={prevSlide} className="prev-button">❮</button>
+                    <div className="carousel-inner">
+                        {slides.map((slide, index) => (
+                            <div 
+                                key={index} 
+                                className={`slide ${index === currentIndex ? "active" : ""}`}
+                            >
+                                <img src={slide.image} alt={slide.title} className="slide-image" />
+                                <h3>{slide.title}</h3>
+                                <p>{slide.content}</p>
+                            </div>
+                        ))}
                     </div>
+                    <button onClick={nextSlide} className="next-button">❯</button>
                 </div>
             </div>
 

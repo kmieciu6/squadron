@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 
-export default function useIntersectionHide(options = { threshold: 1.0, rootMargin: "0px" }) {
+export default function useIntersectionHide(options = { threshold: 0.8, rootMargin: "100px" }) {
   const ref = useRef(null);
   const [isHidden, setIsHidden] = useState(true);
 
