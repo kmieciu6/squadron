@@ -10,7 +10,7 @@
 
 .light-theme {
     body {
-        background: radial-gradient(circle, rgb(171, 207, 226) 0%, rgb(228, 228, 228) 100%);
+        background: $light-background-color;
     }
     
     h1, h2, h3, h4, h5, p, a, Link{
@@ -20,7 +20,7 @@
 
 .dark-theme {
     body {
-        background: radial-gradient(circle, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 100%);
+        background: $dark-background-color;
     }
 
     h1, h2, h3, h4, h5, p, a, Link {
