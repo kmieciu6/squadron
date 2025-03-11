@@ -10,7 +10,7 @@ const Footer = () => {
 
     return (
         <div className="footer">
-            <h1>Logo</h1>
+            <h1>{getTranslation('logo', currentLanguage)}</h1>
             <div className="contact_info">
                 <a href="tel:+48xxxxxxxxx">
                     <FontAwesomeIcon icon={faPhone} className="icon" />

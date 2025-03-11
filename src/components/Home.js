@@ -9,6 +9,11 @@ import carousel1 from '../assets/dron.jpg';
 import carousel2 from '../assets/dron1.jpg';
 import carousel3 from '../assets/dron2.jpg';
 
+const droneImages = [droneBackground, droneBackground1, droneBackground2];
+const getRandomDrone = () => {
+    return droneImages[Math.floor(Math.random() * droneImages.length)];
+};
+
 const Home = () => {
     const [titleRef, isTitleHidden] = useIntersectionHide();
     const [sec1Ref, isSec1Hidden] = useIntersectionHide();
@@ -20,7 +25,6 @@ const Home = () => {
     const [images, setImages] = useState([]);
 
     const textContainerRef = useRef(null);
-    const droneImages = [droneBackground, droneBackground1, droneBackground2];
 
     const MIN_DISTANCE = 300;
     const MAX_ATTEMPTS = 10;
@@ -48,9 +52,7 @@ const Home = () => {
         return { top: "50%", left: "50%", size: "120px" }; // Domyślna pozycja awaryjna
     };
 
-    const getRandomDrone = () => {
-        return droneImages[Math.floor(Math.random() * droneImages.length)];
-    }
+    
 
     useEffect(() => {
         if (!textContainerRef.current) {
@@ -62,7 +64,7 @@ const Home = () => {
         const containerWidth = container.offsetWidth;
         const containerHeight = container.offsetHeight;
 
-        console.log("Generuję drony w `text_container`!");
+        // console.log("Generuję drony w `text_container`!");
 
         let generatedDrones = [];
 
@@ -104,7 +106,7 @@ const Home = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
-        }, 3000);
+        }, 5000);
         return () => clearInterval(interval);
     }, [slides.length, resetTimer]);
 
@@ -210,9 +212,15 @@ const Home = () => {
                                 key={index} 
                                 className={`slide ${index === currentIndex ? "active" : ""}`}
                             >
-                                <img src={slide.image} alt={slide.title} className="slide-image" />
-                                <h3>{slide.title}</h3>
-                                <p>{slide.content}</p>
+                                <div className='text-column'>
+                                    <div className='text-container'>
+                                        <h3>{slide.title}</h3>
+                                        <p>{slide.content}</p>
+                                    </div>
+                                </div>
+                                <div className='image-column'>
+                                    <img src={slide.image} alt={slide.title} className="slide-image" />
+                                </div>
                             </div>
                         ))}
                     </div>
