@@ -102,6 +102,9 @@
             align-items: center;
             flex-direction: column;
             margin: 1rem 0;
+            background: $light-background-color;
+            background-blend-mode: overlay;
+
 
             @include desktop {
                 margin: 5rem 0;

@@ -1,29 +1,29 @@
 import React, { useState } from "react";
-import { useLanguage } from "./translations/LanguageContext";
+import { useLanguage } from './translations/LanguageContext';
 import { getTranslation } from "./translations/LanguageUtils";
 
 const Contact = () => {
     const { currentLanguage } = useLanguage();
     const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        phone: "",
-        message: ""
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
     });
 
     const [errors, setError] = useState({});
     const [submitted, setSubmitted] = useState(false);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setFormData({
             ...formData,
-            [name]: value
+            [name]: value,
         });
         if (submitted) {
             setError({
                 ...errors,
-                [name]: ""
+                [name]: ''
             });
         }
     };
@@ -32,14 +32,14 @@ const Contact = () => {
         e.preventDefault();
         const errors = validateForm(formData, currentLanguage);
         if (Object.keys(errors).length === 0) {
-            console.log("Formularz przesłany: ", formData);
+            console.log('Formularz przesłany: ', formData);
             setError({});
             setSubmitted(true);
             setFormData({
-                name: "",
-                email: "",
-                phone: "",
-                message: ""
+                name: '',
+                email: '',
+                phone: '',
+                message: ''
             });
         } else {
             setError(errors);
@@ -48,19 +48,20 @@ const Contact = () => {
     };
 
     const validateForm = (data, currentLanguage) => {
+
         const errors = {};
         if (!data.name.trim()) {
-            errors.name = getTranslation("field_required", currentLanguage);
+            errors.name = getTranslation('field_required', currentLanguage);
         } else if (data.name.trim().length < 2) {
-            errors.name = getTranslation("must_contain_two_letters", currentLanguage);
+            errors.name = getTranslation('must_contain_two_letters', currentLanguage);
         }
         if (!data.message.trim()) {
-            errors.message = getTranslation("field_required", currentLanguage);
+            errors.message = getTranslation('field_required', currentLanguage);
         }
         if (!data.email.trim()) {
-            errors.email = getTranslation("field_required", currentLanguage);
+            errors.email = getTranslation('field_required', currentLanguage);
         } else if (!isValidEmail(data.email)) {
-            errors.email = getTranslation("invalid_email", currentLanguage);
+            errors.email = getTranslation('invalid_email', currentLanguage);
         }
         return errors;
     };
@@ -68,84 +69,40 @@ const Contact = () => {
     const isValidEmail = (email) => {
         // Prosta walidacja adresu email
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    };
+      };
 
     return (
-        <section className="contact-hero">
-            <div className="overlay"></div>
-
-            {/* Główna treść: nagłówek + panel formularza */}
-            <div className="contact-content">
-                <h1>{getTranslation("contact", currentLanguage)}</h1>
-
-                {/* Komunikat po udanym przesłaniu */}
+        <div className="contact">
+            <h2>
+                {getTranslation("write_to_us", currentLanguage)}
+            </h2>
+            <form autoComplete="on" onSubmit={handleSubmit} noValidate className="form">
+                <label htmlFor="name">
+                    <p>{getTranslation('name', currentLanguage)}</p>
+                </label>
+                <input type="text" id="name" name="name" className="input" autoComplete="name" value={formData.name} onChange={handleChange}/>
+                {errors.name && <span className="error">{errors.name}</span>}
+                <label htmlFor="email">
+                    <p>{getTranslation('email', currentLanguage)}</p>
+                </label>
+                <input type="email" id="email" name="email" className="input" autoComplete="email" value={formData.email} onChange={handleChange}/>
+                {errors.email && <span className="error">{errors.email}</span>}
+                <label htmlFor="phone">
+                    <p>{getTranslation('phone', currentLanguage)}</p>
+                </label>
+                <input type="tel" id="phone" name="phone" className="input" autoComplete="tel" value={formData.phone} onChange={handleChange}/>
+                <label htmlFor="message">
+                    <p>{getTranslation('message', currentLanguage)}</p>
+                </label>
+                <textarea id="message" name="message" className="input" value={formData.message} onChange={handleChange} rows={4}/>
+                {errors.message && <span className="error">{errors.message}</span>}
+                <button type='submit'>{getTranslation('send', currentLanguage)}</button>
                 {submitted && Object.keys(errors).length === 0 && (
-                    <p className="submitted-info">{getTranslation("form_submitted_successfully", currentLanguage)}</p>
+                    <p className="success">{getTranslation('form_submitted_successfully', currentLanguage)}</p>
                 )}
-
-                <div className="contact-form-glass">
-                    <form onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label htmlFor="name">{getTranslation("name", currentLanguage)}</label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                className="input"
-                                value={formData.name}
-                                onChange={handleChange}
-                                autoComplete="name"
-                            />
-                            {errors.name && <span className="error">{errors.name}</span>}
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="email">{getTranslation("email", currentLanguage)}</label>
-                            <input
-                                type="text"
-                                id="email"
-                                name="email"
-                                className="input"
-                                value={formData.email}
-                                onChange={handleChange}
-                                autoComplete="email"
-                            />
-                            {errors.email && <span className="error">{errors.email}</span>}
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="phone">{getTranslation("phone", currentLanguage)}</label>
-                            <input
-                                type="text"
-                                id="phone"
-                                name="phone"
-                                className="input"
-                                value={formData.phone}
-                                onChange={handleChange}
-                                autoComplete="tel"
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="message">{getTranslation("message", currentLanguage)}</label>
-                            <textarea
-                                id="message"
-                                name="message"
-                                className="input"
-                                value={formData.message}
-                                onChange={handleChange}
-                            />
-                            {errors.message && <span className="error">{errors.message}</span>}
-                        </div>
-
-                        <button type="submit" className="send-btn">
-                            {getTranslation("send", currentLanguage)}
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </section>
-    );
-};
+            </form>
+        </div>
+    )
+} 
 
 export default Contact;

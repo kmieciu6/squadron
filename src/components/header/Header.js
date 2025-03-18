@@ -6,6 +6,7 @@ import NavLink from "./NavLink";
 import flag_poland from '../../assets/pl.svg'
 import flag_england from '../../assets/gb.svg'
 import flag_germany from '../../assets/de.svg'
+import logo from '../../assets/logo.png'
 import { NavDropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon, faA } from "@fortawesome/free-solid-svg-icons";
@@ -100,7 +101,8 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
             <div className={className}>
                 <div className="logo">
                     <NavLink to="/"> 
-                        <h1>Logo</h1>
+                        <img src={logo} alt="Logo" />
+                        {/* <h1>Logo</h1> */}
                     </NavLink>
                 </div>
                 <div className="bookmarks">
