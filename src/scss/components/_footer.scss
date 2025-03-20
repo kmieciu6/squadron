@@ -31,7 +31,7 @@
                 display: flex;
                 flex-direction: column;
                 height: auto;
-                width: 60%;
+                width: 50%;
                 max-width: 600px;
                 
                 @include mobile {
@@ -118,5 +118,28 @@
                 font-size: 14px;
             }
         }
+    }
+
+    /* Początkowy stan – elementy są przesunięte i niewidoczne */
+    .slide-from-left,
+    .slide-from-right {
+        opacity: 0;
+        transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+    }
+
+    /* Wersja z lewej: przesuwamy w lewo na start */
+    .slide-from-left {
+        transform: translateX(-50px);
+    }
+
+    /* Wersja z prawej: przesuwamy w prawo na start */
+    .slide-from-right {
+        transform: translateX(50px);
+    }
+
+    /* Gdy element jest widoczny – wraca na pozycję i staje się w pełni widoczny */
+    .slide-in {
+        opacity: 1;
+        transform: translateX(0);
     }
 }

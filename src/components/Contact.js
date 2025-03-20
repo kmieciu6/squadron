@@ -77,7 +77,7 @@ const Contact = () => {
       };
 
     return (
-        <div className="contact">
+        <div className="contact_container">
             <h2>
                 {getTranslation("write_to_us", currentLanguage)}
             </h2>
