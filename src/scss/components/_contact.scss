@@ -27,11 +27,12 @@
         display: flex;
         flex-direction: column;
         // align-items: center;
-        width: 40%;
+        width: 100%;
         min-width: 180px;
+        max-width: 280px;
 
         label {
-            margin-top: 1.5rem;
+            margin-top: 1rem;
 
             p {
                 color: $white-color !important;
@@ -44,6 +45,7 @@
 
         .error {
             color: red;
+            font-size: 15px;
         }
 
         .input {
@@ -58,21 +60,69 @@
             overflow: hidden;
         }
 
-        .consent_checkbox {
+        .checkbox_container {
             // text-align: justify;
-
-            label {
-                cursor: pointer;
-            }
+            width: 80%;
 
             .checkbox {
-                display: flex;
-                align-items: start;
+                cursor: pointer;
+                display: block;
+                position: relative;
+                padding-left: 35px;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
                 color: $white-color;
-                
+
                 input {
-                    margin: 0.3rem 0.3rem 0 0;
-                    accent-color: $main-color;
+                    position: absolute;
+                    opacity: 0;
+                    cursor: pointer;
+                    height: 0;
+                    width: 0;
+                }
+
+                .checkmark {
+                    position: absolute;
+                    top: 5px;
+                    left: 0;
+                    height: 25px;
+                    width: 25px;
+                    background-color: #eee;
+                    transition: .5s;
+
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        display: none;
+                        left: 9px;
+                        top: 3px;
+                        width: 8px;
+                        height: 15px;
+                        border: solid white;
+                        border-width: 0 3px 3px 0;
+                        -webkit-transform: rotate(45deg);
+                        -ms-transform: rotate(45deg);
+                        transform: rotate(45deg);
+                    }
+
+                }
+
+                &:hover input ~ .checkmark {
+                    background-color: #ccc;
+                }
+                
+                input:checked ~ .checkmark {
+                    background-color: $main-color;
+                }
+
+                input:checked ~ .checkmark:after {
+                    display: block;
+                }
+
+                p {
+                    font-size: 15px;
                 }
             }
         }

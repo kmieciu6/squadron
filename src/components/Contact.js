@@ -141,7 +141,7 @@ const Contact = () => {
                 />
                 {errors.message && <span className="error">{errors.message}</span>}
 
-                <div className="consent_checkbox">
+                <div className="checkbox_container">
                     <label htmlFor="consent" className="checkbox">
                         <input
                             type="checkbox"
@@ -150,9 +150,10 @@ const Contact = () => {
                             checked={formData.consent}
                             onChange={handleChange}
                         />
-                        <span>
+                        <span className="checkmark"/>
+                        <p>
                             {getTranslation('consent_text', currentLanguage)}
-                        </span>
+                        </p>
                     </label>
                     {errors.consent && <span className="error">{errors.consent}</span>}
                 </div>
