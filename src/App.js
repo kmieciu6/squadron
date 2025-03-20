@@ -8,7 +8,6 @@ import Home from './components/Home';
 import NotFoundPage from './components/NotFoundPage';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import About from './components/About';
-import Contact from './components/Contact';
 import ScrollToTop from "./components/header/ScrollToTop";
 import { LanguageProvider } from "./components/translations/LanguageContext";
 
@@ -69,14 +68,14 @@ function App() {
                         </PageLoader>
                     )}
                     />
-                    <Route
-                    path="/contact"
+                    {/* <Route
+                    path="/"
                     element={(
                         <PageLoader>
-                            <Contact />
+                            < />
                         </PageLoader>
                     )}
-                    />
+                    /> */}
                     <Route
                     path="/privacy_policy"
                     element={(

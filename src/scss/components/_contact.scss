@@ -2,29 +2,44 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 30%;
+    width: 40%;
 
     @include mobile {
-        width: 90%;
+        width: 80%;
+        align-items: center;
+        margin-top: 2rem;
+        border-top: 2px solid $main-color;
+    }
+    
+    @include mobile {
+        justify-content: center;
     }
 
     h2 {
-        color: $white-color;
+        color: $white-color !important;
+
+        @include mobile {
+            margin-top: 2rem;
+        }
     }
 
     .form {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        // align-items: center;
+        width: 40%;
+        min-width: 180px;
 
         label {
+            margin-top: 1.5rem;
+
             p {
-                color: $white-color;
+                color: $white-color !important;
             }
         }
         
         .success {
-            color: green;
+            color: rgb(0, 165, 0);
         }
 
         .error {
@@ -32,12 +47,61 @@
         }
 
         .input {
-            width: 200px;
+            width: 100%;
+            background: #D9D9D9;
+            border: none;
+            padding: 0.5rem;
         }
 
         textarea {
             resize: none;
             overflow: hidden;
+        }
+
+        .consent_checkbox {
+            // text-align: justify;
+
+            label {
+                cursor: pointer;
+            }
+
+            .checkbox {
+                display: flex;
+                align-items: start;
+                color: $white-color;
+                
+                input {
+                    margin: 0.3rem 0.3rem 0 0;
+                    accent-color: $main-color;
+                }
+            }
+        }
+
+        .button {
+            display: flex;
+            justify-content: center;
+            
+            button {
+                margin: 1rem 0; 
+                background: $main-color;
+                padding: 0.2rem 2rem;
+                color: $white-color;
+                border: none;
+                width: 100%;
+                max-width: 150px;
+                align-items: center;
+                transition: 0.5s;
+                
+                @include desktop {
+                    &:hover {
+                        background: $accent-color;
+                    }
+                }
+                
+                &:active {
+                    background: $accent-color;
+                }
+            }
         }
     }
 }

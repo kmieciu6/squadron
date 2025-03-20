@@ -102,7 +102,6 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
                 <div className="logo">
                     <NavLink to="/"> 
                         <img src={logo} alt="Logo" />
-                        {/* <h1>Logo</h1> */}
                     </NavLink>
                 </div>
                 <div className="bookmarks">
@@ -118,7 +117,15 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
                         <div className={`nav-links ${isBurgerMenuOpen ? "open" : ""}`}>
                             <NavLink to="/">{getTranslation('main_page', currentLanguage)}</NavLink>
                             <NavLink to="/about">{getTranslation('about', currentLanguage)}</NavLink>
-                            <NavLink to="/contact">{getTranslation('contact', currentLanguage)}</NavLink>
+                            <a 
+                                href="#footer" 
+                                onClick={(e) => {
+                                e.preventDefault();
+                                document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                            >
+                                {getTranslation('contact', currentLanguage)}
+                            </a>
                             <NavDropdown
                                 id="nav-dropdown-dark-example"
                                 title={getTranslation('language', currentLanguage)}

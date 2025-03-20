@@ -1,5 +1,7 @@
 {
   "about": "Über uns",
+  "consent": "Sie müssen der Verarbeitung Ihrer personenbezogenen Daten zustimmen.",
+  "consent_text": "Ich stimme der Verarbeitung personenbezogener Daten zu.",
   "contact": "Kontakt",
   "cookie1": "Die Website verwendet Cookies, um die Zugänglichkeit und Personalisierung zu verbessern und Daten über den Website-Verkehr zu sammeln. Jeder kann selbst entscheiden, ob er Cookies zulässt, indem er seinen Browser entsprechend einstellt.",
   "cookie2": "Weitere Informationen finden Sie in den ",

@@ -8,23 +8,24 @@ const Contact = () => {
         name: '',
         email: '',
         phone: '',
-        message: ''
+        message: '',
+        consent: false
     });
 
     const [errors, setError] = useState({});
     const [submitted, setSubmitted] = useState(false);
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
+        const {name, value, checked, type} = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: type === 'checkbox' ? checked : value
+        }));
         if (submitted) {
-            setError({
-                ...errors,
+            setError((prevErrors) => ({
+                ...prevErrors,
                 [name]: ''
-            });
+            }));
         }
     };
 
@@ -39,7 +40,8 @@ const Contact = () => {
                 name: '',
                 email: '',
                 phone: '',
-                message: ''
+                message: '',
+                consent: false
             });
         } else {
             setError(errors);
@@ -63,6 +65,9 @@ const Contact = () => {
         } else if (!isValidEmail(data.email)) {
             errors.email = getTranslation('invalid_email', currentLanguage);
         }
+        if (!data.consent) {
+            errors.consent = getTranslation('consent', currentLanguage);
+        }
         return errors;
     };
 
@@ -76,27 +81,85 @@ const Contact = () => {
             <h2>
                 {getTranslation("write_to_us", currentLanguage)}
             </h2>
-            <form autoComplete="on" onSubmit={handleSubmit} noValidate className="form">
+            <form 
+                autoComplete="on" 
+                onSubmit={handleSubmit} 
+                noValidate 
+                className="form"
+            >
                 <label htmlFor="name">
                     <p>{getTranslation('name', currentLanguage)}</p>
                 </label>
-                <input type="text" id="name" name="name" className="input" autoComplete="name" value={formData.name} onChange={handleChange}/>
+                <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    className="input" 
+                    autoComplete="name" 
+                    value={formData.name} 
+                    onChange={handleChange}
+                />
                 {errors.name && <span className="error">{errors.name}</span>}
+
                 <label htmlFor="email">
                     <p>{getTranslation('email', currentLanguage)}</p>
                 </label>
-                <input type="email" id="email" name="email" className="input" autoComplete="email" value={formData.email} onChange={handleChange}/>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    className="input" 
+                    autoComplete="email" 
+                    value={formData.email} 
+                    onChange={handleChange}
+                />
                 {errors.email && <span className="error">{errors.email}</span>}
+
                 <label htmlFor="phone">
                     <p>{getTranslation('phone', currentLanguage)}</p>
                 </label>
-                <input type="tel" id="phone" name="phone" className="input" autoComplete="tel" value={formData.phone} onChange={handleChange}/>
+                <input 
+                    type="tel" 
+                    id="phone" 
+                    name="phone" 
+                    className="input" 
+                    autoComplete="tel" 
+                    value={formData.phone} 
+                    onChange={handleChange}
+                />
+
                 <label htmlFor="message">
                     <p>{getTranslation('message', currentLanguage)}</p>
                 </label>
-                <textarea id="message" name="message" className="input" value={formData.message} onChange={handleChange} rows={4}/>
+                <textarea 
+                    id="message" 
+                    name="message" 
+                    className="input" 
+                    value={formData.message} 
+                    onChange={handleChange} 
+                    rows={4}
+                />
                 {errors.message && <span className="error">{errors.message}</span>}
-                <button type='submit'>{getTranslation('send', currentLanguage)}</button>
+
+                <div className="consent_checkbox">
+                    <label htmlFor="consent" className="checkbox">
+                        <input
+                            type="checkbox"
+                            id="consent"
+                            name="consent"
+                            checked={formData.consent}
+                            onChange={handleChange}
+                        />
+                        <span>
+                            {getTranslation('consent_text', currentLanguage)}
+                        </span>
+                    </label>
+                    {errors.consent && <span className="error">{errors.consent}</span>}
+                </div>
+
+                <div className="button">
+                    <button type='submit'>{getTranslation('send', currentLanguage)}</button>
+                </div>
                 {submitted && Object.keys(errors).length === 0 && (
                     <p className="success">{getTranslation('form_submitted_successfully', currentLanguage)}</p>
                 )}
