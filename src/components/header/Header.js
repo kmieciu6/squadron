@@ -79,6 +79,10 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
         }
     };
 
+    const handleMenuItemClick = () => {
+        setBurgerMenuOpen(false);
+    };      
+
     useEffect(() => {
         const handleResize = () => {
 
@@ -115,30 +119,56 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
                             <div className="burger-line"></div>
                         </div>
                         <div className={`nav-links ${isBurgerMenuOpen ? "open" : ""}`}>
-                            <NavLink to="/">{getTranslation('main_page', currentLanguage)}</NavLink>
-                            <NavLink to="/about">{getTranslation('about', currentLanguage)}</NavLink>
+                            <NavLink to="/" onClick={handleMenuItemClick}>{getTranslation('main_page', currentLanguage)}</NavLink>
+                            <NavLink to="/about" onClick={handleMenuItemClick}>{getTranslation('about', currentLanguage)}</NavLink>
                             <a 
                                 href="#footer" 
                                 onClick={(e) => {
                                 e.preventDefault();
                                 document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' });
+                                handleMenuItemClick();
                             }}
                             >
                                 {getTranslation('contact', currentLanguage)}
                             </a>
                             <NavDropdown
                                 id="nav-dropdown-dark-example"
-                                title={getTranslation('language', currentLanguage)}
+                                title={
+                                    currentLanguage === 'pl' ? 'PL' :
+                                    currentLanguage === 'en' ? 'EN' :
+                                    currentLanguage === 'de' ? 'DE' :
+                                    "Language"
+                                }
                                 menuVariant="dark"
                                 className="nav_dropdown language-dropdown"
+                                renderMenuOnMount
+                                rootCloseEvent="click"
                                 >
-                                <NavDropdown.Item onClick={() => changeLanguage('pl')} className="nav_dropdown_button">
+                                <NavDropdown.Item 
+                                    onClick={() => {
+                                        changeLanguage('pl');
+                                        handleMenuItemClick();
+                                    }}
+                                    className="nav_dropdown_button"
+                                >
                                     {getTranslation('polish', currentLanguage)} <img src={flag_poland} className="flag" alt="polski"/>
                                 </NavDropdown.Item>
-                                <NavDropdown.Item onClick={() => changeLanguage('en')}className="nav_dropdown_button">
+                                <NavDropdown.Item 
+                                    onClick={() => {
+                                        changeLanguage('en');
+                                        handleMenuItemClick();
+                                    }}
+                                    className="nav_dropdown_button"
+                                >
                                     {getTranslation('english', currentLanguage)} <img src={flag_england} className="flag" alt="english"/>
                                 </NavDropdown.Item>
-                                <NavDropdown.Item onClick={() => changeLanguage('de')}className="nav_dropdown_button">
+                                <NavDropdown.Item 
+                                    onClick={() => { 
+                                        changeLanguage('de');
+                                        handleMenuItemClick();
+                                    }}
+                                    className="nav_dropdown_button"
+                                >
                                     {getTranslation('german', currentLanguage)} <img src={flag_germany} className="flag" alt="deutsch"/>
                                 </NavDropdown.Item>
                             </NavDropdown>

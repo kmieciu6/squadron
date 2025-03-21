@@ -50,3 +50,15 @@ p {
         font-size: 1rem;
     }
 }
+
+a:focus,
+button:focus,
+.nav-link:focus,
+.nav_dropdown_button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+::-moz-focus-inner {
+  border: 0;
+}

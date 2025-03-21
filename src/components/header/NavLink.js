@@ -1,17 +1,22 @@
 import { Link, useLocation } from "react-router-dom";
 
-const NavLink = ({ to, children }) => {
+const NavLink = ({ to, children, ...props }) => {
   const location = useLocation();
 
   const handleClick = (event) => {
+    // Jeżeli jesteśmy już na danej ścieżce, przewiń stronę do góry
     if (location.pathname === to) {
-      event.preventDefault(); // Zatrzymuje przeładowanie, jeśli już jesteśmy na stronie
+      event.preventDefault();
       window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    // Jeżeli przekazano dodatkowy onClick, wywołaj go
+    if (props.onClick) {
+      props.onClick(event);
     }
   };
 
   return (
-    <Link to={to} onClick={handleClick}>
+    <Link to={to} {...props} onClick={handleClick}>
       {children}
     </Link>
   );

@@ -1,5 +1,11 @@
 .contact {
     width: 40%;
+
+    @include mobile {
+        margin-top: 2rem;
+        width: 80%;
+        border-top: 2px solid $main-color;
+    }
     
     .contact_container {
         display: flex;
@@ -9,8 +15,7 @@
         @include mobile {
             width: 80%;
             align-items: center;
-            margin-top: 2rem;
-            border-top: 2px solid $main-color;
+            margin: auto;
         }
         
         @include mobile {
