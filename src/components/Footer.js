@@ -26,7 +26,7 @@ const Footer = () => {
         // Konfiguracja IntersectionObserver
         const observerOptions = {
         root: null,
-        threshold: 0.1, // Gdy 10% elementu jest widoczne
+        threshold: 0.6, // Gdy 60% elementu jest widoczne
         };
 
         const infoObserver = new IntersectionObserver((entries) => {

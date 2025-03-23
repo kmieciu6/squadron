@@ -1,5 +1,6 @@
 {
-  "about": "Über uns",
+  "about": "Treffen Squadron",
+  "areas": "Einsatzgebiete",
   "consent": "Sie müssen der Verarbeitung Ihrer personenbezogenen Daten zustimmen.",
   "consent_text": "Ich stimme der Verarbeitung personenbezogener Daten zu.",
   "contact": "Kontakt",
@@ -18,6 +19,7 @@
   "message": "Nachricht",
   "must_contain_two_letters": "Das Feld muss mindestens zwei Buchstaben enthalten",
   "name": "Name",
+  "news": "Nachricht",
   "not_found_page": "Hoppla! Es sieht so aus, als hättest du dich im digitalen Dschungel verlaufen. Leider hat diese Seite gerade frei und ist im Moment schwer zu finden. Versuche, zur Startseite zurückzukehren oder die Navigation zu nutzen – bevor du in ein weiteres 404-Abenteuer stolperst!",
   "phone": "Telefon",
   "polish": "Polieren",

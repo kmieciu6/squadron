@@ -10,6 +10,8 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import About from './components/About';
 import ScrollToTop from "./components/header/ScrollToTop";
 import { LanguageProvider } from "./components/translations/LanguageContext";
+import Areas from "./components/Areas";
+import News from "./components/News";
 
 function App() {
     // Ustawiamy w stanie to, co mamy w localStorage lub domyślnie 'system'
@@ -68,14 +70,22 @@ function App() {
                         </PageLoader>
                     )}
                     />
-                    {/* <Route
-                    path="/"
+                    <Route
+                    path="/areas"
                     element={(
                         <PageLoader>
-                            < />
+                            <Areas />
                         </PageLoader>
                     )}
-                    /> */}
+                    />
+                    <Route
+                    path="/news"
+                    element={(
+                        <PageLoader>
+                            <News />
+                        </PageLoader>
+                    )}
+                    />
                     <Route
                     path="/privacy_policy"
                     element={(

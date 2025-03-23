@@ -1,5 +1,6 @@
 {
-  "about": "About",
+  "about": "Meet Squadron",
+  "areas": "Areas of Operations",
   "consent": "You must consent to the processing of personal data.",
   "consent_text": "I consent to the processing of personal data.",
   "contact": "Contact",
@@ -18,6 +19,7 @@
   "message": "Message",
   "must_contain_two_letters": "The field must contain at least two letters",
   "name": "Name",
+  "news": "News",
   "not_found_page": "Oops! It looks like you’ve gotten lost in the digital jungle. Unfortunately, this page has taken some time off and is currently hard to track down. Try heading back to the homepage or using the navigation—before you stumble into another 404 adventure!",
   "phone": "Phone",
   "polish": "polish",

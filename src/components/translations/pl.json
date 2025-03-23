@@ -1,5 +1,6 @@
 {
-  "about": "O nas",
+  "about": "Poznaj Squadron",
+  "areas": "Obszary Działalności",
   "consent": "Musisz wyrazić zgodę na przetwarzanie danych osobowych.",
   "consent_text": "Wyrażam zgodę na przetwarzanie danych osobowych.",
   "contact": "Kontakt",
@@ -18,6 +19,7 @@
   "message": "Wiadomość",
   "must_contain_two_letters": "Pole musi zawierać co najmniej dwa znaki",
   "name": "Imię",
+  "news": "Aktualności",
   "not_found_page": "Ups! Wygląda na to, że zabłądziłeś w cyfrowym gąszczu. Niestety ta strona wzięła sobie wolne i aktualnie trudno ją namierzyć. Spróbuj cofnąć się na stronę główną albo skorzystaj z nawigacji – zanim wpadniesz w kolejną 404-kową przygodę!",
   "phone": "Telefon",
   "polish": "polski",

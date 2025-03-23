@@ -13,21 +13,22 @@ import { faSun, faMoon, faA } from "@fortawesome/free-solid-svg-icons";
 
 const Header = ({ onThemeChange, currentTheme }) => {
     const [dynamicVisible, setDynamicVisible] = useState(false); // Widoczność dynamicznego headera
+    const staticHeaderRef = useRef(null);
     const lastScrollY = useRef(0); // Ostatnia pozycja scrolla
-    const threshold = 20; // Próg w pikselach
     const scrollTimeout = useRef(null); // Opóźnienie reakcji na przewijanie
 
     const handleScroll = () => {
         const currentScrollY = window.scrollY;
+        const staticHeaderHeight = staticHeaderRef.current ? staticHeaderRef.current.offsetHeight : 0;
 
         if (scrollTimeout.current) {
             clearTimeout(scrollTimeout.current);
         }
         
         scrollTimeout.current = setTimeout(() => {
-            if (currentScrollY > threshold && currentScrollY < lastScrollY.current) {
+            if (currentScrollY > staticHeaderHeight  && currentScrollY < lastScrollY.current) {
                 setDynamicVisible(true); // Przewijanie w górę
-            } else if (currentScrollY > threshold && currentScrollY > lastScrollY.current) {
+            } else {
                 setDynamicVisible(false); // Przewijanie w dół
             }
 
@@ -47,11 +48,13 @@ const Header = ({ onThemeChange, currentTheme }) => {
     return (
         <>
             {/* Statyczny header */}
-            <HeaderContent 
-                className="header static-header" 
-                onThemeChange={onThemeChange}
-                currentTheme={currentTheme}
-            />
+            <div ref={staticHeaderRef}>
+                <HeaderContent 
+                    className="header static-header" 
+                    onThemeChange={onThemeChange}
+                    currentTheme={currentTheme}
+                />
+            </div>
 
             {/* Dynamiczny header */}
             <HeaderContent
@@ -121,6 +124,8 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
                         <div className={`nav-links ${isBurgerMenuOpen ? "open" : ""}`}>
                             <NavLink to="/" onClick={handleMenuItemClick}>{getTranslation('main_page', currentLanguage)}</NavLink>
                             <NavLink to="/about" onClick={handleMenuItemClick}>{getTranslation('about', currentLanguage)}</NavLink>
+                            <NavLink to="/areas" onClick={handleMenuItemClick}>{getTranslation('areas', currentLanguage)}</NavLink>
+                            <NavLink to="/news" onClick={handleMenuItemClick}>{getTranslation('news', currentLanguage)}</NavLink>
                             <a 
                                 href="#footer" 
                                 onClick={(e) => {
