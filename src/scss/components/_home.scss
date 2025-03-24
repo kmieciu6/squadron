@@ -1,3 +1,17 @@
+.dark-theme {
+    .text1_background,
+    .text2_background {
+        background-color: $main-color2;
+    }
+}
+
+.light-theme {
+    .text1_background,
+    .text2_background {
+        background-color: $main-color3;
+    }
+}
+
 .home {
     display: flex;
 
@@ -55,13 +69,9 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        align-items: center;
+        // align-items: center;
         opacity: 1;
         transition: opacity 1.5s ease 0.2s;
-        
-        @include mobile-tablet {
-            padding-top: 2rem;
-        }
 
         &.hidden {
             opacity: 0;
@@ -71,26 +81,18 @@
             max-width: 90%;
 
             @include desktop {
-                max-width: 800px;
+                max-width: 1500px;
             }
         }
 
-        div {
-
-            p {
-                text-align: justify;
-            }
-
-            h2 {
-                text-align: center;
-            }
+        p {
+            text-align: justify;
         }
 
-        .text_background {
+        .text1_background {
             width: 100%;
-            height: 50vh;
+            height: 80vh;
             background-image: url("../../assets/background.png");
-            background-color: white;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -101,109 +103,186 @@
             z-index: 1;
 
             @include desktop {
-                padding: 5rem 0;
+                padding: 5rem auto;
             }
+            
+            .text1 {
+                align-items: center;
+                width: 80%;
 
-            .text1 {    
-                
-                p {
-                    padding: 2rem;
-                    border-radius: 100px 5px;
-                    background-color: rgba(0, 0, 0, 0.3);
-                    color: white;
+                @include desktop {
+                    width: 100%;
+                    padding: 0 5rem;
+                }
+
+                .text1_container {
+                    display: flex;
+                    flex-direction: column;
+                    justify-items: center;
+                    
+                    @include desktop {
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: space-between;
+                        
+                        h1 {
+                            text-align: left;
+                            width: 40%;
+                            text-transform: uppercase;
+                        }
+                        
+                        div {
+                            width: 50%;         
+                        }
+                    }
+
+                    h1 {
+                        margin-bottom: 3rem;
+                        font-family: $font-teko;
+                        font-weight: bold;
+                        text-align: center;
+                    }
+
+                    div {
+                        justify-items: end;
+                    }
+
+                    p:first-of-type {
+                        font-weight: 500;
+                    }
+
+                    p:last-of-type {
+                        margin-bottom: 3rem;
+                    }
+
+                    .read_more_button {
+                        border: none;
+                        border-bottom: 2px solid $main-color;
+                        padding: 0.5rem 1rem;
+                        background: none;
+                        text-decoration: none;
+                    }
                 }
             }
         }
 
-        .text2 {
-            display: flex;
-            flex-direction: column;
+        .text2_background {
             width: 100%;
-            justify-content: space-between;
-            align-items: center; 
-            margin: 1rem 0;
-
-            .image_container {
-                position: relative;
-                display: flex;
-                justify-content: center;
-
-                &:hover img {
-                    filter: brightness(60%); /* Przyciemniamy obrazek */
-                }
-
-                &:hover .text_overlay {
-                    opacity: 1;             /* Pokazujemy overlay z tekstem */
-                }
-            }
-
-            img {
-                width: 100%;
-                display: block;
-                height: auto;
-                transition: filter 0.3s ease;
-            }
-
-            .text_overlay {
-                position: absolute;
-                z-index: 1;
-                top: 0;
-                left: 0;
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: rgba(0, 0, 0, 0.4);
-                opacity: 0;
-                transition: opacity 0.3s ease;
-            }
-
-            h4 {
-                text-align: center;
-                color: white;
-            }
-
-            p {
-                width: 100%;
-            }
-
+            display: flex;
+            justify-content: center;
+            padding: 3rem 0;
+            // border: 1px solid red;
+            
             @include desktop {
-                flex-direction: row;
-                margin: 10rem 0;
+                padding: 5rem 0;
+            }
 
-                .image_container {
-                    width: 60%;
+            .text2 {
+                width: 100%;
+                height: auto;
+                
+                
+                h1 {
+                    font-family: $font-teko;
+                    font-weight: bold;
+                    text-align: left;
+                    margin-bottom: 2rem;
                 }
 
-                .text_overlay {
-                    top: 40%;
-                }
+                .images_container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    margin: auto;
+                    flex-wrap: wrap;
+                    max-width: 1200px;
+                    
+                    @include mobile {
+                        flex-direction: column;
+                    }
+                    
+                    @include desktop {
+                        justify-content: space-between;
+                    }
+        
+                    .image {
+                        position: relative;
+                        width: 100%;
+                        max-width: 300px;  // Maksymalna szerokość, aby były podłużne
+                        height: 800px;     // Stała wysokość zapewnia pionowy kształt
+                        overflow: hidden;
+                        border-radius: 8px; // opcjonalnie dla estetyki
+                        margin: 1rem;
+        
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover; // zachowuje proporcje zdjęć
+                            display: block;
+                        }
+        
+                        .text_overlay {
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            width: 100%;
+                            background: rgba(0,0,0,0.5);
+                            padding: 3rem;
+                            box-sizing: border-box;
+                            
+                            h3 {
+                                margin-top: 0;
+                                margin-bottom: 0.5rem;
+                                color: white;
+                            }
+                            
+                            p {
+                                font-size: 0.9rem;
+                                margin: 2rem 0;
+                                color: white;
+                            }
+        
+                            button {
+                                padding: 0.5rem 1rem;
+                                background: none;
+                                color: $white-color;
+                                border: 2px solid $white-color;
+                                cursor: pointer;
+                                border-radius: 50px;
+                                transition: opacity 0.2s;
+                                width: 100%;
+                                transition: 0.5s;
 
-                img {
-                    // width: 55%;
-                }
-    
-                p {
-                    width: 40%;
-                    margin-left: 2rem;
+                                 @include desktop {
+                                    &:hover {
+                                        // opacity: 0.8;
+                                        color: $main-color;
+                                        border: 2px solid $main-color;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
 
         .text3 {
-            margin: 1rem 0;
-
+            margin: 1rem auto;
+            align-items: center;
+            
             @include desktop {
                 margin-bottom: 5rem;
             }
         }
-
+        
         .text4 {
-            max-width: 1500px;
-            margin: 1rem 0;
+            align-items: center;
+            margin: 1rem auto;
 
             @include desktop {
-                margin: 5rem 0;
+                margin: 5rem auto;
             }
 
             .carousel {
@@ -320,10 +399,11 @@
         }
         
         .text5 {
-            margin: 1rem 0;
+            margin: 1rem auto;
+            align-items: center;
 
             @include desktop {
-                margin: 5rem 0;
+                margin: 5rem auto;
             }
         }
     }
