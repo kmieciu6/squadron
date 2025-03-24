@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 
-export default function useIntersectionHide(desktopOptions = { threshold: 0.8, rootMargin: "100px" }, mobileOptions = { threshold: 0.2, rootMargin: "0px" }) {
+export default function useIntersectionHide(desktopOptions = { threshold: 0.2, rootMargin: "100px" }, mobileOptions = { threshold: 0.2, rootMargin: "0px" }) {
     const ref = useRef(null);
     const [isHidden, setIsHidden] = useState(true);
 
