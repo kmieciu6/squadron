@@ -313,7 +313,7 @@
             padding: 3rem 0;
 
             .text3 {
-                margin: 1rem auto;
+                margin: 2rem auto;
                 align-items: center;
                 
                 @include desktop {
@@ -354,23 +354,33 @@
                     display: flex;
                     flex-direction: column;
                     padding-top: 1rem;
+                    justify-content: space-between;
+                    align-items: center;
                     
                     div {
-                        padding: 2rem 0;
+                        padding: 1rem 0;
                     }
                     
                     @include desktop {
                         padding-top: 2rem;
                         flex-direction: row;
                         
+                        div {
+                            padding: 3rem 0;
+                        }
+
                         div:first-of-type {
-                            padding: 2rem 1rem 2rem 0;
+                            width: 40%;
                         }
                         
                         div:last-of-type {
-                            padding: 2rem 0 2rem 1rem 
+                            width: 40%;
                         }
                     }
+                }
+
+                .text3_box_image {
+                    padding-top: 1rem;
                 }
             }
         }

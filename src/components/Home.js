@@ -16,7 +16,7 @@ import { NavLink } from 'react-router-dom';
 
 const Home = () => {
     const { currentLanguage } = useLanguage();
-    const [titleRef, isTitleHidden] = useIntersectionHide({ threshold: 0.8, rootMargin: "0px 0px -200px 0px" });
+    const [titleRef, isTitleHidden] = useIntersectionHide();
     const [sec1Ref, isSec1Hidden] = useIntersectionHide();
     const [sec2Ref, isSec2Hidden] = useIntersectionHide();
     const [sec3Ref, isSec3Hidden] = useIntersectionHide();
