@@ -311,6 +311,10 @@
             display: flex;
             justify-content: center;
             padding: 3rem 0;
+            
+            @include desktop {
+                padding: 3rem 2rem;
+            }
 
             .text3 {
                 margin: 2rem auto;
@@ -348,6 +352,17 @@
                     border-bottom: 1px solid $main-color;
                     font-size: large;
                     font-weight: 500;
+                    transition: 0.5s;
+
+                    &:active {
+                        background: $accent-color;
+                    }
+
+                    @include desktop {
+                        &:hover {
+                            background: $accent-color;
+                        }
+                    }
                 }
 
                 .text3_images_container {
