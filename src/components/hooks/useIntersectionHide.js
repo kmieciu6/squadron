@@ -1,27 +1,30 @@
 import { useRef, useState, useEffect } from 'react';
 
-export default function useIntersectionHide(options = { threshold: 0.8, rootMargin: "100px" }) {
-  const ref = useRef(null);
-  const [isHidden, setIsHidden] = useState(true);
+export default function useIntersectionHide(desktopOptions = { threshold: 0.8, rootMargin: "100px" }, mobileOptions = { threshold: 0.2, rootMargin: "0px" }) {
+    const ref = useRef(null);
+    const [isHidden, setIsHidden] = useState(true);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach((entry) => {
-        // console.log("Observed:", entry.target, "isIntersecting:", entry.isIntersecting); // Debug
-        if (entry.isIntersecting) {
-          setIsHidden(false);
-          obs.unobserve(entry.target);
-        }
-      });
-    }, options);
+    useEffect(() => {
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+        const observerOptions = isMobile ? mobileOptions : desktopOptions;
 
-    const el = ref.current;
-    if (el) observer.observe(el);
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach((entry) => {
+              // console.log("Observed:", entry.target, "isIntersecting:", entry.isIntersecting); // Debug
+                if (entry.isIntersecting) {
+                    setIsHidden(false);
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
 
-    return () => {
-      if (el) observer.unobserve(el);
-    };
-  }, [options]);
+        const el = ref.current;
+        if (el) observer.observe(el);
 
-  return [ref, isHidden];
+        return () => {
+            if (el) observer.unobserve(el);
+        };
+    }, [desktopOptions, mobileOptions]);
+
+    return [ref, isHidden];
 }
