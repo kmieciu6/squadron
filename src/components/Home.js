@@ -75,7 +75,6 @@ const Home = () => {
         </div>
 
         <div className="text text_container">
-
             <div className='text1_background'>
                 <div ref={sec1Ref} className={`text text1 text_width ${isSec1Hidden ? 'hidden' : ''}`}>
                     <div className='text1_container'>
@@ -84,10 +83,10 @@ const Home = () => {
                         </h1>
                         <div>
                             <p>
-                                {getTranslation("home_tex1.1", currentLanguage)}
+                                {getTranslation("home_text1.1", currentLanguage)}
                             </p>
                             <p>
-                                {getTranslation("home_tex1.2", currentLanguage)}
+                                {getTranslation("home_text1.2", currentLanguage)}
                             </p>
                             <NavLink to="/about" className="read_more_button">
                                 {getTranslation("read_more_about", currentLanguage) } 
@@ -119,9 +118,11 @@ const Home = () => {
                                     nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
                                     consequat Lorem nulla nostrud.
                                 </p>
-                                <button>
-                                    {getTranslation("more", currentLanguage)}
-                                </button>
+                                <NavLink to="/uav">
+                                    <button>
+                                        {getTranslation("more", currentLanguage)}
+                                    </button>
+                                </NavLink>
                             </div>                    
                         </div>
                         <div className='image'>
@@ -139,9 +140,11 @@ const Home = () => {
                                     nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
                                     consequat Lorem nulla nostrud.
                                 </p>
-                                <button>
-                                    {getTranslation("more", currentLanguage)}
-                                </button>
+                                <NavLink to="/offshore">
+                                    <button>
+                                        {getTranslation("more", currentLanguage)}
+                                    </button>
+                                </NavLink>
                             </div>         
                         </div>
                         <div className='image'>
@@ -159,9 +162,11 @@ const Home = () => {
                                     nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
                                     consequat Lorem nulla nostrud.
                                 </p>
-                                <button>
-                                    {getTranslation("more", currentLanguage)}
-                                </button>
+                                <NavLink to="/soft">
+                                    <button>
+                                        {getTranslation("more", currentLanguage)}
+                                    </button>
+                                </NavLink>
                             </div>         
                         </div>
                     </div>

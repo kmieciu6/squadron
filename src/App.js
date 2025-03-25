@@ -12,6 +12,9 @@ import ScrollToTop from "./components/header/ScrollToTop";
 import { LanguageProvider } from "./components/translations/LanguageContext";
 import Areas from "./components/Areas";
 import News from "./components/News";
+import Uav from "./components/Uav";
+import OffshoreExpertise from "./components/OffshoreExpertise";
+import Soft from "./components/Soft";
 
 function App() {
     // Ustawiamy w stanie to, co mamy w localStorage lub domyślnie 'system'
@@ -54,53 +57,77 @@ function App() {
                 <ScrollToTop />
                 <Routes>
                     <Route
-                    path="/"
-                    index
-                    element={(
-                        <PageLoader>
-                            <Home />
-                        </PageLoader>
-                    )}
+                        path="/"
+                        index
+                        element={(
+                            <PageLoader>
+                                <Home />
+                            </PageLoader>
+                        )}
                     />
                     <Route
-                    path="/about"
-                    element={(
-                        <PageLoader>
-                            <About />
-                        </PageLoader>
-                    )}
+                        path="/about"
+                        element={(
+                            <PageLoader>
+                                <About />
+                            </PageLoader>
+                        )}
                     />
                     <Route
-                    path="/areas"
-                    element={(
-                        <PageLoader>
-                            <Areas />
-                        </PageLoader>
-                    )}
+                        path="/areas"
+                        element={(
+                            <PageLoader>
+                                <Areas />
+                            </PageLoader>
+                        )}
                     />
                     <Route
-                    path="/news"
-                    element={(
-                        <PageLoader>
-                            <News />
-                        </PageLoader>
-                    )}
+                        path="/news"
+                        element={(
+                            <PageLoader>
+                                <News />
+                            </PageLoader>
+                        )}
                     />
                     <Route
-                    path="/privacy_policy"
-                    element={(
-                        <PageLoader>
-                            <PrivacyPolicy />
-                        </PageLoader>
-                    )}
+                        path="/uav"
+                        element={(
+                            <PageLoader>
+                                <Uav />
+                            </PageLoader>
+                        )}
                     />
                     <Route
-                    path="*"
-                    element={(
-                        <PageLoader>
-                            <NotFoundPage />
-                        </PageLoader>
-                    )}
+                        path="/offshore"
+                        element={(
+                            <PageLoader>
+                                <OffshoreExpertise />
+                            </PageLoader>
+                        )}
+                    />
+                    <Route
+                        path="/soft"
+                        element={(
+                            <PageLoader>
+                                <Soft />
+                            </PageLoader>
+                        )}
+                    />
+                    <Route
+                        path="/privacy_policy"
+                        element={(
+                            <PageLoader>
+                                <PrivacyPolicy />
+                            </PageLoader>
+                        )}
+                    />
+                    <Route
+                        path="*"
+                        element={(
+                            <PageLoader>
+                                <NotFoundPage />
+                            </PageLoader>
+                        )}
                     />
                 </Routes>
                 <Footer />

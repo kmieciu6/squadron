@@ -1,0 +1,22 @@
+.uav_section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .opening {
+        width: 100%;
+
+        img {
+            width: 100%;
+            height: auto;
+            
+            @include desktop {
+                max-height: 94vh;
+            }
+        }
+    }
+
+    .text1_container {
+        flex-direction: column-reverse !important;
+    }
+}
