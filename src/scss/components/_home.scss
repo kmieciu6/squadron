@@ -28,9 +28,14 @@
         z-index: -1;
 
         img {
+            display: block;
             width: 100%;
-            // object-fit: contain;
-            max-height: 94vh;
+            height: auto;
+            
+            @include desktop {
+                object-fit: cover;
+                height: 100vh;
+            }
         }
 
         h1 {
@@ -255,7 +260,7 @@
                         left: 0;
                         width: 100%;
                         background: rgba(0,0,0,0.5);
-                        padding: 3rem;
+                        padding: 3rem 2rem;
                         box-sizing: border-box;
                         
                         @include mobile-tablet {

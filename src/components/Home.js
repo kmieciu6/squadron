@@ -97,7 +97,7 @@ const Home = () => {
                 </div>
             </div>
 
-            <div className='text2_background'>
+            <div className='text2_background' id='areas'>
                 <div ref={sec2Ref} className={`text text2 text_width ${isSec2Hidden ? 'hidden' : ''}`}>
                     <h1>
                         {getTranslation("areas", currentLanguage)}    
@@ -173,7 +173,7 @@ const Home = () => {
                 </div>
             </div>
 
-            <div className='text3_background'>
+            <div className='text3_background' id='news'>
                 <div ref={sec3Ref} className={`text text3 text_width ${isSec3Hidden ? 'hidden' : ''}`}>
                     <h1>
                         {getTranslation("news_text", currentLanguage)}

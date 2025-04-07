@@ -10,6 +10,7 @@ import logo from '../../assets/logo.png'
 import { NavDropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon, faA } from "@fortawesome/free-solid-svg-icons";
+import { HashLink } from 'react-router-hash-link';
 
 const Header = ({ onThemeChange, currentTheme }) => {
     const [dynamicVisible, setDynamicVisible] = useState(false); // Widoczność dynamicznego headera
@@ -122,10 +123,30 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
                             <div className="burger-line"></div>
                         </div>
                         <div className={`nav-links ${isBurgerMenuOpen ? "open" : ""}`}>
-                            <NavLink to="/" onClick={handleMenuItemClick}>{getTranslation('main_page', currentLanguage)}</NavLink>
-                            <NavLink to="/about" onClick={handleMenuItemClick}>{getTranslation('about', currentLanguage)}</NavLink>
-                            <NavLink to="/areas" onClick={handleMenuItemClick}>{getTranslation('areas', currentLanguage)}</NavLink>
-                            <NavLink to="/news" onClick={handleMenuItemClick}>{getTranslation('news', currentLanguage)}</NavLink>
+                            <NavLink 
+                                to="/" 
+                                onClick={handleMenuItemClick}
+                            >
+                                {getTranslation('main_page', currentLanguage)}
+                            </NavLink>
+                            <NavLink 
+                                to="/about" 
+                                onClick={handleMenuItemClick}
+                            >
+                                {getTranslation('about', currentLanguage)}
+                            </NavLink>
+                            <HashLink 
+                                smooth to="/#areas" 
+                                onClick={handleMenuItemClick}
+                            >
+                                {getTranslation('areas', currentLanguage)}
+                            </HashLink>
+                            <HashLink 
+                                smooth to="/#news" 
+                                onClick={handleMenuItemClick}
+                            >
+                                {getTranslation('news', currentLanguage)}
+                            </HashLink>
                             <a 
                                 href="#footer" 
                                 onClick={(e) => {

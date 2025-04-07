@@ -14,11 +14,17 @@ const Uav = () => {
                     src={opening_photo}
                     alt="opening"
                 />      
+                <h1>
+                    {getTranslation("uav", currentLanguage)}
+                </h1>
             </div>
             <div className="text text_container">
                 <div className='text1_background'>
                     <div ref={sec1Ref} className={`text text1 text_width ${isSec1Hidden ? 'hidden' : ''}`}>
                         <div className='text1_container'>
+                            <h1>
+                                {getTranslation("uav_title", currentLanguage)}
+                            </h1>
                             <div>
                                 <p>
                                     {getTranslation("uav_text1.1", currentLanguage)}
@@ -27,9 +33,6 @@ const Uav = () => {
                                     {getTranslation("uav_text1.2", currentLanguage)}
                                 </p>
                             </div>
-                            <h1>
-                                {getTranslation("unmanned_aircraft", currentLanguage)}
-                            </h1>
                         </div>
                     </div>
                 </div>

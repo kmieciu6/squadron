@@ -10,8 +10,6 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import About from './components/About';
 import ScrollToTop from "./components/header/ScrollToTop";
 import { LanguageProvider } from "./components/translations/LanguageContext";
-import Areas from "./components/Areas";
-import News from "./components/News";
 import Uav from "./components/Uav";
 import OffshoreExpertise from "./components/OffshoreExpertise";
 import Soft from "./components/Soft";
@@ -70,22 +68,6 @@ function App() {
                         element={(
                             <PageLoader>
                                 <About />
-                            </PageLoader>
-                        )}
-                    />
-                    <Route
-                        path="/areas"
-                        element={(
-                            <PageLoader>
-                                <Areas />
-                            </PageLoader>
-                        )}
-                    />
-                    <Route
-                        path="/news"
-                        element={(
-                            <PageLoader>
-                                <News />
                             </PageLoader>
                         )}
                     />
