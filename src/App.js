@@ -13,6 +13,7 @@ import { LanguageProvider } from "./components/translations/LanguageContext";
 import Uav from "./components/Uav";
 import OffshoreExpertise from "./components/OffshoreExpertise";
 import Soft from "./components/Soft";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function App() {
     // Ustawiamy w stanie to, co mamy w localStorage lub domyślnie 'system'

@@ -15,6 +15,8 @@ const Uav = () => {
     const [current, setCurrent] = useState(0);
     const [sec1Ref, isSec1Hidden] = useIntersectionHide();
     const [sec2Ref, isSec2Hidden] = useIntersectionHide();
+    const [sec3Ref, isSec3Hidden] = useIntersectionHide();
+    const [sec4Ref, isSec4Hidden] = useIntersectionHide();
 
     const options = [
         {
@@ -75,7 +77,7 @@ const Uav = () => {
                         <h2>
                             {getTranslation("offer", currentLanguage)}
                         </h2>
-                        <div>
+                        <div className="text2_container">
                             <div>
                                 <img src={photo1} alt=""/>
                                 <h3>
@@ -108,18 +110,11 @@ const Uav = () => {
                 </div>
 
                 <div className='text3_background'>
-                    <div className={`text text3 text_width ${isSec2Hidden ? 'hidden' : ''}`}>
+                    <div ref={sec3Ref} className={`text text3 text_width ${isSec3Hidden ? 'hidden' : ''}`}>
                         <h2>
                             {getTranslation("uav_title3", currentLanguage)}
                         </h2>
                         <div className="text3_container">
-                            <div className="switcher__text">
-                                <h3>{options[current].label}</h3>
-                                <p>{options[current].text1}</p>
-                                <br/>
-                                <p>{options[current].text2}</p>
-                            </div>
-
                             <div className="switcher__buttons">
                                 {options.map((opt, idx) => (
                                 <button
@@ -131,12 +126,18 @@ const Uav = () => {
                                 </button>
                                 ))}
                             </div>
+                            <div className="switcher__text">
+                                <h3>{options[current].label}</h3>
+                                <p>{options[current].text1}</p>
+                                <br/>
+                                <p>{options[current].text2}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div className='text4_background'>
-                    <div className={`text text4 text_width ${isSec2Hidden ? 'hidden' : ''}`}>
+                    <div ref={sec4Ref} className={`text text4 text_width ${isSec4Hidden ? 'hidden' : ''}`}>
                         <h2>
                             {getTranslation("uav_title4", currentLanguage)}
                         </h2>
