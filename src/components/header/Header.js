@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useLocation } from 'react-router-dom';
 import Cookies from "./Cookies";
 import { getTranslation } from '../translations/LanguageUtils';
 import { useLanguage } from '../translations/LanguageContext';
@@ -72,6 +73,7 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
     const { changeLanguage } = useLanguage();
     const [isBurgerMenuOpen, setBurgerMenuOpen] = useState(false); // Stan burger menu
     const burgerMenuRef = useRef(null);
+    const location = useLocation();
 
     const toggleBurgerMenu = () => {
         setBurgerMenuOpen(!isBurgerMenuOpen);
@@ -104,6 +106,26 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
         };
     }, []);
 
+    const anchorMap ={
+        '/': [
+            {hash: 'areas', label: getTranslation('areas', currentLanguage)},
+            {hash: 'news', label: getTranslation('news', currentLanguage)},
+        ],
+        '/uav': [
+            {hash: 'offer', label: getTranslation('uav_title2', currentLanguage)},
+            {hash: 'implementation', label: getTranslation('uav_title3', currentLanguage)},
+            {hash: 'projects', label: getTranslation('uav_title4', currentLanguage)},
+        ],
+        '/offshore': [
+            {}
+        ],
+        '/soft': [
+            {}
+        ]
+    }
+
+    const anchors = anchorMap[location.pathname] || [];
+
     return (
         <>
             <div className={className}>
@@ -135,7 +157,7 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
                             >
                                 {getTranslation('about', currentLanguage)}
                             </NavLink>
-                            <HashLink 
+                            {/* <HashLink 
                                 smooth to="/#areas" 
                                 onClick={handleMenuItemClick}
                             >
@@ -146,7 +168,19 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
                                 onClick={handleMenuItemClick}
                             >
                                 {getTranslation('news', currentLanguage)}
-                            </HashLink>
+                            </HashLink> */}
+
+                            {anchors.map(({ hash, label }) => (
+                                <HashLink
+                                    key={hash}
+                                    smooth
+                                    to={`#${hash}`}
+                                    onClick={handleMenuItemClick}
+                                >
+                                    {label}
+                                </HashLink>
+                            ))}
+
                             <a 
                                 href="#footer" 
                                 onClick={(e) => {

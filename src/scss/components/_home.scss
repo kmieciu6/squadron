@@ -8,11 +8,9 @@
 
 .light-theme {
     .text1_background,
+    .text2_background,
     .text3_background {
         background-color: $main-color3;
-    }
-    .text2_background {
-        background-color: $main-color2;
     }
 }
 
@@ -528,4 +526,10 @@
     //         }
     //     }            
     // }
+}
+
+.home {
+    .text2_background {
+        background-color: $main-color2;
+    }
 }

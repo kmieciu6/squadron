@@ -72,7 +72,7 @@ const Uav = () => {
                     </div>
                 </div>
 
-                <div className='text2_background'>
+                <div className='text2_background' id="offer">
                     <div ref={sec2Ref} className={`text text2 text_width ${isSec2Hidden ? 'hidden' : ''}`}>
                         <h2>
                             {getTranslation("offer", currentLanguage)}
@@ -109,13 +109,13 @@ const Uav = () => {
                     </div>
                 </div>
 
-                <div className='text3_background'>
+                <div className='text3_background' id="implementation">
                     <div ref={sec3Ref} className={`text text3 text_width ${isSec3Hidden ? 'hidden' : ''}`}>
                         <h2>
                             {getTranslation("uav_title3", currentLanguage)}
                         </h2>
                         <div className="text3_container">
-                            <div className="switcher__buttons">
+                            <div className="switcher_buttons">
                                 {options.map((opt, idx) => (
                                 <button
                                     key={idx}
@@ -126,7 +126,7 @@ const Uav = () => {
                                 </button>
                                 ))}
                             </div>
-                            <div className="switcher__text">
+                            <div className="switcher_text">
                                 <h3>{options[current].label}</h3>
                                 <p>{options[current].text1}</p>
                                 <br/>
@@ -136,7 +136,7 @@ const Uav = () => {
                     </div>
                 </div>
 
-                <div className='text4_background'>
+                <div className='text4_background' id="projects">
                     <div ref={sec4Ref} className={`text text4 text_width ${isSec4Hidden ? 'hidden' : ''}`}>
                         <h2>
                             {getTranslation("uav_title4", currentLanguage)}
