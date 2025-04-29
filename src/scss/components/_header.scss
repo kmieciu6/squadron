@@ -55,6 +55,11 @@
         .nav-links a:hover {
             color: $main-color;
         }
+
+        .language-toggle:hover {
+            color: $main-color;
+        }
+
     }
   
     .burger-menu {
@@ -106,41 +111,154 @@
             transition: 0.5s;
             
             &.open {
-                min-height: 300px;
-                max-height: 300px;
+                max-height: 100vh !important;   // pozwoli rozwinąć się do pełnej wysokości ekranu
             }
 
             @include tablet {
                 top: 65px;
             }
         }
-    }
 
-    .language-dropdown .dropdown-item {
-        color: white ;
+        .nav-link {
+            padding: .5rem 0;
+        }
     }
-
+    
     .icon-button {
         background: none;
         border: none;
         cursor: pointer;
         padding: 0;
     }
+
+    @include mobile-tablet {
+
+        .language-switcher {
+            width: 100%;
+    }
+
+        .language-toggle {
+            width: 100%;
+            text-align: center;
+            border: none;
+        }
+        
+        .language-menu {
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .dropdown-item {
+            width: 100%;
+            padding: 0.5rem 0;
+            background: inherit;
+            color: inherit;
+            text-align: center;
+            border: none;
+        }
+        
+        .dropdown-item:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .theme-switcher {
+            padding-bottom: 1rem;
+        }
+    }
+
+    @include desktop {
+        .language-switcher {
+            position: relative;
+            display: inline-block;
+
+            .language-menu {
+                position: absolute !important;
+                top: calc(100% + 20px) !important;
+                left: 0 !important;
+                right: auto !important;
+                border: none !important;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+                z-index: 20 !important;
+                width: auto !important;
+            }
+
+            .language-toggle {
+                color: inherit;
+                &.active {
+                    color: $main-color !important;
+                }
+            }
+            
+            .dropdown-item {
+                padding: 0.75rem 1rem;
+                text-align: left;
+                color: inherit !important;
+          
+                &:hover,
+                &:focus {
+                    color: $main-color !important;
+                    background: rgba(255,255,255,0.1) !important;
+                }
+            }
+        }
+    }
 }
 
 .dark-theme {
+    .language-menu {
+        background:  inherit !important;
+        border: none !important;
+        box-shadow: none !important;
+
+        @include desktop {
+            background: $dark-background-header !important; 
+
+            .dropdown-item {
+                color: $white-color;
+            }
+        }
+    }
+
+    .language-toggle {
+        color: $white-color !important;
+    }
+
     .icons_light {
         color: white;
     }
+
     .burger-line {
         background-color: white;
     }
+
 }
   
 .light-theme {
-    .static-header {
-        background: linear-gradient(0deg, rgba(223,223,223,1) 0%, rgba(117,116,116,1) 100%);
+    @include mobile-tablet {
+        .language-toggle {
+            color: $black-color !important;
+        }
+
+        .dropdown-item {
+            color: $black-color !important;
+        }
     }
+
+    .language-menu {
+        background:  inherit !important;
+        border: none !important;
+        box-shadow: none !important;    
+
+        @include desktop {
+            background:  $light-background-header !important;
+        }
+    }
+    
+    .static-header {
+        background: $dark-background-header;
+    }
+    
     .nav-links {
         &.open {
             background-color: rgba(216, 216, 216, 0.9);
@@ -150,7 +268,7 @@
 
 .light-theme {
     .dynamic-header {
-        background: linear-gradient(0deg, rgba(223,223,223,1) 0%, rgba(117,116,116,1) 100%);
+        background: $light-background-header;
     }
 }
 

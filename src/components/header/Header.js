@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useLocation } from 'react-router-dom';
 import Cookies from "./Cookies";
 import { getTranslation } from '../translations/LanguageUtils';
 import { useLanguage } from '../translations/LanguageContext';
@@ -8,7 +7,7 @@ import flag_poland from '../../assets/pl.svg'
 import flag_england from '../../assets/gb.svg'
 import flag_germany from '../../assets/de.svg'
 import logo from '../../assets/logo.png'
-import { NavDropdown } from "react-bootstrap";
+// import { NavDropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon, faA } from "@fortawesome/free-solid-svg-icons";
 import { HashLink } from 'react-router-hash-link';
@@ -73,7 +72,6 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
     const { changeLanguage } = useLanguage();
     const [isBurgerMenuOpen, setBurgerMenuOpen] = useState(false); // Stan burger menu
     const burgerMenuRef = useRef(null);
-    const location = useLocation();
 
     const toggleBurgerMenu = () => {
         setBurgerMenuOpen(!isBurgerMenuOpen);
@@ -106,25 +104,20 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
         };
     }, []);
 
-    const anchorMap ={
-        '/': [
-            {hash: 'areas', label: getTranslation('areas', currentLanguage)},
-            {hash: 'news', label: getTranslation('news', currentLanguage)},
-        ],
-        '/uav': [
-            {hash: 'offer', label: getTranslation('uav_title2', currentLanguage)},
-            {hash: 'implementation', label: getTranslation('uav_title3', currentLanguage)},
-            {hash: 'projects', label: getTranslation('uav_title4', currentLanguage)},
-        ],
-        '/offshore': [
-            {}
-        ],
-        '/soft': [
-            {}
-        ]
-    }
+    const [isLangOpen, setLangOpen] = useState(false);
+    const langRef = useRef(null);
 
-    const anchors = anchorMap[location.pathname] || [];
+    // opcjonalnie: zamykanie po kliknięciu poza
+    useEffect(() => {
+    const onClick = e => {
+        if (langRef.current && !langRef.current.contains(e.target)) {
+        setLangOpen(false);
+        }
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+    }, []);
+
 
     return (
         <>
@@ -146,42 +139,37 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
                         </div>
                         <div className={`nav-links ${isBurgerMenuOpen ? "open" : ""}`}>
                             <NavLink 
+                                className="nav-link"
                                 to="/" 
                                 onClick={handleMenuItemClick}
                             >
                                 {getTranslation('main_page', currentLanguage)}
                             </NavLink>
                             <NavLink 
+                                className="nav-link"
                                 to="/about" 
                                 onClick={handleMenuItemClick}
                             >
                                 {getTranslation('about', currentLanguage)}
                             </NavLink>
-                            {/* <HashLink 
+                            <HashLink 
+                                className="nav-link"
                                 smooth to="/#areas" 
                                 onClick={handleMenuItemClick}
                             >
                                 {getTranslation('areas', currentLanguage)}
                             </HashLink>
                             <HashLink 
+                                className="nav-link"
                                 smooth to="/#news" 
                                 onClick={handleMenuItemClick}
                             >
                                 {getTranslation('news', currentLanguage)}
-                            </HashLink> */}
+                            </HashLink>
 
-                            {anchors.map(({ hash, label }) => (
-                                <HashLink
-                                    key={hash}
-                                    smooth
-                                    to={`#${hash}`}
-                                    onClick={handleMenuItemClick}
-                                >
-                                    {label}
-                                </HashLink>
-                            ))}
 
                             <a 
+                                className="nav-link"
                                 href="#footer" 
                                 onClick={(e) => {
                                 e.preventDefault();
@@ -191,48 +179,37 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
                             >
                                 {getTranslation('contact', currentLanguage)}
                             </a>
-                            <NavDropdown
-                                id="nav-dropdown-dark-example"
-                                title={
-                                    currentLanguage === 'pl' ? 'PL' :
-                                    currentLanguage === 'en' ? 'EN' :
-                                    currentLanguage === 'de' ? 'DE' :
-                                    "Language"
-                                }
-                                menuVariant="dark"
-                                className="nav_dropdown language-dropdown"
-                                renderMenuOnMount
-                                rootCloseEvent="click"
+                            <div ref={langRef} className="language-switcher">
+                                <button
+                                    className={`nav-link language-toggle${isLangOpen ? ' active' : ''}`}
+                                    onClick={() => setLangOpen(o => !o)}
                                 >
-                                <NavDropdown.Item 
-                                    onClick={() => {
-                                        changeLanguage('pl');
-                                        handleMenuItemClick();
-                                    }}
-                                    className="nav_dropdown_button"
-                                >
-                                    {getTranslation('polish', currentLanguage)} <img src={flag_poland} className="flag" alt="polski"/>
-                                </NavDropdown.Item>
-                                <NavDropdown.Item 
-                                    onClick={() => {
-                                        changeLanguage('en');
-                                        handleMenuItemClick();
-                                    }}
-                                    className="nav_dropdown_button"
-                                >
-                                    {getTranslation('english', currentLanguage)} <img src={flag_england} className="flag" alt="english"/>
-                                </NavDropdown.Item>
-                                <NavDropdown.Item 
-                                    onClick={() => { 
-                                        changeLanguage('de');
-                                        handleMenuItemClick();
-                                    }}
-                                    className="nav_dropdown_button"
-                                >
-                                    {getTranslation('german', currentLanguage)} <img src={flag_germany} className="flag" alt="deutsch"/>
-                                </NavDropdown.Item>
-                            </NavDropdown>
-                            <div>
+                                    {currentLanguage.toUpperCase()}
+                                </button>
+                                {isLangOpen && (
+                                    <div className="language-menu">
+                                        <button
+                                            className="dropdown-item"
+                                            onClick={() => { changeLanguage('pl'); setLangOpen(false); }}
+                                        >
+                                            {getTranslation('polish', currentLanguage)} <img src={flag_poland} alt="flag" className="flag" />
+                                        </button>
+                                        <button
+                                            className="dropdown-item"
+                                            onClick={() => { changeLanguage('en'); setLangOpen(false); }}
+                                        >
+                                            {getTranslation('english', currentLanguage)} <img src={flag_england} alt="flag" className="flag" />
+                                        </button>
+                                        <button
+                                            className="dropdown-item"
+                                            onClick={() => { changeLanguage('de'); setLangOpen(false); }}
+                                        >
+                                            {getTranslation('german', currentLanguage)} <img src={flag_germany} alt="flag" className="flag" />
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="theme-switcher">
                                 <ThemeSwitcher
                                     currentTheme={currentTheme}
                                     onThemeChange={onThemeChange}
