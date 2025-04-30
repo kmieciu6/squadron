@@ -7,8 +7,7 @@ const NavLink = ({ to, children, ...props }) => {
     // Jeżeli jesteśmy już na danej ścieżce, przewiń stronę do góry
     if (location.pathname === to) {
       event.preventDefault();
-      // window.scrollTo({ top: 0, behavior: "smooth" });
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, behavior: "auto" });
     }
     // Jeżeli przekazano dodatkowy onClick, wywołaj go
     if (props.onClick) {
