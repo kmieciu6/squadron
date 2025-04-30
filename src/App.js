@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import './scss/main.scss';
 import Header from "./components/header/Header";
 import Footer from "./components/Footer";
@@ -14,6 +14,7 @@ import Uav from "./components/Uav";
 import OffshoreExpertise from "./components/OffshoreExpertise";
 import Soft from "./components/Soft";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { useLocation } from 'react-router-dom';
 
 function App() {
     // Ustawiamy w stanie to, co mamy w localStorage lub domyślnie 'system'
@@ -49,72 +50,72 @@ function App() {
         localStorage.setItem("theme", newTheme);
     };
 
+    const { pathname } = useLocation();
+
     return (
         <LanguageProvider>
-            <BrowserRouter>
-                <Header onThemeChange={handleThemeChange} currentTheme={theme} />
-                <ScrollToTop />
-                <Routes>
-                    <Route
-                        path="/"
-                        index
-                        element={(
-                            <PageLoader>
-                                <Home />
-                            </PageLoader>
-                        )}
-                    />
-                    <Route
-                        path="/about"
-                        element={(
-                            <PageLoader>
-                                <About />
-                            </PageLoader>
-                        )}
-                    />
-                    <Route
-                        path="/uav"
-                        element={(
-                            <PageLoader>
-                                <Uav />
-                            </PageLoader>
-                        )}
-                    />
-                    <Route
-                        path="/offshore"
-                        element={(
-                            <PageLoader>
-                                <OffshoreExpertise />
-                            </PageLoader>
-                        )}
-                    />
-                    <Route
-                        path="/soft"
-                        element={(
-                            <PageLoader>
-                                <Soft />
-                            </PageLoader>
-                        )}
-                    />
-                    <Route
-                        path="/privacy_policy"
-                        element={(
-                            <PageLoader>
-                                <PrivacyPolicy />
-                            </PageLoader>
-                        )}
-                    />
-                    <Route
-                        path="*"
-                        element={(
-                            <PageLoader>
-                                <NotFoundPage />
-                            </PageLoader>
-                        )}
-                    />
-                </Routes>
-                <Footer />
-            </BrowserRouter>
+            <Header onThemeChange={handleThemeChange} currentTheme={theme} />
+            <ScrollToTop />
+            <Routes>
+                <Route
+                    path="/"
+                    index
+                    element={(
+                        <PageLoader>
+                            <Home />
+                        </PageLoader>
+                    )}
+                />
+                <Route
+                    path="/about"
+                    element={(
+                        <PageLoader>
+                            <About />
+                        </PageLoader>
+                    )}
+                />
+                <Route
+                    path="/uav"
+                    element={(
+                        <PageLoader>
+                            <Uav />
+                        </PageLoader>
+                    )}
+                />
+                <Route
+                    path="/offshore"
+                    element={(
+                        <PageLoader>
+                            <OffshoreExpertise />
+                        </PageLoader>
+                    )}
+                />
+                <Route
+                    path="/soft"
+                    element={(
+                        <PageLoader>
+                            <Soft />
+                        </PageLoader>
+                    )}
+                />
+                <Route
+                    path="/privacy_policy"
+                    element={(
+                        <PageLoader>
+                            <PrivacyPolicy />
+                        </PageLoader>
+                    )}
+                />
+                <Route
+                    path="*"
+                    element={(
+                        <PageLoader>
+                            <NotFoundPage />
+                        </PageLoader>
+                    )}
+                />
+            </Routes>
+            <Footer key={pathname}/>
         </LanguageProvider>
     );
 }
