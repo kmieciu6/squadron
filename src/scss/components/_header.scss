@@ -59,7 +59,6 @@
         .language-toggle:hover {
             color: $main-color;
         }
-
     }
   
     .burger-menu {
@@ -131,11 +130,77 @@
         padding: 0;
     }
 
-    @include mobile-tablet {
+    .areas-switcher {
 
-        .language-switcher {
-            width: 100%;
+        @include desktop {
+            position: relative;
+            display: inline-block;
+        }
+
+        .areas-toggle {
+            cursor: pointer;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            transition: 0.5s;
+    
+            &:hover {
+                color: $main-color;
+            }
+
+            &.active {
+                color: $main-color;
+            }
+        }
+    
+        /* Wspólne menu */
+        .areas-menu {
+            position: absolute;
+            top: calc(100% + 21px);
+            left: 0;
+            min-width: 180px;
+            display: flex;
+            flex-direction: column;
+            padding: .5rem 0;
+            border-radius: .5rem;
+            background: $white-color;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, .1);
+            z-index: 1000;
+            animation: dropdownFade .15s ease-out both;
+    
+            @include mobile {
+                right: 0; /* łatwiejsze dopasowanie w wąskim widoku */
+                left: auto;
+            }
+    
+            /* pojedyncze elementy */
+            .dropdown-item,
+            .nav-link {
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+                padding: .75rem 1rem;
+                font-size: .9rem;
+                text-align: center;
+                white-space: nowrap;
+                border: 0;
+                color: $black-color;
+                cursor: pointer;
+                text-decoration: none;
+                text-transform: capitalize;
+                transition: .15s;
+
+                &:hover,
+                &:focus {
+                    color: $main-color !important;
+                    background: rgba(255,255,255,0.1);
+                }
+            }
+        }
     }
+
+    @include mobile-tablet {
 
         .language-toggle {
             width: 100%;
@@ -173,18 +238,25 @@
             display: inline-block;
 
             .language-menu {
-                position: absolute !important;
-                top: calc(100% + 20px) !important;
-                left: 0 !important;
-                right: auto !important;
-                border: none !important;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
-                z-index: 20 !important;
-                width: auto !important;
+                position: absolute;
+                top: calc(100% + 21px);
+                left: 0;
+                right: auto;
+                border: none;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                z-index: 20;
+                width: auto;
+                border-radius: .5rem;
+                padding: .5rem 0;
             }
 
             .language-toggle {
                 color: inherit;
+                
+                &:hover {
+                    color: $main-color !important;
+                }
+
                 &.active {
                     color: $main-color !important;
                 }
@@ -192,13 +264,13 @@
             
             .dropdown-item {
                 padding: 0.75rem 1rem;
-                text-align: left;
+                text-align: center;
                 color: inherit !important;
           
                 &:hover,
                 &:focus {
                     color: $main-color !important;
-                    background: rgba(255,255,255,0.1) !important;
+                    background: rgba(255,255,255,0.1);
                 }
             }
         }
@@ -206,6 +278,8 @@
 }
 
 .dark-theme {
+
+    .areas-menu,
     .language-menu {
         background:  inherit !important;
         border: none !important;
@@ -215,13 +289,19 @@
             background: $dark-background-header !important; 
 
             .dropdown-item {
-                color: $white-color;
+                color: $white-color !important;
             }
         }
     }
 
     .language-toggle {
         color: $white-color !important;
+
+        @include desktop {
+            &:hover {
+                color: $main-color;
+            }
+        }
     }
 
     .icons_light {
@@ -235,7 +315,9 @@
 }
   
 .light-theme {
+
     @include mobile-tablet {
+
         .language-toggle {
             color: $black-color !important;
         }
@@ -245,6 +327,7 @@
         }
     }
 
+    .areas-menu,
     .language-menu {
         background:  inherit !important;
         border: none !important;

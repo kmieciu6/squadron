@@ -7,10 +7,8 @@ import flag_poland from '../../assets/pl.svg'
 import flag_england from '../../assets/gb.svg'
 import flag_germany from '../../assets/de.svg'
 import logo from '../../assets/logo.png'
-// import { NavDropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon, faA } from "@fortawesome/free-solid-svg-icons";
-import { HashLink } from 'react-router-hash-link';
 
 const Header = ({ onThemeChange, currentTheme }) => {
     const [dynamicVisible, setDynamicVisible] = useState(false); // Widoczność dynamicznego headera
@@ -73,6 +71,14 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
     const [isBurgerMenuOpen, setBurgerMenuOpen] = useState(false); // Stan burger menu
     const burgerMenuRef = useRef(null);
 
+    const areaLinks = [
+        { path: "/uav", labelKey: getTranslation('uav', currentLanguage)},
+        { path: "/offshore", labelKey: getTranslation('offshore_expertise', currentLanguage)},
+        { path: "/soft", labelKey: getTranslation('soft', currentLanguage)},
+    ];
+    const [isAreasOpen, setAreasOpen] = useState(false);
+    const areasRef = useRef(null);
+
     const toggleBurgerMenu = () => {
         setBurgerMenuOpen(!isBurgerMenuOpen);
     };
@@ -85,6 +91,7 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
 
     const handleMenuItemClick = () => {
         setBurgerMenuOpen(false);
+        setAreasOpen(false);
     };      
 
     useEffect(() => {
@@ -109,15 +116,17 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
 
     // opcjonalnie: zamykanie po kliknięciu poza
     useEffect(() => {
-    const onClick = e => {
-        if (langRef.current && !langRef.current.contains(e.target)) {
-        setLangOpen(false);
-        }
-    };
-    document.addEventListener("click", onClick);
-    return () => document.removeEventListener("click", onClick);
+        const onClick = e => {
+            if (langRef.current && !langRef.current.contains(e.target)) {
+                setLangOpen(false);
+            }
+            if (areasRef.current && !areasRef.current.contains(e.target)) {
+                setAreasOpen(false);
+            }
+        };
+        document.addEventListener("click", onClick);
+        return () => document.removeEventListener("click", onClick);
     }, []);
-
 
     return (
         <>
@@ -152,21 +161,42 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
                             >
                                 {getTranslation('about', currentLanguage)}
                             </NavLink>
-                            <HashLink 
+                            {/* <HashLink 
                                 className="nav-link"
                                 smooth to="/#areas" 
                                 onClick={handleMenuItemClick}
                             >
                                 {getTranslation('areas', currentLanguage)}
-                            </HashLink>
-                            <HashLink 
+                            </HashLink> */}
+                            <div ref={areasRef} className="areas-switcher">
+                                <button
+                                    className={`nav-link areas-toggle${isAreasOpen ? ' active' : ''}`}
+                                    onClick={() => setAreasOpen(o => !o)}
+                                >
+                                    {getTranslation('areas', currentLanguage)}
+                                </button>
+                                {isAreasOpen && (
+                                    <div className="areas-menu">
+                                        {areaLinks.map(({ path, labelKey }) => (
+                                            <NavLink
+                                                key={path}
+                                                className="dropdown-item"
+                                                to={path}
+                                                onClick={handleMenuItemClick}
+                                            >
+                                                {getTranslation(labelKey, currentLanguage)}
+                                            </NavLink>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                            {/* <HashLink 
                                 className="nav-link"
                                 smooth to="/#news" 
                                 onClick={handleMenuItemClick}
                             >
                                 {getTranslation('news', currentLanguage)}
-                            </HashLink>
-
+                            </HashLink> */}
 
                             <a 
                                 className="nav-link"
