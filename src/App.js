@@ -56,65 +56,39 @@ function App() {
         <LanguageProvider>
             <Header onThemeChange={handleThemeChange} currentTheme={theme} />
             <ScrollToTop />
-            <Routes>
-                <Route
-                    path="/"
-                    index
-                    element={(
-                        <PageLoader>
-                            <Home />
-                        </PageLoader>
-                    )}
-                />
-                <Route
-                    path="/about"
-                    element={(
-                        <PageLoader>
-                            <About />
-                        </PageLoader>
-                    )}
-                />
-                <Route
-                    path="/uav"
-                    element={(
-                        <PageLoader>
-                            <Uav />
-                        </PageLoader>
-                    )}
-                />
-                <Route
-                    path="/offshore"
-                    element={(
-                        <PageLoader>
-                            <OffshoreExpertise />
-                        </PageLoader>
-                    )}
-                />
-                <Route
-                    path="/soft"
-                    element={(
-                        <PageLoader>
-                            <Soft />
-                        </PageLoader>
-                    )}
-                />
-                <Route
-                    path="/privacy_policy"
-                    element={(
-                        <PageLoader>
-                            <PrivacyPolicy />
-                        </PageLoader>
-                    )}
-                />
-                <Route
-                    path="*"
-                    element={(
-                        <PageLoader>
-                            <NotFoundPage />
-                        </PageLoader>
-                    )}
-                />
-            </Routes>
+            <PageLoader>
+                <Routes>
+                    <Route
+                        path="/"
+                        index
+                        element={<Home />}
+                    />
+                    <Route
+                        path="/about"
+                        element={<About />}
+                    />
+                    <Route
+                        path="/uav"
+                        element={<Uav />}
+                    />
+                    <Route
+                        path="/offshore"
+                        element={<OffshoreExpertise />}
+                    />
+                    <Route
+                        path="/soft"
+                        element={<Soft />}
+                    />
+                    <Route
+                        path="/privacy_policy"
+                        element={<PrivacyPolicy />}
+                    />
+                    <Route
+                        path="*"
+                        element={<NotFoundPage />}
+                    />
+                </Routes>
+            </PageLoader>
             <Footer key={pathname}/>
         </LanguageProvider>
     );
