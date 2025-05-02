@@ -21,11 +21,40 @@ const PageLoader = ({ children }) => {
     useEffect(() => {
         // start nawigacji
         setLoading(true);
-        // po paint/raf wyłączamy loader
-        const frame = window.requestAnimationFrame(() => {
+
+        const images = Array.from(document.images);
+        let pending = images.filter(img => !img.complete).length;
+
+        if (pending === 0) {
+            // jeśli wszystkie już w cache albo brak <img>
             setLoading(false);
+            return;
+        }
+
+        const onImgEvent = () => {
+            pending -= 1;
+            if (pending === 0) {
+                setLoading(false);
+            }
+        };
+      
+        images.forEach(img => {
+            if (!img.complete) {
+                img.addEventListener('load', onImgEvent);
+                img.addEventListener('error', onImgEvent);
+            }
         });
-        return () => window.cancelAnimationFrame(frame);
+
+        // po paint/raf wyłączamy loader
+        // const frame = window.requestAnimationFrame(() => {
+        //     setLoading(false);
+        // });
+        return () => {
+            images.forEach(img => {
+                img.removeEventListener('load', onImgEvent);
+                img.removeEventListener('error', onImgEvent);
+            });
+        };
     }, [pathname]);
 
     return (
