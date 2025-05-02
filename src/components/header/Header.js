@@ -161,13 +161,6 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
                             >
                                 {getTranslation('about', currentLanguage)}
                             </NavLink>
-                            {/* <HashLink 
-                                className="nav-link"
-                                smooth to="/#areas" 
-                                onClick={handleMenuItemClick}
-                            >
-                                {getTranslation('areas', currentLanguage)}
-                            </HashLink> */}
                             <div ref={areasRef} className="areas-switcher">
                                 <button
                                     className={`nav-link areas-toggle${isAreasOpen ? ' active' : ''}`}
