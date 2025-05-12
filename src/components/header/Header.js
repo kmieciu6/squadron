@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Cookies from "./Cookies";
 import { getTranslation } from '../translations/LanguageUtils';
 import { useLanguage } from '../translations/LanguageContext';
@@ -183,14 +183,6 @@ const HeaderContent = ({ className, onThemeChange, currentTheme }) => {
                                     </div>
                                 )}
                             </div>
-                            {/* <HashLink 
-                                className="nav-link"
-                                smooth to="/#news" 
-                                onClick={handleMenuItemClick}
-                            >
-                                {getTranslation('news', currentLanguage)}
-                            </HashLink> */}
-
                             <a 
                                 className="nav-link"
                                 href="#footer" 
