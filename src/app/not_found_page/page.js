@@ -1,6 +1,7 @@
 'use client';
 import { useTranslation } from '../hooks/useTranslation';
 import Link from "next/link";
+import img_page_not_found from '../../../public/images/page_not_found.jpg'
 
 export default function NotFoundPage() {
     const { t } = useTranslation('common')
@@ -12,7 +13,7 @@ export default function NotFoundPage() {
                 {t('not_found_page')}
             </p>
             <Link to='/'><button>{t('main_page')}</button></Link>
-            <img src={img_page_not_found} alt='not found'/>
+            <img src={img_page_not_found.src} alt='not found'/>
         </section>
     );
 }
