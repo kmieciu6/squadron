@@ -1,0 +1,48 @@
+@use "colors" as *;
+@use "mixins" as *;
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+.dark { 
+
+    .overlay {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .loading-spinner {
+        border-top: 8px solid rgba(0, 0, 0, 0);
+    }
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 8px solid $main-color;
+    border-top: 8px solid rgba(255, 255, 255, 0);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+
+    @include mobile {
+        width: 40px;
+        height: 40px;
+    }
+}
+  
+@keyframes spin {
+
+    to {
+        transform: rotate(360deg);
+    }
+}  

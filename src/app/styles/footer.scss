@@ -1,0 +1,150 @@
+@use "colors" as *;
+@use "mixins" as *;
+
+.footer {
+    width: 100%;
+    background: $main-color2;
+    overflow-x: hidden;
+
+    .footer_container {
+        max-width: 1800px;
+        padding: 3rem 0 0.5rem 0;
+        height: auto;
+        margin: 0 auto;
+        // display: flex;
+        // flex-direction: column;
+
+        .info_contact {
+            display: flex;
+
+            @include desktop {
+                flex-direction: row;
+                justify-content: space-around;        
+            }
+
+            @include mobile {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            @include tablet {
+                justify-content: space-around;        
+            }
+            
+            .info {
+                display: flex;
+                flex-direction: column;
+                height: auto;
+                width: 50%;
+                max-width: 600px;
+                
+                @include mobile {
+                    width: 80%;
+                    align-items: center;
+                }
+
+                @include desktop {
+                    margin-left: 3rem;
+                }
+
+                h1 {
+                    color: $white-color;
+                    margin-bottom: 2rem;
+                    // font-size: 2rem;
+                    
+                    @include desktop {
+                        margin-bottom: 3rem;
+                    }
+                }
+                
+                .map {
+                    width: 100%;
+                    height: 200px;
+                    min-width: 250px;
+                    min-height: 200px;
+
+                    @include desktop {
+                        height: 300px;
+                    }
+                }
+
+                .logo {
+                    width: 200px;           
+                    margin: 2rem 0 1rem 0;
+                }
+            
+                @include mobile-tablet {
+                    flex-direction: column;
+                }
+                
+                a {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    cursor: pointer;
+                    text-decoration: none;
+                    color: $white-color;
+                    text-decoration: none;
+                    
+                    h5:nth-child(2) {
+                        margin-left: 1rem;
+                    }
+
+                    h5 {
+                        color: $white-color;
+                    }
+                }
+
+                .address {
+                    width: 140px;
+                }
+
+                .tel_mail {
+                    margin: 1rem 0;
+                    width: 200px;
+
+                    .icon {
+                        height: 20px;
+                    }     
+                }
+
+                .in {
+                    width: 30px;
+                }
+            }
+        }
+
+        .info_map {
+            margin-top: 2rem;
+            text-align: center;
+
+            p {
+                color: $white-color;
+                font-size: 14px;
+            }
+        }
+    }
+
+    /* Początkowy stan – elementy są przesunięte i niewidoczne */
+    .slide-from-left,
+    .slide-from-right {
+        opacity: 0;
+        transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+    }
+
+    /* Wersja z lewej: przesuwamy w lewo na start */
+    .slide-from-left {
+        transform: translateX(-50px);
+    }
+
+    /* Wersja z prawej: przesuwamy w prawo na start */
+    .slide-from-right {
+        transform: translateX(50px);
+    }
+
+    /* Gdy element jest widoczny – wraca na pozycję i staje się w pełni widoczny */
+    .slide-in {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

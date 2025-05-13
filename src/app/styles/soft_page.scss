@@ -1,0 +1,61 @@
+@use "colors" as *;
+@use "mixins" as *;
+@use "fonts" as *;
+
+.soft_section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .opening {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+            
+            @include desktop {
+                object-fit: cover;
+                height: 93vh;
+            }
+        }
+
+        h1 {
+            position: absolute;
+            text-align: center;
+            top: 55%;
+            padding: 0 2rem;
+            width: 50%;
+            opacity: 1;
+            transition: opacity 4s ease;
+            font-family: $font-teko;
+            font-weight: 600;
+            color: $main-color;
+
+            &.hidden {
+                opacity: 0;
+                transition: opacity 1s ease; 
+                // 1s time + 1s delay (przykład)
+            }
+
+
+            @include desktop {
+                font-size: 55px;
+            }
+
+            @include mobile {
+                top: 20%;
+                width: 70%;
+            }
+        }
+    }
+
+    .text1_container {
+        flex-direction: column !important;
+    }
+}
