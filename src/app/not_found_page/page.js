@@ -12,7 +12,7 @@ export default function NotFoundPage() {
             <p>
                 {t('not_found_page')}
             </p>
-            <Link to='/'><button>{t('main_page')}</button></Link>
+            <Link href='/'><button>{t('main_page')}</button></Link>
             <img src={img_page_not_found.src} alt='not found'/>
         </section>
     );
