@@ -135,7 +135,7 @@ export default function Home() {
                                         nulla reprehenderit magna pariatur culpa commodo. Reprehenderit velit consequat sint magna sunt dolor et ipsum 
                                         consequat Lorem nulla nostrud.
                                     </p>
-                                    <Link href="/offshore">
+                                    <Link href="/offshore_expertise">
                                         <button>
                                             {t("more")}
                                         </button>
