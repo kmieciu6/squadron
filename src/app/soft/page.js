@@ -5,6 +5,7 @@ import opening_photo from "../../../public/images/turbiny.jpg"
 
 export default function Soft() {
     const { t } = useTranslation('common')
+    const [titleRef, isTitleHidden] = useIntersectionHide();
     const [sec1Ref, isSec1Hidden] = useIntersectionHide();
 
     return (
@@ -14,9 +15,11 @@ export default function Soft() {
                     src={opening_photo.src}
                     alt="opening"
                 />      
-                <h1>
-                    {t("soft")}
-                </h1>
+                <div className={`opening_text ${isTitleHidden ? 'hidden' : ''}`} ref={titleRef}>
+                    <h1>
+                        {t("soft")}
+                    </h1>
+                </div>
             </div>
             <div className="text text_container">
                 <div className='text1_background'>

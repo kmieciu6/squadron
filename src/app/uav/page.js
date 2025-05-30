@@ -13,6 +13,7 @@ import photo6 from "../../../public/images/dron_image.png"
 export default function Uav() {
     const { t } = useTranslation('common')
     const [current, setCurrent] = useState(0);
+    const [titleRef, isTitleHidden] = useIntersectionHide();
     const [sec1Ref, isSec1Hidden] = useIntersectionHide();
     const [sec2Ref, isSec2Hidden] = useIntersectionHide();
     const [sec3Ref, isSec3Hidden] = useIntersectionHide();
@@ -48,9 +49,11 @@ export default function Uav() {
                     src={opening_photo.src}
                     alt="opening"
                 />      
-                <h1>
-                    {t("uav")}
-                </h1>
+                <div className={`opening_text ${isTitleHidden ? 'hidden' : ''}`} ref={titleRef}>
+                    <h1>
+                        {t("uav")}
+                    </h1>
+                </div>
             </div>
 
             <div className="text text_container">
@@ -142,7 +145,7 @@ export default function Uav() {
                             {t("uav_title4")}
                         </h2>
                         <div className="text4_container">
-                            <div>
+                            <div className='container'>
                                 <div>
                                     <h3>
                                         {t("uav_title4.1")}
@@ -153,7 +156,7 @@ export default function Uav() {
                                 </div>
                                 <img src={photo4.src} alt=""/>
                             </div>
-                            <div>
+                            <div className='container'>
                                 <div>
                                     <h3>
                                         {t("uav_title4.2")}
@@ -164,7 +167,7 @@ export default function Uav() {
                                 </div>
                                 <img src={photo5.src} alt=""/>
                             </div>
-                            <div>
+                            <div className='container'>
                                 <div>
                                     <h3>
                                         {t("uav_title4.3")}
