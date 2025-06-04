@@ -56,6 +56,9 @@
     }
 
     .text1_container {
-        flex-direction: column !important;
+        
+        @include desktop {
+            flex-direction: row-reverse !important;
+        }    
     }
 }
