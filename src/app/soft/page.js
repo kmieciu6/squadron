@@ -1,9 +1,9 @@
 'use client';
 import useIntersectionHide from '../hooks/useIntersectionHide';
-import { useTranslation } from '../hooks/useTranslation';
+import useTranslation from '../hooks/useTranslation';
 import opening_photo from "../../../public/images/turbiny.jpg"
 
-export default function Soft() {
+const Soft = () => {
     const { t } = useTranslation('common')
     const [titleRef, isTitleHidden] = useIntersectionHide();
     const [sec1Ref, isSec1Hidden] = useIntersectionHide();
@@ -43,3 +43,5 @@ export default function Soft() {
         </section>
     );
 }
+
+export default Soft;

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useTranslation } from '../hooks/useTranslation';
+import useTranslation from "../hooks/useTranslation";
 
 const Contact = () => {
     const { t } = useTranslation('common')

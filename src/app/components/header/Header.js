@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect, useRef } from "react";
-import { useTranslation } from '../../hooks/useTranslation';
+import useTranslation from '../../hooks/useTranslation';
 import { useTheme } from "next-themes";
 import NavLink from "./NavLink";
 import flag_poland from '../../../../public/icons/pl.svg';
@@ -9,7 +9,7 @@ import flag_germany from '../../../../public/icons/de.svg';
 import logo from "../../../../public/images/logo.png";
 import { MdOutlineBrightnessAuto, MdLightMode, MdDarkMode } from "react-icons/md";
 
-export default function Header() {
+const Header = () => {
     const [dynamicVisible, setDynamicVisible] = useState(false);
     const staticHeaderRef = useRef(null);
     const lastScrollY = useRef(0);
@@ -184,3 +184,5 @@ function HeaderContent({ className }) {
         </div>
     );
 }
+
+export default Header;

@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import en_common from '../languages/en/common.json';
 import pl_common from '../languages/pl/common.json';
 import de_common from '../languages/de/common.json';
@@ -16,32 +16,38 @@ const translations = {
     },
 };
 
-export function useTranslation(namespace = 'common') {
+const supportedLanguages = ['en', 'pl', 'de'];
+
+const useTranslation = (namespace = 'common') => {
     const [local, setLocale] = useState('en');
     const [messages, setMessages] = useState({});
 
     useEffect(() => {
-        const stored = localStorage.getItem('locale') || navigator.language.slice(0, 2) || 'en';
-        const supported = ['en', 'pl', 'de'];
-        const lang = supported.includes(stored) ? stored : 'en';
+        const stored = localStorage.getItem('locale');
+        const browser = navigator.language.slice(0, 2);
+        const lang = supportedLanguages.includes(stored) 
+            ? stored
+            : supportedLanguages.includes(browser)
+            ? browser
+            : 'en';
 
         setLocale(lang);
         setMessages(translations[lang][namespace] || {});
     }, [namespace]);
 
-    const t = (key) => {
-        // return key.split('.').reduce((obj, part) => obj?.[part], messages) || key;
-        return messages[key] || key;
-    };
+    const t = useCallback((key) => {
+        return key.split('.').reduce((obj, part) => obj?.[part], messages) || key;
+    }, [messages]);
 
     const changeLanguage = (lang) => {
+        if (!supportedLanguages.includes(lang)) return;
         localStorage.setItem('locale', lang);
         setLocale(lang);
         setMessages(translations[lang][namespace] || {});
-        // 🔁 wymuś odświeżenie strony (prosty sposób):
         window.location.reload();
     };
-    
 
     return { t, local, changeLanguage };
 }
+
+export default useTranslation;

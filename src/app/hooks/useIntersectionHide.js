@@ -1,10 +1,10 @@
 "use client";
 import { useRef, useState, useEffect } from 'react';
 
-export default function useIntersectionHide(
+const useIntersectionHide = (
     desktopOptions = { threshold: 0.2, rootMargin: "100px" }, 
     mobileOptions = { threshold: 0.2, rootMargin: "0px" }
-) {
+) => {
     const ref = useRef(null);
     const [isHidden, setIsHidden] = useState(true);
 
@@ -34,3 +34,5 @@ export default function useIntersectionHide(
     
     return [ref, isHidden];
 }
+
+export default useIntersectionHide;

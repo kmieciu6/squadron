@@ -1,5 +1,5 @@
 'use client';
-import { useTranslation } from '../hooks/useTranslation';
+import useTranslation from '../hooks/useTranslation';
 import photo from "../../../public/images/1.jpg";
 import useIntersectionHide from '../hooks/useIntersectionHide';
 

@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import useIntersectionHide from '../hooks/useIntersectionHide';
-import { useTranslation } from '../hooks/useTranslation';
+import useTranslation from '../hooks/useTranslation';
 import opening_photo from "../../../public/images/dron_image.png"
 import photo1 from "../../../public/images/dron_image.png"
 import photo2 from "../../../public/images/dron_image.png"
@@ -10,7 +10,7 @@ import photo4 from "../../../public/images/dron_image.png"
 import photo5 from "../../../public/images/dron_image.png"
 import photo6 from "../../../public/images/dron_image.png"
 
-export default function Uav() {
+const Uav = () => {
     const { t } = useTranslation('common')
     const [current, setCurrent] = useState(0);
     const [titleRef, isTitleHidden] = useIntersectionHide();
@@ -185,3 +185,5 @@ export default function Uav() {
         </section>
     );
 }
+
+export default Uav;

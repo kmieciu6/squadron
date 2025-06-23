@@ -1,9 +1,9 @@
 'use client';
 import useIntersectionHide from '../hooks/useIntersectionHide';
-import { useTranslation } from '../hooks/useTranslation';
+import useTranslation from '../hooks/useTranslation';
 import opening_photo from "../../../public/images/turbiny.jpg"
 
-export default function OffshoreExpertise() {
+const OffshoreExpertise = () => {
     const { t } = useTranslation('common')
     const [sec1Ref, isSec1Hidden] = useIntersectionHide();
 
@@ -40,3 +40,5 @@ export default function OffshoreExpertise() {
         </section>
     );
 }
+
+export default OffshoreExpertise;

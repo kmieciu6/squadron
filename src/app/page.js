@@ -1,7 +1,7 @@
 "use client";
 import useIntersectionHide from './hooks/useIntersectionHide';
 import Link from 'next/link';
-import { useTranslation } from './hooks/useTranslation';
+import useTranslation from './hooks/useTranslation';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import dron_photo from '../../public/images/dron.png';
@@ -10,7 +10,7 @@ import opening_photo from '../../public/images/turbins_sea.png';
 import soldier_photo from '../../public/images/soldier.png';
 import dron_sea_photo from '../../public/images/dron_sea.jpg';
 
-export default function Home() {
+const Home = () => {
     const { t } = useTranslation('common')
     const [titleRef, isTitleHidden] = useIntersectionHide();
     const [sec1Ref, isSec1Hidden] = useIntersectionHide();
@@ -260,3 +260,5 @@ export default function Home() {
         </div>
     );
 };
+
+export default Home;

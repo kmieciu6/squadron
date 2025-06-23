@@ -1,7 +1,7 @@
 'use client';
-import { useTranslation } from '../hooks/useTranslation';
+import useTranslation from '../hooks/useTranslation';
 
-export default function PrivacyPolicy() {
+const PrivacyPolicy = () => {
     const { t } = useTranslation('common')
 
     return (
@@ -10,3 +10,5 @@ export default function PrivacyPolicy() {
         </section>
     );
 }
+
+export default PrivacyPolicy;
