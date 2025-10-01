@@ -120,6 +120,7 @@ const Footer = () => {
                                 <AdvancedMarker position={center}/>
                             </Map>
                         </APIProvider>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={logo.src} alt="logo" className="logo" />
                         <a href="https://www.google.com/maps/place/Squadron+Sp.+z+o.o./@54.3856259,18.6330175,164m/data=!3m2!1e3!4b1!4m6!3m5!1s0x46fd74a42ca67505:0xf1f8e3ef31bef071!8m2!3d54.3856251!4d18.6336612!16s%2Fg%2F11gyxfjdqx!5m1!1e2?hl=pl-PL&entry=ttu&g_ep=EgoyMDI1MDMxNy4wIKXMDSoASAFQAw%3D%3D" 
                             target="_blank" 
@@ -132,21 +133,22 @@ const Footer = () => {
                             </h5>
                         </a>
                         <div className="tel_mail">
-                            <a href="tel:+48609690340">
+                            <a href="tel:+48609690340" >
                                 <FontAwesomeIcon icon={faPhone} className="icon" />
                                 <h5>
                                     +48 609 690 340
                                 </h5>
                             </a>
-                            <a href="mailto:biuro@squadron.pl">
+                            <a href="mailto:biuro@squadron.pl" >
                                 <FontAwesomeIcon icon={faEnvelope} className="icon" />
                                 <h5>
                                     biuro@squadron.pl
                                 </h5>
                             </a>
                         </div>
-                        <a href="https://pl.linkedin.com/company/squadron-sp.-z-o.o.">
-                            <img src={linkedIn.src} alt="logo linkedIn" className="in"/>
+                        <a href="https://pl.linkedin.com/company/squadron-sp.-z-o.o." className="in">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={linkedIn.src} alt="logo linkedIn"/>
                         </a>
                     </div>
                     <div

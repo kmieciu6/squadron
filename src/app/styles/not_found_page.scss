@@ -1,6 +1,10 @@
 @use "colors" as *;
 @use "mixins" as *;
 
+.dark .not_found_page {
+  background-color: $black-color;
+}
+
 .not_found_page {
     display: flex;
     flex-direction: column;

@@ -81,14 +81,17 @@
                     cursor: pointer;
                     text-decoration: none;
                     color: $white-color;
-                    text-decoration: none;
-                    
+
                     h5:nth-child(2) {
                         margin-left: 1rem;
                     }
 
                     h5 {
                         color: $white-color;
+                    }
+
+                    &:last-of-type {
+                        margin-top: 0.8rem;
                     }
                 }
 
