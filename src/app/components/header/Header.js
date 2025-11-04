@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 import NavLink from "./NavLink";
 import flag_poland from '../../../../public/icons/pl.svg';
 import flag_england from '../../../../public/icons/gb.svg';
-import flag_germany from '../../../../public/icons/de.svg';
+// import flag_germany from '../../../../public/icons/de.svg';
 import logo from "../../../../public/images/logo.png";
 import { MdOutlineBrightnessAuto, MdLightMode, MdDarkMode } from "react-icons/md";
 
@@ -51,19 +51,25 @@ const Header = () => {
 
 function HeaderContent({ className }) {
     const { t, local, changeLanguage } = useTranslation('common');
-    const { theme, setTheme, systemTheme } = useTheme();
+    const { theme, setTheme} = useTheme();
     const [isBurgerMenuOpen, setBurgerMenuOpen] = useState(false);
     const burgerMenuRef = useRef(null);
-    const [isAreasOpen, setAreasOpen] = useState(false);
-    const areasRef = useRef(null);
+    const [isAseOpen, setAseOpen] = useState(false);
+    const aseRef = useRef(null);
     const [isLangOpen, setLangOpen] = useState(false);
     const langRef = useRef(null);
     const [mounted, setMounted] = useState(false);
 
-    const areaLinks = [
-        { path: "/uav", label: t("uav") },
-        { path: "/offshore_expertise", label: t("offshore_expertise") },
-        { path: "/soft", label: t("soft") },
+    const aseLinks = [
+        { path: "https://ase.pl/", label: 'ASE Group' },
+        { path: "https://bpr.ase.pl/", label: 'BPR ASE GROUP' },
+        { path: "https://projmors.ase.pl/", label: 'PROJMORS' },
+        { path: "https://ekokonsult.ase.pl/", label: 'EKO-KONSULT' },
+        { path: "https://aseatex.ase.pl/", label: 'ASE ATEX' },
+        { path: "https://aseoffshore.pl/", label: 'ASE OFFSHORE' },
+        { path: "https://www.elmech.pl/", label: 'ELMECH' },
+        { path: "https://www.ase-lt.lt/", label: 'ASE BALTIC' },
+        { path: "https://ase.pl/pl/camino-project", label: 'CAMINO' },
     ];
 
     useEffect(() => {
@@ -77,8 +83,8 @@ function HeaderContent({ className }) {
             if (langRef.current && !langRef.current.contains(event.target)) {
                 setLangOpen(false);
             }
-            if (areasRef.current && !areasRef.current.contains(event.target)) {
-                setAreasOpen(false);
+            if (aseRef.current && !aseRef.current.contains(event.target)) {
+                setAseOpen(false);
             }
         };
         window.addEventListener("resize", handleResize);
@@ -91,7 +97,7 @@ function HeaderContent({ className }) {
 
     const handleMenuItemClick = () => {
         setBurgerMenuOpen(false);
-        setAreasOpen(false);
+        setAseOpen(false);
     };
 
     useEffect(() => 
@@ -117,6 +123,7 @@ function HeaderContent({ className }) {
         <div className={className}>
             <div className="logo">
                 <NavLink to="/">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={logo.src} alt="Logo" />
                 </NavLink>
             </div>
@@ -129,16 +136,47 @@ function HeaderContent({ className }) {
                     </div>
                     <div className={`nav-links ${isBurgerMenuOpen ? "open" : ""}`}>
                         <NavLink className="nav-link" to="/" onClick={handleMenuItemClick}>{t("main_page")}</NavLink>
-                        <NavLink className="nav-link" to="/about" onClick={handleMenuItemClick}>{t("about")}</NavLink>
 
-                        <div ref={areasRef} className="areas-switcher">
-                            <button className={`nav-link areas-toggle${isAreasOpen ? ' active' : ''}`} onClick={() => setAreasOpen(o => !o)}>
-                                {t("areas")}
+                        <a className="nav-link" onClick={(e) => {
+                            e.preventDefault();
+                            document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+                            handleMenuItemClick();
+                        }}>{t("about")}</a>
+
+                        <a className="nav-link" onClick={(e) => {
+                            e.preventDefault();
+                            document.getElementById('offer')?.scrollIntoView({ behavior: 'smooth' });
+                            handleMenuItemClick();
+                        }}>{t("offer")}</a>
+
+                        <a className="nav-link" onClick={(e) => {
+                            e.preventDefault();
+                            document.getElementById('reference')?.scrollIntoView({ behavior: 'smooth' });
+                            handleMenuItemClick();
+                        }}>{t("reference")}</a>
+
+                        <a className="nav-link" onClick={(e) => {
+                            e.preventDefault();
+                            document.getElementById('cooperation')?.scrollIntoView({ behavior: 'smooth' });
+                            handleMenuItemClick();
+                        }}>{t("cooperation")}</a>
+
+                        <a className="nav-link" onClick={(e) => {
+                            e.preventDefault();
+                            document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' });
+                            handleMenuItemClick();
+                        }}>{t("contact")}</a>
+
+                        <div ref={aseRef} className="ase-switcher"
+                             onMouseEnter={() => setAseOpen(true)}
+                             onMouseLeave={() => setAseOpen(false)}>
+                            <button className={`nav-link ase-toggle${isAseOpen ? ' active' : ''}`} onClick={() => setAseOpen(o => !o)}>
+                                ASE Group
                             </button>
-                            {isAreasOpen && (
-                                <div className="areas-menu">
-                                    {areaLinks.map(({ path, label }) => (
-                                        <NavLink key={path} className="dropdown-item" to={path} onClick={handleMenuItemClick}>
+                            {isAseOpen && (
+                                <div className="ase-menu">
+                                    {aseLinks.map(({ path, label }) => (
+                                        <NavLink key={path} className="dropdown-item" to={ path} onClick={handleMenuItemClick} target="_blank">
                                             {label}
                                         </NavLink>
                                     ))}
@@ -146,13 +184,9 @@ function HeaderContent({ className }) {
                             )}
                         </div>
 
-                        <a className="nav-link" href="#footer" onClick={(e) => {
-                            e.preventDefault();
-                            document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' });
-                            handleMenuItemClick();
-                        }}>{t("contact")}</a>
-
-                        <div ref={langRef} className="language-switcher">
+                        <div ref={langRef} className="language-switcher"
+                             onMouseEnter={() => setLangOpen(true)}
+                             onMouseLeave={() => setLangOpen(false)}>
                             <button className={`nav-link language-toggle${isLangOpen ? ' active' : ''}`} onClick={() => setLangOpen(o => !o)}>
                                 {local.toUpperCase()}
                             </button>
@@ -160,14 +194,17 @@ function HeaderContent({ className }) {
                                 <div className="language-menu">
                                     <button className="dropdown-item" onClick={() => { changeLanguage('pl'); setLangOpen(false); }}>
                                         {t("polish")} 
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
                                         <img src={flag_poland.src} alt="flag" className="flag" />
                                     </button>
                                     <button className="dropdown-item" onClick={() => { changeLanguage('en'); setLangOpen(false); }}>
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
                                         {t("english")} <img src={flag_england.src} alt="flag" className="flag" />
                                     </button>
-                                    <button className="dropdown-item" onClick={() => { changeLanguage('de'); setLangOpen(false); }}>
-                                        {t("german")} <img src={flag_germany.src} alt="flag" className="flag" />
-                                    </button>
+                                    {/*<button className="dropdown-item" onClick={() => { changeLanguage('de'); setLangOpen(false); }}>*/}
+                                    {/*    /!* eslint-disable-next-line @next/next/no-img-element *!/*/}
+                                    {/*    {t("german")} <img src={flag_germany.src} alt="flag" className="flag" />*/}
+                                    {/*</button>*/}
                                 </div>
                             )}
                         </div>

@@ -142,14 +142,14 @@
 
     @include mobile-tablet {
 
-        .areas-toggle,
+        .ase-toggle,
         .language-toggle {
             width: 100%;
             text-align: center;
             border: none;
         }
         
-        .areas-menu,
+        .ase-menu,
         .language-menu {
             display: flex;
             flex-direction: column;
@@ -186,17 +186,14 @@
     }
 
     @include desktop {
-        .areas-switcher,
+        .ase-switcher,
         .language-switcher {
             position: relative;
             display: inline-block;
 
-            .areas-menu,
+            .ase-menu,
             .language-menu {
                 position: absolute;
-                top: calc(100% + 21px);
-                left: 0;
-                right: auto;
                 border: none;
                 box-shadow: 0 4px 8px rgba(0,0,0,0.1);
                 z-index: 20;
@@ -205,12 +202,12 @@
                 display: flex;
                 flex-direction: column;
 
-                &.areas-menu {
+                &.ase-menu {
                     width: 175px;
                 }
             }
             
-            .areas-toggle,
+            .ase-toggle,
             .language-toggle {
                 color: inherit;
                 
@@ -259,7 +256,7 @@
 
 .dark {
 
-    .areas-menu,
+    .ase-menu,
     .language-menu {
         background:  inherit !important;
         border: none !important;
@@ -274,7 +271,7 @@
         }
     }
 
-    .areas-toggle,
+    .ase-toggle,
     .language-toggle {
         color: $white-color !important;
 
@@ -308,7 +305,7 @@
     }
     @include mobile-tablet {
 
-        .areas-toggle,
+        .ase-toggle,
         .language-toggle {
             color: $black-color !important;
         }
@@ -318,7 +315,7 @@
         }
     }
 
-    .areas-menu,
+    .ase-menu,
     .language-menu {
         background:  inherit !important;
         border: none !important;
