@@ -31,7 +31,7 @@ const Contact = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const errors = validateForm(formData, currentLanguage);
+        const errors = validateForm(formData, t);
         if (Object.keys(errors).length === 0) {
             console.log('Formularz przesłany: ', formData);
             setError({});
@@ -49,24 +49,24 @@ const Contact = () => {
         }
     };
 
-    const validateForm = (data, currentLanguage) => {
+    const validateForm = (data) => {
 
         const errors = {};
         if (!data.name.trim()) {
-            errors.name = getTranslation('field_required', currentLanguage);
+            errors.name = t('field_required');
         } else if (data.name.trim().length < 2) {
-            errors.name = getTranslation('must_contain_two_letters', currentLanguage);
+            errors.name = t('must_contain_two_letters');
         }
         if (!data.message.trim()) {
-            errors.message = getTranslation('field_required', currentLanguage);
+            errors.message = t('field_required');
         }
         if (!data.email.trim()) {
-            errors.email = getTranslation('field_required', currentLanguage);
+            errors.email = t('field_required');
         } else if (!isValidEmail(data.email)) {
-            errors.email = getTranslation('invalid_email', currentLanguage);
+            errors.email = t('invalid_email');
         }
         if (!data.consent) {
-            errors.consent = getTranslation('consent', currentLanguage);
+            errors.consent = t('consent');
         }
         return errors;
     };

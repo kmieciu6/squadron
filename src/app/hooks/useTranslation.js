@@ -2,7 +2,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import en_common from '../languages/en/common.json';
 import pl_common from '../languages/pl/common.json';
-// import de_common from '../languages/de/common.json';
 
 const translations = {
     en: {
@@ -11,9 +10,6 @@ const translations = {
     pl: {
         common: pl_common,
     },
-    // de: {
-    //     common: de_common,
-    // },
 };
 
 const supportedLanguages = ['en', 'pl'];

@@ -3,10 +3,11 @@ import { useState, useEffect, useRef } from "react";
 import useTranslation from '../../hooks/useTranslation';
 import { useTheme } from "next-themes";
 import NavLink from "./NavLink";
-import flag_poland from '../../../../public/icons/pl.svg';
-import flag_england from '../../../../public/icons/gb.svg';
-// import flag_germany from '../../../../public/icons/de.svg';
-import logo from "../../../../public/images/logo.png";
+// import flag_poland from '../../../../public/icons/pl.svg';
+// import flag_england from '../../../../public/icons/gb.svg';
+import { useRouter, usePathname } from "next/navigation";
+import logoLight from "../../../../public/images/logo.png";
+import logoDark from "../../../../public/images/logo_white.png";
 import { MdOutlineBrightnessAuto, MdLightMode, MdDarkMode } from "react-icons/md";
 
 const Header = () => {
@@ -40,28 +41,58 @@ const Header = () => {
     }, []);
 
     return (
-        <>
+        <div>
             <div ref={staticHeaderRef}>
                 <HeaderContent className="header static-header" />
             </div>
             <HeaderContent className={`header dynamic-header ${dynamicVisible ? "visible" : "hidden"}`} />
-        </>
+        </div>
     );
 }
 
 function HeaderContent({ className }) {
     const { t, local, changeLanguage } = useTranslation('common');
-    const { theme, setTheme} = useTheme();
+    const { theme, resolvedTheme, setTheme} = useTheme();
     const [isBurgerMenuOpen, setBurgerMenuOpen] = useState(false);
     const burgerMenuRef = useRef(null);
     const [isAseOpen, setAseOpen] = useState(false);
     const aseRef = useRef(null);
-    const [isLangOpen, setLangOpen] = useState(false);
-    const langRef = useRef(null);
     const [mounted, setMounted] = useState(false);
+    const [isFinePointer, setIsFinePointer] = useState(false);
+    const router = useRouter();                // ⬅️ DODAJ
+    const pathname = usePathname();
+    const HOME_PATHS = ["/"];
+
+    const isHome = HOME_PATHS.includes(pathname);
+
+    const SUBPAGE_MENUS = {
+        "/privacy_policy": [
+            { key: "home", label: t("main_page"), href: "/" },
+            { key: "privacy", label: t("privacy_policy"), id: "privacy_policy" },
+        ],
+    };
+
+    // domyślne menu dla „reszty” (w tym 404)
+    const DEFAULT_SUBPAGE_MENU = [
+        { label: t("main_page"), href: "/" },
+    ];
+
+    const currentSubpageMenu = SUBPAGE_MENUS[pathname] || DEFAULT_SUBPAGE_MENU;
+
+    const handleAsePointerDown = (e) => {
+        if (!isFinePointer) {
+            if (!isAseOpen) {
+                e.stopPropagation();                         // React
+                e.nativeEvent.stopImmediatePropagation?.();  // ⬅️ Natywnie (to był brakujący klocek)
+                e.preventDefault();                          // OK dla pointerdown
+                setAseOpen(true);
+            }
+            // gdy otwarte – NIC nie rób; globalny pointerdown (na dokumencie) ma zamknąć
+        }
+    };
 
     const aseLinks = [
-        { path: "https://ase.pl/", label: 'ASE Group' },
+        { path: "https://ase.pl/", label: 'ASE GROUP' },
         { path: "https://bpr.ase.pl/", label: 'BPR ASE GROUP' },
         { path: "https://projmors.ase.pl/", label: 'PROJMORS' },
         { path: "https://ekokonsult.ase.pl/", label: 'EKO-KONSULT' },
@@ -73,27 +104,57 @@ function HeaderContent({ className }) {
     ];
 
     useEffect(() => {
+        const mq = window.matchMedia('(hover: hover) and (pointer: fine)');
+        const update = () => setIsFinePointer(mq.matches);
+        update();
+        if (mq.addEventListener) mq.addEventListener('change', update);
+        else mq.addListener(update);
+        return () => {
+            if (mq.removeEventListener) mq.removeEventListener('change', update);
+            else mq.removeListener(update);
+        };
+    }, []);
+
+    useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth > 1023) setBurgerMenuOpen(false);
         };
-        const handleClick = (event) => {
-            if (burgerMenuRef.current && !burgerMenuRef.current.contains(event.target)) {
-                setBurgerMenuOpen(false);
-            }
-            if (langRef.current && !langRef.current.contains(event.target)) {
-                setLangOpen(false);
-            }
-            if (aseRef.current && !aseRef.current.contains(event.target)) {
-                setAseOpen(false);
-            }
-        };
         window.addEventListener("resize", handleResize);
-        document.addEventListener("click", handleClick);
+
+        if (!isFinePointer) {
+            const handleDocPointerDown = (e) => {
+                const t = e.target;
+                const inAse    = aseRef.current?.contains(t);
+                const inBurger = burgerMenuRef.current?.contains(t);
+
+                // ⬅️ najpierw ASE – klik w przycisk/listę ASE ma zamykać ASE
+                if (inAse) {
+                    setAseOpen(false);
+                    return;
+                }
+
+                // dopiero teraz przepuszczamy interakcje wewnątrz burger
+                if (inBurger) {
+                    return;
+                }
+
+                // poza wszystkim: zamknij wszystko
+                setBurgerMenuOpen(false);
+                setAseOpen(false);
+            };
+
+            document.addEventListener("pointerdown", handleDocPointerDown);
+            return () => {
+                window.removeEventListener("resize", handleResize);
+                document.removeEventListener("pointerdown", handleDocPointerDown);
+            };
+        }
+
         return () => {
             window.removeEventListener("resize", handleResize);
-            document.removeEventListener("click", handleClick);
         };
-    }, []);
+    }, [isFinePointer]);
+
 
     const handleMenuItemClick = () => {
         setBurgerMenuOpen(false);
@@ -119,47 +180,98 @@ function HeaderContent({ className }) {
         }[theme];
     }
 
+    const currentTheme = resolvedTheme || theme;
+    const logoSrc = currentTheme === 'dark' ? logoDark.src : logoLight.src;
+
+    const goHomeOrScrollTop = (e) => {
+        if (e) e.preventDefault();
+        handleMenuItemClick(); // zamknij burger/ASE jeśli otwarte
+
+        if (pathname === "/") {
+            // już jesteśmy na głównej → scroll na samą górę
+            if (typeof window !== "undefined") {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+        } else {
+            // inna strona → przejdź na /
+            router.push("/");
+        }
+    };
+
     return (
         <div className={className}>
             <div className="logo">
-                <NavLink to="/">
+                {/*<NavLink to="/">*/}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={logo.src} alt="Logo" />
-                </NavLink>
+                <a className="nav-link" onClick={goHomeOrScrollTop}>
+                    <img src={logoSrc} alt="Logo" />
+                </a>
+                {/*</NavLink>*/}
             </div>
             <div className="bookmarks">
                 <div ref={burgerMenuRef} className="burger-wrapper">
-                    <div className={`burger-menu ${isBurgerMenuOpen ? "open" : ""}`} onClick={() => setBurgerMenuOpen(o => !o)}>
+                    <div className={`burger-menu ${isBurgerMenuOpen ? "open" : ""}`}
+                         onPointerDown={!isFinePointer ? (e) => {
+                            if (!isBurgerMenuOpen) e.stopPropagation(); // otwieramy – nie zamykaj globalnie
+                         } : undefined}
+                         onClick={() => setBurgerMenuOpen(o => !o)}>
                         <div className="burger-line"></div>
                         <div className="burger-line"></div>
                         <div className="burger-line"></div>
                     </div>
                     <div className={`nav-links ${isBurgerMenuOpen ? "open" : ""}`}>
-                        <NavLink className="nav-link" to="/" onClick={handleMenuItemClick}>{t("main_page")}</NavLink>
+                        {isHome ? (
+                            <>
+                                {/*<a className="nav-link" onClick={goHomeOrScrollTop}>{t("main_page")}</a>*/}
 
-                        <a className="nav-link" onClick={(e) => {
-                            e.preventDefault();
-                            document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-                            handleMenuItemClick();
-                        }}>{t("about")}</a>
+                                <a className="nav-link" onClick={(e) => {
+                                    e.preventDefault();
+                                    document.getElementById('offer')?.scrollIntoView({ behavior: 'smooth' });
+                                    handleMenuItemClick();
+                                }}>{t("offer")}</a>
 
-                        <a className="nav-link" onClick={(e) => {
-                            e.preventDefault();
-                            document.getElementById('offer')?.scrollIntoView({ behavior: 'smooth' });
-                            handleMenuItemClick();
-                        }}>{t("offer")}</a>
+                                <a className="nav-link" onClick={(e) => {
+                                    e.preventDefault();
+                                    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+                                    handleMenuItemClick();
+                                }}>{t("about")}</a>
 
-                        <a className="nav-link" onClick={(e) => {
-                            e.preventDefault();
-                            document.getElementById('reference')?.scrollIntoView({ behavior: 'smooth' });
-                            handleMenuItemClick();
-                        }}>{t("reference")}</a>
+                                <a className="nav-link" onClick={(e) => {
+                                    e.preventDefault();
+                                    document.getElementById('reference')?.scrollIntoView({ behavior: 'smooth' });
+                                    handleMenuItemClick();
+                                }}>{t("reference")}</a>
 
-                        <a className="nav-link" onClick={(e) => {
-                            e.preventDefault();
-                            document.getElementById('cooperation')?.scrollIntoView({ behavior: 'smooth' });
-                            handleMenuItemClick();
-                        }}>{t("cooperation")}</a>
+                                <a className="nav-link" onClick={(e) => {
+                                    e.preventDefault();
+                                    document.getElementById('cooperation')?.scrollIntoView({ behavior: 'smooth' });
+                                    handleMenuItemClick();
+                                }}>{t("cooperation")}</a>
+                            </>
+                        ) : (
+                            <>
+                                {currentSubpageMenu.map((item) => (
+                                    <a
+                                        key={item.key}
+                                        href={item.href || "#"}
+                                        className="nav-link"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            if (item.id) {
+                                                document.getElementById(item.id)?.scrollIntoView({
+                                                    behavior: 'smooth',
+                                                });
+                                            } else {
+                                                router.push(item.href);
+                                            }
+                                            handleMenuItemClick();
+                                        }}
+                                    >
+                                        {item.label}
+                                    </a>
+                                ))}
+                            </>
+                        )}
 
                         <a className="nav-link" onClick={(e) => {
                             e.preventDefault();
@@ -168,15 +280,19 @@ function HeaderContent({ className }) {
                         }}>{t("contact")}</a>
 
                         <div ref={aseRef} className="ase-switcher"
-                             onMouseEnter={() => setAseOpen(true)}
-                             onMouseLeave={() => setAseOpen(false)}>
-                            <button className={`nav-link ase-toggle${isAseOpen ? ' active' : ''}`} onClick={() => setAseOpen(o => !o)}>
-                                ASE Group
+                             onMouseEnter={isFinePointer ? () => setAseOpen(true) : undefined}
+                             onMouseLeave={isFinePointer ? () => setAseOpen(false) : undefined}>
+                            <button
+                                className={`nav-link ase-toggle${isAseOpen ? ' active' : ''}`}
+                                onPointerDown={!isFinePointer ? handleAsePointerDown : undefined}
+                                aria-haspopup="menu"
+                                aria-expanded={isAseOpen}>
+                                ASE GROUP
                             </button>
                             {isAseOpen && (
-                                <div className="ase-menu">
-                                    {aseLinks.map(({ path, label }) => (
-                                        <NavLink key={path} className="dropdown-item" to={ path} onClick={handleMenuItemClick} target="_blank">
+                                <div className="ase-menu" role="menu">
+                                    {aseLinks.map(({ path, label }, i) => (
+                                        <NavLink key={`${label}-${i}`} className="dropdown-item" to={ path} onClick={handleMenuItemClick} target="_blank">
                                             {label}
                                         </NavLink>
                                     ))}
@@ -184,34 +300,36 @@ function HeaderContent({ className }) {
                             )}
                         </div>
 
-                        <div ref={langRef} className="language-switcher"
-                             onMouseEnter={() => setLangOpen(true)}
-                             onMouseLeave={() => setLangOpen(false)}>
-                            <button className={`nav-link language-toggle${isLangOpen ? ' active' : ''}`} onClick={() => setLangOpen(o => !o)}>
-                                {local.toUpperCase()}
-                            </button>
-                            {isLangOpen && (
-                                <div className="language-menu">
-                                    <button className="dropdown-item" onClick={() => { changeLanguage('pl'); setLangOpen(false); }}>
-                                        {t("polish")} 
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img src={flag_poland.src} alt="flag" className="flag" />
-                                    </button>
-                                    <button className="dropdown-item" onClick={() => { changeLanguage('en'); setLangOpen(false); }}>
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        {t("english")} <img src={flag_england.src} alt="flag" className="flag" />
-                                    </button>
-                                    {/*<button className="dropdown-item" onClick={() => { changeLanguage('de'); setLangOpen(false); }}>*/}
-                                    {/*    /!* eslint-disable-next-line @next/next/no-img-element *!/*/}
-                                    {/*    {t("german")} <img src={flag_germany.src} alt="flag" className="flag" />*/}
-                                    {/*</button>*/}
-                                </div>
+                        <button
+                            className="nav-link language-toggle"
+                            onClick={() => {
+                                const next = local === 'pl' ? 'en' : 'pl';
+                                changeLanguage(next);
+                                handleMenuItemClick(); // zamknij burger po wyborze
+                            }}
+                            aria-label={`Change language, current: ${local.toUpperCase()}`}
+                            title={local === 'pl' ? 'Switch to English' : 'Przełącz na polski'}
+                        >
+                            {local === 'pl' ? (
+                                <>
+                                    PL
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    {/*<img src={flag_poland.src} alt="Polish flag" className="flag" />*/}
+                                </>
+                            ) : (
+                                <>
+                                    EN
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    {/*<img src={flag_england.src} alt="English flag" className="flag" />*/}
+                                </>
                             )}
-                        </div>
+                        </button>
+
                         <button
                             className="theme-toggle"
                             onClick={toggleTheme}
                             aria-label="Toggle theme"
+                            title="Toggle theme"
                         >
                             {mounted && Icon && <Icon/>}
                         </button>        
