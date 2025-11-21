@@ -74,7 +74,7 @@ function HeaderContent({ className }) {
 
     // domyślne menu dla „reszty” (w tym 404)
     const DEFAULT_SUBPAGE_MENU = [
-        { label: t("main_page"), href: "/" },
+        { key: "home", label: t("main_page"), href: "/" },
     ];
 
     const currentSubpageMenu = SUBPAGE_MENUS[pathname] || DEFAULT_SUBPAGE_MENU;

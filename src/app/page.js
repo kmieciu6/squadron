@@ -1,9 +1,13 @@
 "use client";
 import useIntersectionHide from './hooks/useIntersectionHide';
 import useTranslation from './hooks/useTranslation';
-import dron from '../../public/images/dron.jpg';
+import drone from '../../public/images/dron.jpg';
 import turbine_photo from '../../public/images/turbiny.jpg';
 import opening_photo from '../../public/images/turbins_sea.png';
+import icon1 from '../../public/icons/tank.svg';
+import icon2 from '../../public/icons/document.svg';
+import icon3 from '../../public/icons/radar1.svg';
+import icon4 from '../../public/icons/drone.svg';
 import {useEffect, useState} from "react";
 
 const Home = () => {
@@ -13,6 +17,7 @@ const Home = () => {
     const [sec2Ref, isSec2Hidden] = useIntersectionHide();
     const [sec3Ref, isSec3Hidden] = useIntersectionHide();
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [current, setCurrent] = useState(0);
     const [resetTimer, setResetTimer] = useState(false);
 
     const slides = [
@@ -24,13 +29,20 @@ const Home = () => {
         {
             title: t("slide2_title"),
             content: t("slide2_text"),
-            image: dron
+            image: drone
         },
         {
             title: t("slide3_title"),
             content: t("slide3_text"),
             image: turbine_photo
         },
+        // {
+        //     type: "video",
+        //     title: t("slide4_title"),
+        //     content: t("slide4_text"),
+        //     video: "/videos/my_video.mp4"
+        // }
+
     ];
 
     useEffect(() => {
@@ -49,7 +61,102 @@ const Home = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
         setResetTimer((prev) => !prev);
     };
-    
+
+    const options = [
+        {
+            key: 'offer1',
+            img: icon1,
+            buttonLabel: t("offer_title1"),
+            content : (
+                <>
+                    <h3>{t("offer_title1_1")}</h3>
+                    <p>{t("offer_text1_1")}</p>
+                    <p>{t("offer_text1_2")}</p>
+                    <p>{t("offer_text1_3")}</p>
+                    <br/>
+                    <h3>{t("offer_title1_2")}</h3>
+                    <p>{t("offer_text1_4")}</p>
+                    <p>{t("offer_text1_5")}</p>
+                    <p>{t("offer_text1_6")}</p>
+                    <p>{t("offer_text1_7")}</p>
+                    <p>{t("offer_text1_8")}</p>
+                    <br/>
+                    <h3>{t("offer_title1_3")}</h3>
+                    <p>{t("offer_text1_9")}</p>
+                    <p>{t("offer_text1_10")}</p>
+                    <p>{t("offer_text1_11")}</p>
+                    <br/>
+                    <h3>{t("offer_title1_4")}</h3>
+                    <p>{t("offer_text1_12")}</p>
+                    <p>{t("offer_text1_13")}</p>
+                    <br/>
+                    <h3>{t("offer_title1_5")}</h3>
+                    <br/>
+                    <h3>{t("offer_title1_6")}</h3>
+                </>
+            ),
+        },
+        {
+            key: 'offer2',
+            img: icon2,
+            buttonLabel: t("offer_title2"),
+            content : (
+                <>
+                    <h3>{t("offer_title2_1")}</h3>
+                    <p>{t("offer_text2_1")}</p>
+                    <p>{t("offer_text2_2")}</p>
+                    <p>{t("offer_text2_3")}</p>
+                    <p>{t("offer_text2_4")}</p>
+                    <p>{t("offer_text2_5")}</p>
+                    <p>{t("offer_text2_6")}</p>
+                    <p>{t("offer_text2_7")}</p>
+                    <br/>
+                    <h3>{t("offer_title2_2")}</h3>
+                    <p>{t("offer_text2_8")}</p>
+                    <p>{t("offer_text2_9")}</p>
+                    <p>{t("offer_text2_10")}</p>
+                    <p>{t("offer_text2_11")}</p>
+                    <p>{t("offer_text2_12")}</p>
+                    <p>{t("offer_text2_13")}</p>
+                </>
+            ),
+        },
+        {
+            key: 'offer3',
+            img: icon3,
+            buttonLabel: t("offer_title3"),
+            content : (
+                <>
+                    <h3>{t("offer_title3_1")}</h3>
+                    <p>{t("offer_text3_1")}</p>
+                    <p>{t("offer_text3_2")}</p>
+                    <p>{t("offer_text3_2")}</p>
+                </>
+            ),
+        },
+        {
+            key: 'offer4',
+            img: icon4,
+            buttonLabel: t("offer_title4"),
+            content : (
+                <>
+                    <h3>{t("offer_title4_1")}</h3>
+                    <p>{t("offer_text4_1")}</p>
+                    <p>{t("offer_text4_2")}</p>
+                    <p>{t("offer_text4_3")}</p>
+                    <p>{t("offer_text4_4")}</p>
+                    <p>{t("offer_text4_5")}</p>
+                    <p>{t("offer_text4_6")}</p>
+                    <br/>
+                    <h3>{t("offer_title4_2")}</h3>
+                    <p>{t("offer_text4_7")}</p>
+                    <p>{t("offer_text4_8")}</p>
+                    <p>{t("offer_text4_9")}</p>
+                </>
+            ),
+        }
+    ];
+
     return (
         <div className='home page' id='home'>
 
@@ -62,7 +169,22 @@ const Home = () => {
                                 key={index}
                                 className={`slide ${index === currentIndex ? "active" : ""}`}
                             >
-                                <img src={slide.image.src} alt={slide.title} className="slide-image" />
+                                {slide.type === "video" ? (
+                                    <video
+                                        src={slide.video}
+                                        className="slide-image"
+                                        autoPlay
+                                        loop
+                                        muted
+                                        playsInline
+                                    />
+                                ) : (
+                                    <img
+                                        src={slide.image.src}
+                                         alt={slide.title}
+                                         className="slide-image"
+                                    />
+                                )}
                                 <div className="overlay">
                                     <div className="text-box">
                                         <div className={`opening_text ${isTitleHidden ? 'hidden' : ''}`} ref={titleRef}>
@@ -79,15 +201,36 @@ const Home = () => {
             </div>
 
             <div className="text text_container">
-                <div className='text1_background'>
+                <div className='text1_background' id='offer'>
                     <div ref={sec1Ref} className={`text text1 text_width ${isSec1Hidden ? 'hidden' : ''}`}>
-
+                        <h1>
+                            {t('offer')}
+                        </h1>
+                        <div className="text1_container">
+                            <div className="switcher_buttons">
+                                {options.map((opt, idx) => (
+                                    <button
+                                        key={opt.key}
+                                        className={idx === current ? "active" : ""}
+                                        onClick={() => setCurrent(idx)}
+                                    >
+                                        <img src={opt.img.src} alt={opt.buttonLabel} />
+                                        <p>{opt.buttonLabel}</p>
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="switcher_text">
+                                {options[current].content}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div className='text2_background' id='areas'>
+                <div className='text2_background' id='about'>
                     <div ref={sec2Ref} className={`text text2 text_width ${isSec2Hidden ? 'hidden' : ''}`}>
-
+                        <h1>
+                            {t("about")}
+                        </h1>
                     </div>
                 </div>
 
@@ -96,9 +239,6 @@ const Home = () => {
                         <h1>
                             {t("cooperation")}
                         </h1>
-                        <div className='text3_images_container'>
-
-                        </div>
                     </div>
                 </div>
             </div>
