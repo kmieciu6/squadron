@@ -20,20 +20,32 @@ const Home = () => {
     const [current, setCurrent] = useState(0);
     const [resetTimer, setResetTimer] = useState(false);
 
+    function highlighted(text) {
+        const parts = text.split(/\*\*(.*?)\*\*/g);
+
+        return parts.map((part, i) =>
+            i % 2 === 1 ? (
+                <span key={i} className="highlight">{part}</span>
+            ) : (
+                <span key={i}>{part}</span>
+            )
+        );
+    }
+
     const slides = [
         {
-            title: t("slide1_title"),
+            title: highlighted(t("slide1_title")),
             content: t("slide1_text"),
             image: opening_photo
         },
         {
-            title: t("slide2_title"),
-            content: t("slide2_text"),
+            title: highlighted(t("slide1_title")),
+            content: t("slide1_text"),
             image: drone
         },
         {
-            title: t("slide3_title"),
-            content: t("slide3_text"),
+            title: highlighted(t("slide1_title")),
+            content: t("slide1_text"),
             image: turbine_photo
         },
         // {
@@ -70,25 +82,25 @@ const Home = () => {
             content : (
                 <>
                     <h3>{t("offer_title1_1")}</h3>
-                    <p>{t("offer_text1_1")}</p>
-                    <p>{t("offer_text1_2")}</p>
-                    <p>{t("offer_text1_3")}</p>
+                    <li><p>{t("offer_text1_1")}</p></li>
+                    <li><p>{t("offer_text1_2")}</p></li>
+                    <li><p>{t("offer_text1_3")}</p></li>
                     <br/>
                     <h3>{t("offer_title1_2")}</h3>
-                    <p>{t("offer_text1_4")}</p>
-                    <p>{t("offer_text1_5")}</p>
-                    <p>{t("offer_text1_6")}</p>
-                    <p>{t("offer_text1_7")}</p>
-                    <p>{t("offer_text1_8")}</p>
+                    <li><p>{t("offer_text1_4")}</p></li>
+                    <li><p>{t("offer_text1_5")}</p></li>
+                    <li><p>{t("offer_text1_6")}</p></li>
+                    <li><p>{t("offer_text1_7")}</p></li>
+                    <li><p>{t("offer_text1_8")}</p></li>
                     <br/>
                     <h3>{t("offer_title1_3")}</h3>
-                    <p>{t("offer_text1_9")}</p>
-                    <p>{t("offer_text1_10")}</p>
-                    <p>{t("offer_text1_11")}</p>
+                    <li><p>{t("offer_text1_9")}</p></li>
+                    <li><p>{t("offer_text1_10")}</p></li>
+                    <li><p>{t("offer_text1_11")}</p></li>
                     <br/>
                     <h3>{t("offer_title1_4")}</h3>
-                    <p>{t("offer_text1_12")}</p>
-                    <p>{t("offer_text1_13")}</p>
+                    <li><p>{t("offer_text1_12")}</p></li>
+                    <li><p>{t("offer_text1_13")}</p></li>
                     <br/>
                     <h3>{t("offer_title1_5")}</h3>
                     <br/>
@@ -103,21 +115,21 @@ const Home = () => {
             content : (
                 <>
                     <h3>{t("offer_title2_1")}</h3>
-                    <p>{t("offer_text2_1")}</p>
-                    <p>{t("offer_text2_2")}</p>
-                    <p>{t("offer_text2_3")}</p>
-                    <p>{t("offer_text2_4")}</p>
-                    <p>{t("offer_text2_5")}</p>
-                    <p>{t("offer_text2_6")}</p>
-                    <p>{t("offer_text2_7")}</p>
+                    <li><p>{t("offer_text2_1")}</p></li>
+                    <li><p>{t("offer_text2_2")}</p></li>
+                    <li><p>{t("offer_text2_3")}</p></li>
+                    <li><p>{t("offer_text2_4")}</p></li>
+                    <li><p>{t("offer_text2_5")}</p></li>
+                    <li><p>{t("offer_text2_6")}</p></li>
+                    <li><p>{t("offer_text2_7")}</p></li>
                     <br/>
                     <h3>{t("offer_title2_2")}</h3>
-                    <p>{t("offer_text2_8")}</p>
-                    <p>{t("offer_text2_9")}</p>
-                    <p>{t("offer_text2_10")}</p>
-                    <p>{t("offer_text2_11")}</p>
-                    <p>{t("offer_text2_12")}</p>
-                    <p>{t("offer_text2_13")}</p>
+                    <li><p>{t("offer_text2_8")}</p></li>
+                    <li><p>{t("offer_text2_9")}</p></li>
+                    <li><p>{t("offer_text2_10")}</p></li>
+                    <li><p>{t("offer_text2_11")}</p></li>
+                    <li><p>{t("offer_text2_12")}</p></li>
+                    <li><p>{t("offer_text2_13")}</p></li>
                 </>
             ),
         },
@@ -128,9 +140,9 @@ const Home = () => {
             content : (
                 <>
                     <h3>{t("offer_title3_1")}</h3>
-                    <p>{t("offer_text3_1")}</p>
-                    <p>{t("offer_text3_2")}</p>
-                    <p>{t("offer_text3_2")}</p>
+                    <li><p>{t("offer_text3_1")}</p></li>
+                    <li><p>{t("offer_text3_2")}</p></li>
+                    <li><p>{t("offer_text3_2")}</p></li>
                 </>
             ),
         },
@@ -141,17 +153,17 @@ const Home = () => {
             content : (
                 <>
                     <h3>{t("offer_title4_1")}</h3>
-                    <p>{t("offer_text4_1")}</p>
-                    <p>{t("offer_text4_2")}</p>
-                    <p>{t("offer_text4_3")}</p>
-                    <p>{t("offer_text4_4")}</p>
-                    <p>{t("offer_text4_5")}</p>
-                    <p>{t("offer_text4_6")}</p>
+                    <li><p>{t("offer_text4_1")}</p></li>
+                    <li><p>{t("offer_text4_2")}</p></li>
+                    <li><p>{t("offer_text4_3")}</p></li>
+                    <li><p>{t("offer_text4_4")}</p></li>
+                    <li><p>{t("offer_text4_5")}</p></li>
+                    <li><p>{t("offer_text4_6")}</p></li>
                     <br/>
                     <h3>{t("offer_title4_2")}</h3>
-                    <p>{t("offer_text4_7")}</p>
-                    <p>{t("offer_text4_8")}</p>
-                    <p>{t("offer_text4_9")}</p>
+                    <li><p>{t("offer_text4_7")}</p></li>
+                    <li><p>{t("offer_text4_8")}</p></li>
+                    <li><p>{t("offer_text4_9")}</p></li>
                 </>
             ),
         }
@@ -189,7 +201,7 @@ const Home = () => {
                                     <div className="text-box">
                                         <div className={`opening_text ${isTitleHidden ? 'hidden' : ''}`} ref={titleRef}>
                                             <h3>{slide.title}</h3>
-                                            <p>{slide.content}</p>
+                                            {/*<p>{slide.content}</p>*/}
                                         </div>
                                     </div>
                                 </div>
@@ -237,7 +249,7 @@ const Home = () => {
                 <div className='text3_background' id='cooperation'>
                     <div ref={sec3Ref} className={`text text3 text_width ${isSec3Hidden ? 'hidden' : ''}`}>
                         <h1>
-                            {t("cooperation")}
+                            {t("partners")}
                         </h1>
                     </div>
                 </div>

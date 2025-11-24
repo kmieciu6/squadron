@@ -181,7 +181,7 @@ function HeaderContent({ className }) {
     }
 
     const currentTheme = resolvedTheme || theme;
-    const logoSrc = currentTheme === 'dark' ? logoDark.src : logoLight.src;
+    const logoSrc = mounted && currentTheme === 'dark' ? logoDark.src : logoLight.src;
 
     const goHomeOrScrollTop = (e) => {
         if (e) e.preventDefault();
