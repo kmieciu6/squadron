@@ -4,10 +4,10 @@ import useTranslation from './hooks/useTranslation';
 import drone from '../../public/images/dron.jpg';
 import turbine_photo from '../../public/images/turbiny.jpg';
 import opening_photo from '../../public/images/turbins_sea.png';
-import icon1 from '../../public/icons/tank.svg';
-import icon2 from '../../public/icons/document.svg';
-import icon3 from '../../public/icons/radar1.svg';
-import icon4 from '../../public/icons/drone.svg';
+import icon1 from '../../public/icons/Rocket car icon.png';
+import icon2 from '../../public/icons/Document icon.png';
+import icon3 from '../../public/icons/radar.png';
+import icon4 from '../../public/icons/Drone icon.png';
 import {useEffect, useState} from "react";
 
 const Home = () => {
@@ -16,6 +16,7 @@ const Home = () => {
     const [sec1Ref, isSec1Hidden] = useIntersectionHide();
     const [sec2Ref, isSec2Hidden] = useIntersectionHide();
     const [sec3Ref, isSec3Hidden] = useIntersectionHide();
+    const [sec4Ref, isSec4Hidden] = useIntersectionHide();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [current, setCurrent] = useState(0);
     const [resetTimer, setResetTimer] = useState(false);
@@ -169,6 +170,23 @@ const Home = () => {
         }
     ];
 
+    const logos = [
+        "/logos/ASE GROUP LOGO.png",
+        "/logos/ASE ATEX ASE GROUP LOGO.png",
+        "/logos/BPR ASE GROUP LOGO.png",
+        "/logos/EKO-KONSULT ASE GROUP LOGO.png",
+        "/logos/PROJMORS ASE GROUP LOGO.png",
+        "/logos/logo.png",
+        "/logos/ASE GROUP LOGO.png",
+        "/logos/ASE ATEX ASE GROUP LOGO.png",
+        "/logos/BPR ASE GROUP LOGO.png",
+        "/logos/EKO-KONSULT ASE GROUP LOGO.png",
+        "/logos/PROJMORS ASE GROUP LOGO.png",
+        "/logos/logo.png",
+    ];
+
+    const allLogos = [...logos, ...logos];
+
     return (
         <div className='home page' id='home'>
 
@@ -240,17 +258,69 @@ const Home = () => {
 
                 <div className='text2_background' id='about'>
                     <div ref={sec2Ref} className={`text text2 text_width ${isSec2Hidden ? 'hidden' : ''}`}>
+                        <div className='container'>
+                            <div className='content'>
+                                <div>
+                                    <h2>
+                                        {t("about_title1")}
+                                    </h2>
+                                    <p>
+                                        {t("about_text1")}
+                                </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='container'>
+                        <div className='content'>
+                                <div>
+                                    <h2>
+                                        {t("about_title2")}
+                                    </h2>
+                                    <p>
+                                        {t("about_text2")}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='container'>
+                            <div className='content'>
+                                <div>
+                                    <h2>
+                                        {t("about_title3")}
+                                    </h2>
+                                    <p>
+                                        {t("about_text3")}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className='text3_background' id='reference'>
+                    <div ref={sec3Ref} className={`text text3 text_width ${isSec3Hidden ? 'hidden' : ''}`}>
                         <h1>
-                            {t("about")}
+                            {t("reference")}
                         </h1>
                     </div>
                 </div>
 
-                <div className='text3_background' id='cooperation'>
-                    <div ref={sec3Ref} className={`text text3 text_width ${isSec3Hidden ? 'hidden' : ''}`}>
+                <div className='text4_background' id='cooperation'>
+                    <div ref={sec4Ref} className={`text text4 text_width ${isSec4Hidden ? 'hidden' : ''}`}>
                         <h1>
                             {t("partners")}
                         </h1>
+                        <div className="logo_slider">
+                            <div className="logo_slider-track">
+                                {allLogos.map((src, index) => (
+                                    <div className="logo_slide" key={index}>
+                                        <img src={src} alt={`partner-${index % logos.length}`} />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

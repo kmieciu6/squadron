@@ -6,8 +6,8 @@ import NavLink from "./NavLink";
 // import flag_poland from '../../../../public/icons/pl.svg';
 // import flag_england from '../../../../public/icons/gb.svg';
 import { useRouter, usePathname } from "next/navigation";
-import logoLight from "../../../../public/images/logo.png";
-import logoDark from "../../../../public/images/logo_white.png";
+import logoLight from "../../../../public/logos/logo.png";
+import logoDark from "../../../../public/logos/logo_white.png";
 import { MdOutlineBrightnessAuto, MdLightMode, MdDarkMode } from "react-icons/md";
 
 const Header = () => {

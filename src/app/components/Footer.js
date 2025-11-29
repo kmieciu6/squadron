@@ -6,7 +6,7 @@ import Contact from "./Contact";
 import { AdvancedMarker, APIProvider, Map } from '@vis.gl/react-google-maps';
 import useTranslation from '../hooks/useTranslation';
 import linkedIn from "../../../public/icons/logo_linkedIn.png";
-import logo from "../../../public/images/logo_white.png";
+import logo from "../../../public/logos/logo_white.png";
 import { usePathname } from "next/navigation";
 
 const Footer = () => {
