@@ -174,7 +174,7 @@
                 transform: translateY(-50%);
                 z-index: 10;         // <-- NAJWYŻSZA WARSTWA
                 background: rgba(0,0,0,0.5);
-                color: #fff;
+                color: $white-color;
                 border: none;
                 padding: 10px 22px;
                 cursor: pointer;
@@ -216,7 +216,12 @@
 
             @include desktop {
                 max-width: 1500px;
+
+                &:last-of-type {
+                    max-width: 90%;
+                }
             }
+
         }
 
         p {
@@ -233,7 +238,6 @@
 
                 @include desktop {
                     width: 100%;
-                    max-width: 1000px;
                 }
 
                 h1 {
@@ -251,17 +255,18 @@
                 }
 
                 p {
-                    //padding-left: 1rem;
                     text-align: left;
                 }
 
                 .text1_container {
                     width: 100%;
                     display: flex;
+                    justify-content: space-around;
                     margin-top: 5rem;
 
                     @include mobile-tablet {
                         flex-direction: column;
+                        justify-content: center;
                         margin-top: 2rem;
                     }
 
@@ -336,8 +341,7 @@
                         text-align: center;
 
                         @include desktop {
-                            width: 70%;
-                            padding-left: 10rem;
+                            width: 60%;
                         }
                     }
                 }
@@ -484,6 +488,7 @@
             z-index: 1;
 
             @include desktop {
+                height: 90vh;
                 background-attachment: fixed;
             }
 
@@ -508,10 +513,6 @@
                     }
                 }
 
-                $slide-width: 230px;   // szerokość jednego kafelka z logo
-                $slide-desktop-width: 350px;
-                $slide-count: 10;      // ILE MASZ RÓŻNYCH LOGO (tyle co w tablicy logos)
-
                 .logo_slider {
                     width: 100%;
                     overflow: hidden;
@@ -521,31 +522,32 @@
 
                 .logo_slider-track {
                     display: flex;
-                    width: calc(#{$slide-width} * #{$slide-count * 2});
-                    animation: logo-scroll 30s linear infinite;
-
-                    @include desktop {
-                        width: calc(#{$slide-desktop-width} * #{$slide-count * 2});
-                    }
+                    width: max-content;
+                    animation: logo-scroll 10s linear infinite;
+                    will-change: transform;
                 }
 
                 .logo_slide {
-                    width: $slide-width;
-                    height: $slide-width;
+                    flex: 0 0 auto;
+                    padding: 0 2rem;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    margin: 0 1rem;
 
                     img {
-                        width: 100%;
+                        width: 220px;
+                        max-width: 100%;
                         object-fit: contain;
                         transition: 0.3s ease;
                         padding: 1rem;
 
+                        @include desktop {
+                            width: 300px;
+                        }
+
                         &:hover {
-                            opacity: 1;
                             transform: scale(1.2);
+                            //cursor: pointer;
                         }
                     }
                 }
@@ -555,8 +557,7 @@
                         transform: translateX(0);
                     }
                     100% {
-                        // przesuwamy się dokładnie o szerokość JEDNEGO zestawu (10 slajdów)
-                        transform: translateX(calc(-#{$slide-width} * #{$slide-count}));
+                        transform: translateX(-50%);
                     }
                 }
             }

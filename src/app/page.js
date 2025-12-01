@@ -176,13 +176,6 @@ const Home = () => {
         "/logos/BPR ASE GROUP LOGO.png",
         "/logos/EKO-KONSULT ASE GROUP LOGO.png",
         "/logos/PROJMORS ASE GROUP LOGO.png",
-        "/logos/logo.png",
-        "/logos/ASE GROUP LOGO.png",
-        "/logos/ASE ATEX ASE GROUP LOGO.png",
-        "/logos/BPR ASE GROUP LOGO.png",
-        "/logos/EKO-KONSULT ASE GROUP LOGO.png",
-        "/logos/PROJMORS ASE GROUP LOGO.png",
-        "/logos/logo.png",
     ];
 
     const allLogos = [...logos, ...logos];
