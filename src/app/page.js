@@ -6,7 +6,7 @@ import turbine_photo from '../../public/images/turbiny.jpg';
 import opening_photo from '../../public/images/turbins_sea.png';
 import icon1 from '../../public/icons/Rocket car icon.png';
 import icon2 from '../../public/icons/Document icon.png';
-import icon3 from '../../public/icons/radar.png';
+import icon3 from '../../public/icons/Anti-drone systems.png';
 import icon4 from '../../public/icons/Drone icon.png';
 import {useEffect, useState} from "react";
 
@@ -171,11 +171,26 @@ const Home = () => {
     ];
 
     const logos = [
-        "/logos/ASE GROUP LOGO.png",
-        "/logos/ASE ATEX ASE GROUP LOGO.png",
-        "/logos/BPR ASE GROUP LOGO.png",
-        "/logos/EKO-KONSULT ASE GROUP LOGO.png",
-        "/logos/PROJMORS ASE GROUP LOGO.png",
+        {
+            logo: "/logos/ASE GROUP LOGO.png",
+            link: "https://ase.pl/"
+        },
+        {
+            logo: "/logos/ASE ATEX ASE GROUP LOGO.png",
+            link: "https://aseatex.ase.pl/"
+        },
+        {
+            logo: "/logos/BPR ASE GROUP LOGO.png",
+            link: "https://ase.pl/pl/camino-project"
+        },
+        {
+            logo: "/logos/EKO-KONSULT ASE GROUP LOGO.png",
+            link: "https://ekokonsult.ase.pl/"
+        },
+        {
+            logo: "/logos/PROJMORS ASE GROUP LOGO.png",
+            link: "https://projmors.ase.pl/"
+        }
     ];
 
     const allLogos = [...logos, ...logos];
@@ -307,9 +322,11 @@ const Home = () => {
                         </h1>
                         <div className="logo_slider">
                             <div className="logo_slider-track">
-                                {allLogos.map((src, index) => (
+                                {allLogos.map((item, index) => (
                                     <div className="logo_slide" key={index}>
-                                        <img src={src} alt={`partner-${index % logos.length}`} />
+                                        <a href={item.link} target="_blank" rel="noopener noreferrer">
+                                            <img src={item.logo} alt={`partner-${index % logos.length}`}/>
+                                        </a>
                                     </div>
                                 ))}
                             </div>
