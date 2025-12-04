@@ -3,6 +3,7 @@ import "./globals.scss";
 import PageLoader from "./components/PageLoader";
 import Header from "./components/header/Header";
 import Footer from "./components/Footer";
+import {CookiesConsentProvider} from "@/app/context/CookiesConsentContext";
 
 export const metadata = {
     title: "Squadron",
@@ -14,13 +15,15 @@ const RootLayout = ({ children }) => {
         <html lang="en" suppressHydrationWarning>
             <body>
                 <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-                    <PageLoader>
-                        <Header/>
-                        <main>
-                            {children}
-                        </main>
-                        <Footer/>
-                    </PageLoader>
+                    <CookiesConsentProvider>
+                        <PageLoader>
+                            <Header/>
+                            <main>
+                                {children}
+                            </main>
+                            <Footer/>
+                        </PageLoader>
+                    </CookiesConsentProvider>
                 </ThemeProvider>
             </body>
         </html>
