@@ -1,166 +1,160 @@
 @use "colors" as *;
 @use "mixins" as *;
 
+.dark .contact {
+    background-color: $main-color2;
+}
+
 .contact {
-    width: 40%;
+    padding-top: 5rem;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 1.5s ease 0.2s;
+
+    &.hidden {
+        opacity: 0;
+    }
 
     @include mobile {
-        margin-top: 2rem;
-        width: 80%;
-        border-top: 2px solid $main-color;
+        align-items: center;
+        justify-content: center;
     }
-    
-    .contact_container {
+
+    @include desktop {
+        padding-top: 8rem;
+    }
+
+    h1 {
+        margin-bottom: 1rem;
+    }
+
+    .form {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        
-        @include mobile {
-            width: 80%;
-            align-items: center;
-            margin: auto;
-        }
-        
-        @include mobile {
-            justify-content: center;
+        width: 100%;
+        min-width: 180px;
+        max-width: 400px;
+
+        label {
+            margin-top: 2rem;
         }
 
-        h2 {
-            color: $white-color !important;
-
-            @include mobile {
-                margin-top: 2rem;
-            }
+        .success {
+            color: rgb(0, 165, 0);
         }
 
-        .form {
-            display: flex;
-            flex-direction: column;
-            // align-items: center;
+        .error {
+            color: red;
+            font-size: 15px;
+        }
+
+        .input {
             width: 100%;
-            min-width: 180px;
-            max-width: 280px;
+            background: #D9D9D9;
+            border: none;
+            padding: 0.5rem;
+        }
 
-            label {
-                margin-top: 1rem;
+        textarea {
+            resize: none;
+            overflow: hidden;
+        }
+
+        .checkbox_container {
+            width: 100%;
+            margin-bottom: 1rem;
+
+            .checkbox {
+                margin-bottom: 1rem;
+                cursor: pointer;
+                display: block;
+                position: relative;
+                padding-left: 35px;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                color: $white-color;
+
+                input {
+                    position: absolute;
+                    opacity: 0;
+                    cursor: pointer;
+                    height: 0;
+                    width: 0;
+                }
+
+                .checkmark {
+                    position: absolute;
+                    top: 5px;
+                    left: 0;
+                    height: 25px;
+                    width: 25px;
+                    background-color: #eee;
+                    transition: .5s;
+
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        display: none;
+                        left: 9px;
+                        top: 3px;
+                        width: 8px;
+                        height: 15px;
+                        border: solid white;
+                        border-width: 0 3px 3px 0;
+                        -webkit-transform: rotate(45deg);
+                        -ms-transform: rotate(45deg);
+                        transform: rotate(45deg);
+                    }
+
+                }
+
+                &:hover input ~ .checkmark {
+                    background-color: #ccc;
+                }
+
+                input:checked ~ .checkmark {
+                    background-color: $main-color;
+                }
+
+                input:checked ~ .checkmark:after {
+                    display: block;
+                }
 
                 p {
-                    color: $white-color !important;
+                    //font-size: 15px;
                 }
             }
-            
-            .success {
-                color: rgb(0, 165, 0);
-            }
+        }
 
-            .error {
-                color: red;
-                font-size: 15px;
-            }
+        .button {
+            display: flex;
+            justify-content: center;
 
-            .input {
-                width: 100%;
-                background: #D9D9D9;
+            button {
+                margin: 2rem 0 4rem 0;
+                background: $main-color;
+                padding: 0.2rem 2rem;
+                color: $white-color;
                 border: none;
-                padding: 0.5rem;
-            }
+                width: 100%;
+                max-width: 150px;
+                align-items: center;
+                transition: 0.5s;
 
-            textarea {
-                resize: none;
-                overflow: hidden;
-            }
-
-            .checkbox_container {
-                // text-align: justify;
-                width: 80%;
-
-                .checkbox {
-                    cursor: pointer;
-                    display: block;
-                    position: relative;
-                    padding-left: 35px;
-                    -webkit-user-select: none;
-                    -moz-user-select: none;
-                    -ms-user-select: none;
-                    user-select: none;
-                    color: $white-color;
-
-                    input {
-                        position: absolute;
-                        opacity: 0;
-                        cursor: pointer;
-                        height: 0;
-                        width: 0;
-                    }
-
-                    .checkmark {
-                        position: absolute;
-                        top: 5px;
-                        left: 0;
-                        height: 25px;
-                        width: 25px;
-                        background-color: #eee;
-                        transition: .5s;
-
-                        &:after {
-                            content: "";
-                            position: absolute;
-                            display: none;
-                            left: 9px;
-                            top: 3px;
-                            width: 8px;
-                            height: 15px;
-                            border: solid white;
-                            border-width: 0 3px 3px 0;
-                            -webkit-transform: rotate(45deg);
-                            -ms-transform: rotate(45deg);
-                            transform: rotate(45deg);
-                        }
-
-                    }
-
-                    &:hover input ~ .checkmark {
-                        background-color: #ccc;
-                    }
-                    
-                    input:checked ~ .checkmark {
-                        background-color: $main-color;
-                    }
-
-                    input:checked ~ .checkmark:after {
-                        display: block;
-                    }
-
-                    p {
-                        font-size: 15px;
-                    }
-                }
-            }
-
-            .button {
-                display: flex;
-                justify-content: center;
-                
-                button {
-                    margin: 1rem 0; 
-                    background: $main-color;
-                    padding: 0.2rem 2rem;
-                    color: $white-color;
-                    border: none;
-                    width: 100%;
-                    max-width: 150px;
-                    align-items: center;
-                    transition: 0.5s;
-                    
-                    @include desktop {
-                        &:hover {
-                            background: $accent-color;
-                        }
-                    }
-                    
-                    &:active {
+                @include desktop {
+                    &:hover {
                         background: $accent-color;
                     }
+                }
+
+                &:active {
+                    background: $accent-color;
                 }
             }
         }

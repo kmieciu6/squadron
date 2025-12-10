@@ -7,6 +7,7 @@
   "about_title2": "Doświadczenie",
   "about_title3": "Dlaczego my",
   "accept": "Akceptuję",
+  "accept_cookies_to_show_map": "Zaakceptuj cookie, by wyświetlić mapę.",
   "consent": "Musisz wyrazić zgodę na przetwarzanie danych osobowych.",
   "consent_text": "Wyrażam zgodę na przetwarzanie danych osobowych.",
   "contact": "Kontakt",
@@ -84,6 +85,7 @@
   "send": "Wyślij",
   "slide1_text": "",
   "slide1_title": "Zapewniamy **nowatorskie rozwiązania** w dziedzinie bezpieczeństwa infrastruktury krytycznej",
+  "verify_recaptcha": "Zweryfikuj reCAPTCHA",
   "understand_and_accept": "Rozumiem i akceptuje",
   "write_to_us": "Napisz do nas"
 }

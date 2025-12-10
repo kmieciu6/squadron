@@ -7,6 +7,7 @@
   "about_title2": "Experience",
   "about_title3": "Why us",
   "accept": "I accept",
+  "accept_cookies_to_show_map": "Please accept cookies to view the map.",
   "consent": "You must consent to the processing of personal data.",
   "consent_text": "I consent to the processing of personal data.",
   "contact": "Contact",
@@ -84,6 +85,7 @@
   "send": "Send",
   "slide1_text": "",
   "slide1_title": "We provide **innovative solutions** in the field of critical infrastructure security",
+  "verify_recaptcha": "Verify reCAPTCHA",
   "understand_and_accept": "I understand and accept",
   "write_to_us": "Write to us"
 }

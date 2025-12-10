@@ -4,6 +4,7 @@ import PageLoader from "./components/PageLoader";
 import Header from "./components/header/Header";
 import Footer from "./components/Footer";
 import {CookiesConsentProvider} from "@/app/context/CookiesConsentContext";
+import CookieBanner from "@/app/components/CookieBanner";
 
 export const metadata = {
     title: "Squadron",
@@ -18,6 +19,7 @@ const RootLayout = ({ children }) => {
                     <CookiesConsentProvider>
                         <PageLoader>
                             <Header/>
+                            <CookieBanner/>
                             <main>
                                 {children}
                             </main>

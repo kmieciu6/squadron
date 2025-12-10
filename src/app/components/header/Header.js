@@ -68,13 +68,18 @@ function HeaderContent({ className }) {
     const SUBPAGE_MENUS = {
         "/privacy_policy": [
             { key: "home", label: t("main_page"), href: "/" },
-            { key: "privacy", label: t("privacy_policy"), id: "privacy_policy" },
+            { key: "contact", label: t("contact"), href: "/contact" },
+            // { key: "privacy", label: t("privacy_policy"), id: "privacy_policy" },
         ],
+        "/contact": [
+            { key: "home", label: t("main_page"), href: "/" },
+        ]
     };
 
     // domyślne menu dla „reszty” (w tym 404)
     const DEFAULT_SUBPAGE_MENU = [
         { key: "home", label: t("main_page"), href: "/" },
+        { key: "contact", label: t("contact"), href: "/contact" },
     ];
 
     const currentSubpageMenu = SUBPAGE_MENUS[pathname] || DEFAULT_SUBPAGE_MENU;
@@ -247,6 +252,8 @@ function HeaderContent({ className }) {
                                     document.getElementById('cooperation')?.scrollIntoView({ behavior: 'smooth' });
                                     handleMenuItemClick();
                                 }}>{t("cooperation")}</a>
+
+                                <a className="nav-link" href={"/contact"}>{t("contact")}</a>
                             </>
                         ) : (
                             <>
@@ -272,12 +279,6 @@ function HeaderContent({ className }) {
                                 ))}
                             </>
                         )}
-
-                        <a className="nav-link" onClick={(e) => {
-                            e.preventDefault();
-                            document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' });
-                            handleMenuItemClick();
-                        }}>{t("contact")}</a>
 
                         <div ref={aseRef} className="ase-switcher"
                              onMouseEnter={isFinePointer ? () => setAseOpen(true) : undefined}

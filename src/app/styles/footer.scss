@@ -7,116 +7,108 @@
     overflow-x: hidden;
 
     .footer_container {
-        max-width: 1800px;
-        padding: 3rem 0 0.5rem 0;
+        max-width: 2000px;
+        padding: 4rem 0 0.5rem 0;
         height: auto;
         margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+
+        @include desktop {
+            padding: 6rem 0 0.5rem 0;
+        }
+
+        h3, h5, .icon {
+            color: $white-color;
+        }
 
         .info_contact {
             display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
 
             @include desktop {
                 flex-direction: row;
-                justify-content: space-around;        
+                justify-content: space-between;
+                padding: 0 1rem;
             }
 
-            @include mobile {
-                flex-direction: column;
+            @include mobile-tablet {
                 align-items: center;
             }
 
-            @include tablet {
-                justify-content: space-around;        
-            }
-            
-            .info {
-                display: flex;
-                flex-direction: column;
-                height: auto;
-                width: 50%;
-                max-width: 600px;
-                
-                @include mobile {
-                    width: 80%;
-                    align-items: center;
+            .logo {
+                height: 100px;
+
+                @include mobile-tablet {
+                    width: 300px;
+                    height: auto;
                 }
 
                 @include desktop {
-                    margin-left: 3rem;
+                    padding-right: 1rem;
                 }
+            }
 
-                h1 {
-                    color: $white-color;
-                    margin-bottom: 2rem;
-                    
-                    @include desktop {
-                        margin-bottom: 3rem;
-                    }
-                }
-                
-                .map {
-                    width: 100%;
-                    height: 200px;
-                    min-width: 250px;
-                    min-height: 200px;
+            .rectangle {
+                height: 40px;
+            }
 
-                    @include desktop {
-                        height: 300px;
-                    }
-                }
+            .address {
+                width: 450px;
+                display: flex;
+                flex-direction: row;
+                cursor: pointer;
+                text-decoration: none;
+                color: $white-color;
 
-                .logo {
-                    width: 200px;           
-                    margin: 2rem 0 1rem 0;
-                }
-            
                 @include mobile-tablet {
-                    flex-direction: column;
-                }
-                
-                a {
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    cursor: pointer;
-                    text-decoration: none;
-                    color: $white-color;
-
-                    h5:nth-child(2) {
-                        margin-left: 1rem;
-                    }
-
-                    h5 {
-                        color: $white-color;
-                    }
-
-                    &:last-of-type {
-                        margin-top: 0.8rem;
-                    }
+                    margin-top: 2rem;
                 }
 
-                .address {
-                    width: 140px;
+                div {
+                    margin-left: 1rem;
                 }
 
-                .tel_mail {
-                    margin: 1rem 0;
-                    width: 200px;
+                h3 {
+                    margin-bottom: .5rem;
+                }
+            }
 
-                    .icon {
-                        height: 20px;
-                    }     
+            .tel_mail {
+                display: flex;
+                width: 450px;
+
+                @include desktop {
+                    padding-left: 1rem;
                 }
 
-                .in {
-                    width: 30px;
+                @include mobile-tablet {
+                    margin-top: 2rem;
+                }
+
+                .icon {
+                    height: 30px;
+                    margin-right: 1rem;
+                }
+
+                h5 {
+                    color: $main-color;
+                }
+
+                a:first-of-type h5 {
+                    margin: .5rem 0;
                 }
             }
         }
 
-        .info_map {
-            margin-top: 2rem;
+        .copyright {
+            margin-top: 4rem;
             text-align: center;
+
+            @include desktop {
+                margin-top: 5rem;
+            }
 
             p {
                 color: $white-color;
@@ -125,24 +117,13 @@
         }
     }
 
-    /* Początkowy stan – elementy są przesunięte i niewidoczne */
-    .slide-from-left,
-    .slide-from-right {
+    /* Animacja */
+    .slide-from-bottom {
         opacity: 0;
+        transform: translateY(60px);
         transition: transform 0.8s ease-out, opacity 0.8s ease-out;
     }
 
-    /* Wersja z lewej: przesuwamy w lewo na start */
-    .slide-from-left {
-        transform: translateX(-50px);
-    }
-
-    /* Wersja z prawej: przesuwamy w prawo na start */
-    .slide-from-right {
-        transform: translateX(50px);
-    }
-
-    /* Gdy element jest widoczny – wraca na pozycję i staje się w pełni widoczny */
     .slide-in {
         opacity: 1;
         transform: translateX(0);
