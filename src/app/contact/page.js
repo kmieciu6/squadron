@@ -25,7 +25,7 @@ const Contact = () => {
     const [recaptchaToken, setRecaptchaToken] = useState("");
     const [isSending, setIsSending] = useState(false);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-    const [sec1Ref, isSec1Hidden] = useIntersectionHide();
+    const [secRef, isSecHidden] = useIntersectionHide();
     const recaptchaRef = useRef(null);
 
     const handleChange = (e) => {
@@ -141,120 +141,122 @@ const Contact = () => {
     };
 
     return (
-        <div ref={sec1Ref} className={`contact ${isSec1Hidden ? 'hidden' : ''}`}>
-            <h1>
-                {t('contact')}
-            </h1>
+        <div className='contact'>
+            <div ref={secRef} className={`contact_container ${isSecHidden ? 'hidden' : ''}`}>
+                <h1>
+                    {t('contact')}
+                </h1>
 
-            {showSuccessMessage && (
-                <p className="success">{t("form_submitted_successfully")}</p>
-            )}
-
-            {errors.server && <p className="error">{errors.server}</p>}
-
-            <form
-                autoComplete="on"
-                onSubmit={handleSubmit}
-                noValidate
-                className="form"
-            >
-                <label htmlFor="name">
-                    <p>{t("name")}</p>
-                </label>
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    className="input"
-                    autoComplete="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                />
-                {errors.name && <span className="error">{errors.name}</span>}
-
-                <label htmlFor="email">
-                    <p>{t("email")}</p>
-                </label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="input"
-                    autoComplete="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                />
-                {errors.email && <span className="error">{errors.email}</span>}
-
-                <label htmlFor="phone">
-                    <p>{t("phone")}</p>
-                </label>
-                <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    className="input"
-                    autoComplete="tel"
-                    value={formData.phone}
-                    onChange={handleChange}
-                />
-
-                <label htmlFor="message">
-                    <p>{t("message")}</p>
-                </label>
-                <textarea
-                    id="message"
-                    name="message"
-                    className="input"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={4}
-                />
-                {errors.message && <span className="error">{errors.message}</span>}
-
-                <div className="checkbox_container">
-                    <label htmlFor="consent" className="checkbox">
-                        <input
-                            type="checkbox"
-                            id="consent"
-                            name="consent"
-                            checked={formData.consent}
-                            onChange={handleChange}
-                        />
-                        <span className="checkmark" />
-                        <p>{t("consent_text")}</p>
-                    </label>
-                    {errors.consent && (
-                        <span className="error">{errors.consent}</span>
-                    )}
-                </div>
-
-                {/* reCAPTCHA + cookies */}
-                <div className="recaptcha">
-                    {isAccepted ? (
-                        <ReCAPTCHA
-                            sitekey={RECAPTCHA_SITE_KEY}
-                            ref={recaptchaRef}
-                            onChange={(token) => setRecaptchaToken(token || "")}
-                            theme="light"
-                        />
-                    ) : (
-                        <ConsentPlaceholder
-                            text={t("accept_cookies_to_use_recaptcha")}
-                            onAccept={acceptCookies}
-                        />
-                    )}
-                </div>
-                {errors.recaptcha && (
-                    <span className="error">{errors.recaptcha}</span>
+                {showSuccessMessage && (
+                    <p className="success">{t("form_submitted_successfully")}</p>
                 )}
 
-                <div className="button">
-                    <button type="submit" disabled={isSending}>
-                        {isSending ? t("sending") || "Wysyłanie..." : t("send")}
-                    </button>
-                </div>
-            </form>
+                {errors.server && <p className="error">{errors.server}</p>}
+
+                <form
+                    autoComplete="on"
+                    onSubmit={handleSubmit}
+                    noValidate
+                    className="form"
+                >
+                    <label htmlFor="name">
+                        <p>{t("name")}</p>
+                    </label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        className="input"
+                        autoComplete="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                    />
+                    {errors.name && <span className="error">{errors.name}</span>}
+
+                    <label htmlFor="email">
+                        <p>{t("email")}</p>
+                    </label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        className="input"
+                        autoComplete="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                    />
+                    {errors.email && <span className="error">{errors.email}</span>}
+
+                    <label htmlFor="phone">
+                        <p>{t("phone")}</p>
+                    </label>
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        className="input"
+                        autoComplete="tel"
+                        value={formData.phone}
+                        onChange={handleChange}
+                    />
+
+                    <label htmlFor="message">
+                        <p>{t("message")}</p>
+                    </label>
+                    <textarea
+                        id="message"
+                        name="message"
+                        className="input"
+                        value={formData.message}
+                        onChange={handleChange}
+                        rows={4}
+                    />
+                    {errors.message && <span className="error">{errors.message}</span>}
+
+                    <div className="checkbox_container">
+                        <label htmlFor="consent" className="checkbox">
+                            <input
+                                type="checkbox"
+                                id="consent"
+                                name="consent"
+                                checked={formData.consent}
+                                onChange={handleChange}
+                            />
+                            <span className="checkmark" />
+                            <p>{t("consent_text")}</p>
+                        </label>
+                        {errors.consent && (
+                            <span className="error">{errors.consent}</span>
+                        )}
+                    </div>
+
+                    {/* reCAPTCHA + cookies */}
+                    <div className="recaptcha">
+                        {isAccepted ? (
+                            <ReCAPTCHA
+                                sitekey={RECAPTCHA_SITE_KEY}
+                                ref={recaptchaRef}
+                                onChange={(token) => setRecaptchaToken(token || "")}
+                                theme="light"
+                            />
+                        ) : (
+                            <ConsentPlaceholder
+                                text={t("accept_cookies_to_use_recaptcha")}
+                                onAccept={acceptCookies}
+                            />
+                        )}
+                    </div>
+                    {errors.recaptcha && (
+                        <span className="error">{errors.recaptcha}</span>
+                    )}
+
+                    <div className="button">
+                        <button type="submit" disabled={isSending}>
+                            {isSending ? t("sending") || "Wysyłanie..." : t("send")}
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };
