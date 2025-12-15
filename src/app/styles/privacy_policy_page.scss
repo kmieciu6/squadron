@@ -1,0 +1,15 @@
+@use "colors" as *;
+@use "mixins" as *;
+
+.dark .privacy_policy {
+    background: $main-color2;
+}
+
+.privacy_policy {
+    padding: 3rem 0;
+    height: 100vh;
+
+    @include desktop {
+        padding: 8rem 0;
+    }
+}

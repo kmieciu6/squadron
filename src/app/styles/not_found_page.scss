@@ -2,7 +2,7 @@
 @use "mixins" as *;
 
 .dark .not_found_page {
-  background-color: $black-color;
+    background-color: $main-color2;
 }
 
 .not_found_page {
@@ -10,10 +10,10 @@
     flex-direction: column;
     align-items: center;
     text-align: justify;
-    padding: 2rem 0;
+    padding: 3rem 0;
 
     @include desktop {
-        padding: 5rem 0;
+        padding: 8rem 0;
     }
 
     p {
@@ -25,12 +25,18 @@
         }
     }
 
+    button {
+        background-color: $main-color;
+        padding: .5rem 1rem;
+    }
+
     img {
         margin-top: 2rem;
         width: 90%;
+        height: auto;
 
         @include desktop {
-            width: 50%;
+            max-width: 600px;
         }
     }
 }
