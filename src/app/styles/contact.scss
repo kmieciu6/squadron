@@ -27,9 +27,6 @@
         &.hidden {
             opacity: 0;
         }
-
-        @include mobile-tablet {
-        }
     }
 
     @include mobile {
@@ -145,8 +142,8 @@
                     display: block;
                 }
 
-                p {
-                    //font-size: 15px;
+                .link {
+                    color: $main-color;
                 }
             }
         }
@@ -158,11 +155,8 @@
             button {
                 margin: 2rem 0 4rem 0;
                 background: $main-color;
-                padding: 0.2rem 2rem;
-                color: $white-color;
+                padding: 0.5rem 2rem ;
                 border: none;
-                width: 100%;
-                max-width: 150px;
                 align-items: center;
                 transition: 0.5s;
 
@@ -175,6 +169,19 @@
                 &:active {
                     background: $accent-color;
                 }
+            }
+        }
+
+        .consent_placeholder {
+            background: rgba(red, 0.3);
+            padding: 1rem;
+            align-items: center;
+            text-align: center;
+
+            button {
+                background: $main-color;
+                margin-top: 1rem;
+                padding: .5rem 1rem;
             }
         }
     }

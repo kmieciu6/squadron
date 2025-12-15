@@ -5,6 +5,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { useCookiesConsent } from "../context/CookiesConsentContext";
 import ConsentPlaceholder from "../components/ConsentPlaceholder";
 import useIntersectionHide from "@/app/hooks/useIntersectionHide";
+import Link from "next/link";
 
 const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
@@ -223,7 +224,14 @@ const Contact = () => {
                                 onChange={handleChange}
                             />
                             <span className="checkmark" />
-                            <p>{t("consent_text")}</p>
+                            <p>
+                                {`${t("consent_text")} `}
+                                <Link href="/privacy_policy"
+                                    className="link"
+                                    >
+                                    {`${t("privacy_policy")}.`}
+                                </Link>
+                            </p>
                         </label>
                         {errors.consent && (
                             <span className="error">{errors.consent}</span>
@@ -243,7 +251,10 @@ const Contact = () => {
                             <ConsentPlaceholder
                                 text={t("accept_cookies_to_use_recaptcha")}
                                 onAccept={acceptCookies}
-                            />
+                                className='consent_placeholder'
+                            >
+                                <button onClick={acceptCookies}>{t("accept")}</button>
+                            </ConsentPlaceholder>
                         )}
                     </div>
                     {errors.recaptcha && (
