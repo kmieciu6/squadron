@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import useTranslation from '../hooks/useTranslation';
@@ -88,6 +88,7 @@ const Footer = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="address">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={rectangle.src} alt="rectangle" className="rectangle" />
                         <div>
                             <h3>
@@ -104,6 +105,7 @@ const Footer = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="address">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={rectangle.src} alt="rectangle" className="rectangle" />
                         <div>
                             <h3>

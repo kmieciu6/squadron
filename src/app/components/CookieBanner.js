@@ -18,7 +18,7 @@ const CookieBanner = () => {
         <div className="cookie_banner">
             <p>
                 {t('cookies_text')}
-                <a href="/privacy_policy_page">{t('privacy_policy')}</a>
+                <a href="/privacy_policy">{t('privacy_policy')}</a>
             </p>
             <div className="cookie_buttons">
                 <button onClick={acceptCookies}>{t('accept')}</button>
