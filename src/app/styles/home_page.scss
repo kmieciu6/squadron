@@ -38,9 +38,12 @@
                 background-color: rgba($main-color2, 0.7) !important;
             }
 
-            &:nth-of-type(2) .content,
-            &:last-of-type .content {
+            &:nth-of-type(2) .content {
                 background-color: rgba($main-color2, 1) !important;
+            }
+
+            &:last-of-type .content {
+                background-color: rgba($main-color2, 0.8) !important;
 
             }
         }
@@ -417,7 +420,12 @@
                             .content {
                                 border-radius: 25px 25px 0 0;
                                 left: 10%;
+                                background-color: rgba($main-color2, .7);
                                 width: 32%;
+
+                                h2, p {
+                                    color: $white-color;
+                                }
                             }
                         }
                     }
@@ -447,9 +455,13 @@
                             border-radius: 0 25px 25px 25px;
 
                             .content {
-                                background-color: rgba($main-color3, 1);
+                                background-color: rgba($main-color2, .7);
                                 height: 100%;
                                 border-radius: 0 0 0 25px;
+
+                                h2, p {
+                                    color: $white-color;
+                                }
                             }
                         }
                     }
