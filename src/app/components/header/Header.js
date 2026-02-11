@@ -3,11 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import useTranslation from '../../hooks/useTranslation';
 import { useTheme } from "next-themes";
 import NavLink from "./NavLink";
-// import flag_poland from '../../../../public/icons/pl.svg';
-// import flag_england from '../../../../public/icons/gb.svg';
 import { useRouter, usePathname } from "next/navigation";
-import logoLight from "../../../../public/logos/logo.png";
-import logoDark from "../../../../public/logos/logo_white.png";
+import logo from "../../../../public/logos/logo_white.png";
 import { MdOutlineBrightnessAuto, MdLightMode, MdDarkMode } from "react-icons/md";
 
 const Header = () => {
@@ -185,9 +182,6 @@ function HeaderContent({ className }) {
         }[theme];
     }
 
-    const currentTheme = resolvedTheme || theme;
-    const logoSrc = mounted && currentTheme === 'dark' ? logoDark.src : logoLight.src;
-
     const goHomeOrScrollTop = (e) => {
         if (e) e.preventDefault();
         handleMenuItemClick(); // zamknij burger/ASE jeśli otwarte
@@ -209,7 +203,7 @@ function HeaderContent({ className }) {
                 {/*<NavLink to="/">*/}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                 <a className="nav-link" onClick={goHomeOrScrollTop}>
-                    <img src={logoSrc} alt="Logo" />
+                    <img src={logo.src} alt="Logo" />
                 </a>
                 {/*</NavLink>*/}
             </div>

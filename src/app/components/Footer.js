@@ -92,7 +92,7 @@ const Footer = () => {
                         <img src={rectangle.src} alt="rectangle" className="rectangle" />
                         <div>
                             <h3>
-                                SQUADRON ASE Group Sp. z o. o.
+                                SQUADRON Sp. z o. o.
                             </h3>
                             <h5>
                                 ul. Narwicka 6
@@ -109,7 +109,7 @@ const Footer = () => {
                         <img src={rectangle.src} alt="rectangle" className="rectangle" />
                         <div>
                             <h3>
-                                Biuro SQUADRON  Sp. z o. o.
+                                Biuro SQUADRON Sp. z o. o.
                             </h3>
                             <h5>
                                 Al. Zwycięstwa 13A
@@ -126,9 +126,9 @@ const Footer = () => {
                             <h3>
                                 {t("write_to_us")}
                             </h3>
-                            <a href="mailto:biuro@squadron.pl" >
+                            <a href="mailto:biuro@squadron.ase.pl" >
                                 <h5>
-                                    biuro@squadron.pl
+                                    biuro@squadron.ase.pl
                                 </h5>
                             </a>
                             <a href="tel:+48609690340" >
@@ -141,7 +141,7 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className="copyright">
-                    <p>© 2025 Squadron ASE Group</p>
+                    <p>© 2026 SQUADRON</p>
                 </div>
             </div>
         </div>

@@ -9,6 +9,10 @@
     width: 100%;
     z-index: 10;
 
+    p, a, button {
+        color: $white-color !important;
+    }
+
     .flag {
         width: 30px;
     }
@@ -18,7 +22,7 @@
         justify-content: center;
 
         img {
-            width: 200px;
+            width: 180px;
 
             @include mobile {
                 width: 150px;
@@ -52,7 +56,6 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
-        font-weight: 500;
 
         .nav-link {
             text-transform: capitalize;
@@ -67,7 +70,7 @@
                 height: 60px;
 
                 &:hover {
-                    color: $main-color;
+                    color: $main-color !important;
                 }
             }
         }
@@ -83,16 +86,16 @@
     @include mobile-tablet {
   
         .nav-links a:active {
-            color: $main-color;
+            color: $main-color !important;
         }
 
         .burger-line {
             width: 30px;
             height: 2.7px;
-            background-color: $black-color;
             margin: 3px 0;
             transition: 0.4s;
             z-index: 2;
+            background-color: white;
         }
     
         .burger-menu.open .burger-line:nth-child(1) {
@@ -120,10 +123,12 @@
             
             &.open {
                 max-height: 100vh !important;   // pozwoli rozwinąć się do pełnej wysokości ekranu
+                //background-color: rgba(0, 0, 0, 0.9);
+                background-color: rgba(#3e3e3e, 0.9);
             }
 
             @include tablet {
-                top: 65px;
+                top: 61px;
             }
 
             .nav-link {
@@ -149,7 +154,7 @@
         transition: color .3s;
 
         &:hover {
-            color: $main-color;
+            color: $main-color !important;
         }
     }
     
@@ -170,15 +175,28 @@
             width: 100%;
             text-align: center;
             border: none;
+            color: $white-color;
+
+            @include desktop {
+                &.active {
+                    color: $black-color !important;
+                }
+            }
         }
         
         .ase-menu {
             display: flex;
             flex-direction: column;
             border-top: 1px solid rgba(255,255,255,0.2);
+            background: inherit;
+            box-shadow: none;
+
+            @include desktop {
+                background: $dark-background-header;
+            }
             
             &:active {
-                color: $main-color;
+                color: $main-color !important;
             }
         }
         
@@ -189,10 +207,20 @@
             border: none;
             display: flex;
             justify-content: center;
+            color: $white-color;
 
-                img {
-                    margin-left: 0.5rem;
+            @include desktop {
+
+                &:hover,
+                &:focus {
+                    color: $black-color;
+                    background: rgba(255,255,255,0.1);
                 }
+            }
+
+            img {
+                margin-left: 0.5rem;
+            }
         }
         
         .theme-toggle {
@@ -258,7 +286,7 @@
                 color: inherit;
 
                 &.active {
-                    color: $white-color;
+                    color: $black-color !important;
                 }
             }
             
@@ -276,7 +304,7 @@
           
                 &:hover,
                 &:focus {
-                    color: $white-color !important;
+                    color: $black-color !important;
                     background: rgba(255,255,255,0.1);
                 }
             }
@@ -287,7 +315,7 @@
             transition: 0.3s;
 
             &:hover {
-                color: $main-color;
+                color: $main-color !important;
             }
         
             &:active {
@@ -297,100 +325,10 @@
     }
 }
 
-.dark {
-
-    .ase-toggle {
-        color: $white-color !important;
-
-        @include desktop {
-            &.active {
-                color: $black-color !important;
-            }
-        }
-    }
-
-    .ase-menu {
-        background: inherit !important;
-        border: none !important;
-        box-shadow: none !important;
-
-        @include desktop {
-            background: $dark-background-header !important;
-
-            .dropdown-item {
-                color: $white-color !important;
-
-                @include desktop {
-                    &:hover,
-                    &:focus {
-                        color: $black-color !important;
-                        background: rgba(255,255,255,0.1);
-                    }
-                }
-            }
-        }
-    }
-
-    .icons_light {
-        color: white;
-    }
-
-    .burger-line {
-        background-color: white;
-    }
-
-    .nav-links {
-
-        &.open {
-            background-color: rgba(0, 0, 0, 0.9);
-        }
-    }
-}
-  
-.light {
-    
-    .dynamic-header {
-        background: $light-background-header;
-    }
-
-    .static-header {
-        background: $light-background-header;
-    }
-
-        @include mobile-tablet {
-
-        .ase-toggle,
-        .language-toggle {
-            color: $black-color !important;
-        }
-
-        .dropdown-item {
-            color: $black-color !important;
-        }
-    }
-
-    .ase-menu,
-    .language-menu {
-        background:  inherit !important;
-        border: none !important;
-        box-shadow: none !important;    
-
-        @include desktop {
-            background:  $light-background-header !important;
-        }
-    }
-    
-    .nav-links {
-
-        &.open {
-            background-color: rgba(216, 216, 216, 0.9);
-        }
-    }
-}
-
 .static-header {
     position: relative; // Statyczny header w przepływie dokumentu
-    background: $dark-background-header;
+    //background: $dark-background-header;
+    background: rgba(#838383, 0.8);
     z-index: 5;
 
     @include desktop {
@@ -402,7 +340,8 @@
 }
 
 .dynamic-header {
-    background: $dark-background-header;
+    //background: $dark-background-header;
+    background: rgba(#838383, 0.8);
     position: fixed; // Dynamiczny header przyklejony do góry ekranu
     top: 0;
     left: 0;
