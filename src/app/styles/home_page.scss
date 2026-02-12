@@ -54,7 +54,6 @@
 
         .text4 img {
             background: rgba(255, 255, 255, 0.8);
-            border-radius: 15px;
         }
     }
 }
@@ -542,7 +541,7 @@
                     padding-top: 10px;
 
                     @include desktop {
-                        height: 120px;
+                        height: 140px;
                     }
                 }
 
@@ -551,6 +550,10 @@
                     width: max-content;
                     animation: logo-scroll 20s linear infinite;
                     will-change: transform;
+
+                    @include desktop {
+                        animation: logo-scroll 30s linear infinite;
+                    }
                 }
 
                 .logo_slide {
@@ -576,10 +579,11 @@
                         max-width: 100%;
                         object-fit: contain;
                         padding: .5rem;
+                        border-radius: 15px;
 
                         @include desktop {
                             padding: 1rem;
-                            height: 100px;
+                            height: 120px;
                         }
                     }
                 }
