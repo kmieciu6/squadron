@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import useTranslation from "../hooks/useTranslation";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useCookiesConsent } from "../context/CookiesConsentContext";
