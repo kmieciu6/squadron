@@ -190,6 +190,28 @@ const Home = () => {
         {
             logo: "/logos/PROJMORS ASE GROUP LOGO.png",
             link: "https://projmors.ase.pl/"
+        },
+
+        //powtórka
+        {
+            logo: "/logos/ASE GROUP LOGO.png",
+            link: "https://ase.pl/"
+        },
+        {
+            logo: "/logos/ASE ATEX ASE GROUP LOGO.png",
+            link: "https://aseatex.ase.pl/"
+        },
+        {
+            logo: "/logos/BPR ASE GROUP LOGO.png",
+            link: "https://ase.pl/pl/camino-project"
+        },
+        {
+            logo: "/logos/EKO-KONSULT ASE GROUP LOGO.png",
+            link: "https://ekokonsult.ase.pl/"
+        },
+        {
+            logo: "/logos/PROJMORS ASE GROUP LOGO.png",
+            link: "https://projmors.ase.pl/"
         }
     ];
 

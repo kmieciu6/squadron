@@ -5,16 +5,22 @@ import Header from "./components/header/Header";
 import Footer from "./components/Footer";
 import {CookiesConsentProvider} from "@/app/context/CookiesConsentContext";
 import CookieBanner from "@/app/components/CookieBanner";
+import {Outfit} from "next/font/google";
 
 export const metadata = {
     title: "Squadron",
     description: "",
 };
 
+const outfit = Outfit({
+    subsets: ['latin'],
+    weight: ['300', '400', '500', '600', '700'],
+});
+
 const RootLayout = ({ children }) => {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body>
+            <body className={outfit.className}>
                 <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                     <CookiesConsentProvider>
                         <PageLoader>

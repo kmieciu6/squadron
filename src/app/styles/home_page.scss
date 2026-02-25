@@ -54,7 +54,6 @@
 
         .text4 img {
             background: rgba(255, 255, 255, 0.8);
-            border-radius: 15px;
         }
     }
 }
@@ -149,7 +148,6 @@
                             }
 
                             h3 {
-                                font-family: $font-teko;
                                 font-size: 2.5rem;
                                 text-transform: uppercase;
                                 margin-bottom: 1rem;
@@ -249,12 +247,13 @@
 
                 h3 {
                     color: $main-color;
-                    padding: 1rem 0;
+                    padding: 1.5rem 0;
                 }
 
                 li {
                     color: $main-color;
-                    margin-left: 1rem;
+                    margin-left: 2rem;
+                    margin-bottom: 1rem;
                 }
 
                 p {
@@ -342,8 +341,10 @@
                     .switcher_text {
                         width: 100%;
                         text-align: center;
+                        //border: 1px solid red;
 
                         @include desktop {
+                            text-align: left;
                             width: 60%;
                         }
                     }
@@ -356,31 +357,31 @@
             display: flex;
             justify-content: center;
 
-            .text_width {
-
-                @include desktop {
-                    max-width: 2000px;
-                }
-            }
-
             .text2 {
                 align-items: center;
                 margin: 2rem 0;
 
                 @include desktop {
+                    max-width: 2000px;
                     margin: 4rem 0;
                 }
 
                 .container {
                     position: relative;
                     width: 100%;
-                    height: 60vh;
                     margin: 2rem 0;
+                    overflow: hidden;
+                    aspect-ratio: 16 / 9;
+                    min-height: 360px;
+                    max-height: 900px;
+                    background-position: center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
 
                     @include desktop {
                         margin: 0;
                         width: 80%;
-                        height: 70vh;
+                        aspect-ratio: 21 / 9;
                     }
 
                     .content {
@@ -412,7 +413,8 @@
                     }
 
                     &:first-of-type {
-                        background: url("../../../public/images/Iryda.jpg") center / cover no-repeat;
+                        background-image: url("../../../public/images/Iryda.jpg");
+                        background-position: 60% 50%;
 
                         @include desktop {
                             width: 100%;
@@ -431,7 +433,8 @@
                     }
 
                     &:nth-of-type(2) {
-                        background: url("../../../public/images/dron_sea1.jpg") top / cover no-repeat;
+                        background-image: url("../../../public/images/dron_sea1.jpg");
+                        background-position: 50% 20%;
 
                         @include desktop {
                             height: 90vh;
@@ -449,7 +452,8 @@
                     }
 
                     &:last-of-type {
-                        background: url("../../../public/images/Windmills.jpg") center / cover no-repeat;
+                        background-image: url("../../../public/images/Windmills.jpg");
+                        background-position: 50% 50%;
 
                         @include desktop {
                             border-radius: 0 25px 25px 25px;
@@ -465,7 +469,6 @@
                             }
                         }
                     }
-
                 }
             }
         }
@@ -488,7 +491,7 @@
 
         .text4_background {
             width: 100%;
-            height: 80vh;
+            height: 40vh;
             background-image: url("../../../public/images/background.png");
             background-size: cover;
             background-position: center;
@@ -499,28 +502,33 @@
             z-index: 1;
 
             @include desktop {
-                height: 90vh;
                 background-attachment: fixed;
+                height: 100vh;
+                max-height: 1200px;
             }
 
             .text4 {
+                width: 100%;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                width: 100%;
                 z-index: 2;
                 height: 100%;
-                margin-top: 4rem;
+                padding-top: 2rem;
 
                 @include desktop {
-                    margin-top: 6rem;
+                    padding-top: 6rem;
+                }
+
+                @include mobile {
+                    max-width: 100%;
                 }
 
                 h1 {
-                     margin-bottom: -6rem;
+                     margin-bottom: -2rem;
 
                     @include desktop {
-                        margin-bottom: -9rem;
+                        margin-bottom: -4rem;
                     }
                 }
 
@@ -529,13 +537,23 @@
                     overflow: hidden;
                     margin-top: auto;
                     margin-bottom: auto;
+                    height: 80px;
+                    padding-top: 10px;
+
+                    @include desktop {
+                        height: 140px;
+                    }
                 }
 
                 .logo_slider-track {
                     display: flex;
                     width: max-content;
-                    animation: logo-scroll 10s linear infinite;
+                    animation: logo-scroll 20s linear infinite;
                     will-change: transform;
+
+                    @include desktop {
+                        animation: logo-scroll 30s linear infinite;
+                    }
                 }
 
                 .logo_slide {
@@ -544,21 +562,28 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    transition: 0.3s ease;
 
-                    img {
-                        width: 220px;
-                        max-width: 100%;
-                        object-fit: contain;
-                        transition: 0.3s ease;
-                        padding: 1rem;
+                    @include mobile {
+                        padding: .5rem;
+                    }
 
-                        @include desktop {
-                            width: 300px;
-                        }
-
+                    @include desktop {
                         &:hover {
                             transform: scale(1.1);
-                            //cursor: pointer;
+                        }
+                    }
+
+                    img {
+                        height: 60px;
+                        max-width: 100%;
+                        object-fit: contain;
+                        padding: .5rem;
+                        border-radius: 15px;
+
+                        @include desktop {
+                            padding: 1rem;
+                            height: 120px;
                         }
                     }
                 }
