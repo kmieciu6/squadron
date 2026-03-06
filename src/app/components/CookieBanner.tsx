@@ -9,10 +9,11 @@ const CookieBanner = () => {
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsMounted(true);
     }, []);
 
-    if (!isMounted || isDecided === null || isDecided === true) return null;
+    if (!isMounted || isDecided === null || isDecided) return null;
 
     return (
         <div className="cookie_banner">

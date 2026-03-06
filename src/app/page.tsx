@@ -1,4 +1,5 @@
 "use client";
+
 import useIntersectionHide from './hooks/useIntersectionHide';
 import useTranslation from './hooks/useTranslation';
 import drone from '../../public/images/dron.jpg';
@@ -8,20 +9,51 @@ import icon1 from '../../public/icons/Rocket car icon.png';
 import icon2 from '../../public/icons/Document icon.png';
 import icon3 from '../../public/icons/Anti-drone systems.png';
 import icon4 from '../../public/icons/Drone icon.png';
-import {useEffect, useState} from "react";
+import React, {JSX, useEffect, useMemo, useState} from "react";
+import Image, {StaticImageData} from "next/image";
 
-const Home = () => {
+type SlideImage = StaticImageData;
+
+type Slide =
+    | {
+    type?: "image";
+    titleText: string;              // do alt / SEO
+    titleNode: React.ReactNode;     // do renderu (z highlightami)
+    content?: string;
+    image: SlideImage;
+}
+    | {
+    type: "video";
+    titleText: string;
+    titleNode: React.ReactNode;
+    content?: string;
+    video: string;
+};
+
+type OfferOption = {
+    key: string;
+    img: StaticImageData;
+    buttonLabel: string;
+    content: React.ReactNode;
+};
+
+type PartnerLogo = {
+    logo: string; // ścieżka w /public
+    link: string;
+};
+
+const Home = (): JSX.Element => {
     const { t } = useTranslation('common')
-    const [titleRef, isTitleHidden] = useIntersectionHide();
-    const [sec1Ref, isSec1Hidden] = useIntersectionHide();
-    const [sec2Ref, isSec2Hidden] = useIntersectionHide();
-    const [sec3Ref, isSec3Hidden] = useIntersectionHide();
-    const [sec4Ref, isSec4Hidden] = useIntersectionHide();
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [current, setCurrent] = useState(0);
-    const [resetTimer, setResetTimer] = useState(false);
+    const [titleRef, isTitleHidden] = useIntersectionHide<HTMLDivElement>();
+    const [sec1Ref, isSec1Hidden] = useIntersectionHide<HTMLDivElement>();
+    const [sec2Ref, isSec2Hidden] = useIntersectionHide<HTMLDivElement>();
+    const [sec3Ref, isSec3Hidden] = useIntersectionHide<HTMLDivElement>();
+    const [sec4Ref, isSec4Hidden] = useIntersectionHide<HTMLDivElement>();
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
+    const [current, setCurrent] = useState<number>(0);
+    const [resetTimer, setResetTimer] = useState<boolean>(false);
 
-    function highlighted(text) {
+    function highlighted(text: string): React.ReactNode {
         const parts = text.split(/\*\*(.*?)\*\*/g);
 
         return parts.map((part, i) =>
@@ -33,30 +65,32 @@ const Home = () => {
         );
     }
 
-    const slides = [
-        {
-            title: highlighted(t("slide1_title")),
-            content: t("slide1_text"),
-            image: opening_photo
-        },
-        {
-            title: highlighted(t("slide1_title")),
-            content: t("slide1_text"),
-            image: drone
-        },
-        {
-            title: highlighted(t("slide1_title")),
-            content: t("slide1_text"),
-            image: turbine_photo
-        },
-        // {
-        //     type: "video",
-        //     title: t("slide4_title"),
-        //     content: t("slide4_text"),
-        //     video: "/videos/my_video.mp4"
-        // }
-
-    ];
+    const slides: Slide[] = useMemo(() => {
+        const titleText = t("slide1_title");
+        return [
+            {
+                type: "image",
+                titleText,
+                titleNode: highlighted(titleText),
+                content: t("slide1_text"),
+                image: opening_photo
+            },
+            {
+                type: "image",
+                titleText,
+                titleNode: highlighted(titleText),
+                content: t("slide1_text"),
+                image: drone
+            },
+            {
+                type: "image",
+                titleText,
+                titleNode: highlighted(titleText),
+                content: t("slide1_text"),
+                image: turbine_photo
+            },
+        ];
+    }, [t]);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -75,7 +109,8 @@ const Home = () => {
         setResetTimer((prev) => !prev);
     };
 
-    const options = [
+    const options: OfferOption[] = useMemo(
+        () => [
         {
             key: 'offer1',
             img: icon1,
@@ -168,9 +203,9 @@ const Home = () => {
                 </>
             ),
         }
-    ];
+    ], [t]);
 
-    const logos = [
+    const logos: PartnerLogo[] = [
         {
             logo: "/logos/ASE GROUP LOGO.png",
             link: "https://ase.pl/"
@@ -239,21 +274,23 @@ const Home = () => {
                                         playsInline
                                     />
                                 ) : (
-                                    <img
+                                    <Image
                                         src={slide.image.src}
-                                         alt={slide.title}
-                                         className="slide-image"
+                                        alt={slide.titleText}
+                                        className="slide-image"
+                                        width={1200}
+                                        height={800}
                                     />
                                 )}
                                 <div className="overlay">
                                     <div className="text-box">
                                         <div className={`opening_text ${isTitleHidden ? 'hidden' : ''}`} ref={titleRef}>
-                                            <h3>{slide.title}</h3>
+                                            <h3>{slide.titleNode}</h3>
                                             {/*<p>{slide.content}</p>*/}
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                          </div>
                         ))}
                     </div>
                     <button onClick={nextSlide} className="next-button">❯</button>
@@ -274,7 +311,9 @@ const Home = () => {
                                         className={idx === current ? "active" : ""}
                                         onClick={() => setCurrent(idx)}
                                     >
-                                        <img src={opt.img.src} alt={opt.buttonLabel} />
+                                        <Image src={opt.img.src} alt={opt.buttonLabel}
+                                           width={200}
+                                           height={100}/>
                                         <p>{opt.buttonLabel}</p>
                                     </button>
                                 ))}
@@ -291,25 +330,8 @@ const Home = () => {
                         <div className='container'>
                             <div className='content'>
                                 <div>
-                                    <h2>
-                                        {t("about_title1")}
-                                    </h2>
-                                    <p>
-                                        {t("about_text1")}
-                                </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className='container'>
-                        <div className='content'>
-                                <div>
-                                    <h2>
-                                        {t("about_title2")}
-                                    </h2>
-                                    <p>
-                                        {t("about_text2")}
-                                    </p>
+                                    <h2>{t("about_title1")}</h2>
+                                    <p>{t("about_text1")}</p>
                                 </div>
                             </div>
                         </div>
@@ -317,12 +339,17 @@ const Home = () => {
                         <div className='container'>
                             <div className='content'>
                                 <div>
-                                    <h2>
-                                        {t("about_title3")}
-                                    </h2>
-                                    <p>
-                                        {t("about_text3")}
-                                    </p>
+                                  <h2>{t("about_title2")}</h2>
+                                  <p>{t("about_text2")}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='container'>
+                            <div className='content'>
+                                <div>
+                                    <h2>{t("about_title3")}</h2>
+                                    <p>{t("about_text3")}</p>
                                 </div>
                             </div>
                         </div>
@@ -331,23 +358,21 @@ const Home = () => {
 
                 <div className='text3_background' id='reference'>
                     <div ref={sec3Ref} className={`text text3 text_width ${isSec3Hidden ? 'hidden' : ''}`}>
-                        <h1>
-                            {t("reference")}
-                        </h1>
+                        <h1>{t("reference")}</h1>
                     </div>
                 </div>
 
                 <div className='text4_background' id='cooperation'>
                     <div ref={sec4Ref} className={`text text4 text_width ${isSec4Hidden ? 'hidden' : ''}`}>
-                        <h1>
-                            {t("partners")}
-                        </h1>
+                        <h1>{t("partners")}</h1>
                         <div className="logo_slider">
                             <div className="logo_slider-track">
                                 {allLogos.map((item, index) => (
                                     <div className="logo_slide" key={index}>
                                         <a href={item.link} target="_blank" rel="noopener noreferrer">
-                                            <img src={item.logo} alt={`partner-${index % logos.length}`}/>
+                                            <Image src={item.logo} alt={`partner-${index % logos.length}`}
+                                               width={200}
+                                               height={200}/>
                                         </a>
                                     </div>
                                 ))}

@@ -6,18 +6,20 @@ import Footer from "./components/Footer";
 import {CookiesConsentProvider} from "@/app/context/CookiesConsentContext";
 import CookieBanner from "@/app/components/CookieBanner";
 import {Outfit} from "next/font/google";
+import {Metadata} from "next";
+import React from "react";
 
-export const metadata = {
-    title: "Squadron",
-    description: "",
+export const metadata: Metadata = {
+  title: "Squadron",
+  description: "",
 };
 
 const outfit = Outfit({
-    subsets: ['latin'],
-    weight: ['300', '400', '500', '600', '700'],
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
 });
 
-const RootLayout = ({ children }) => {
+export default function RootLayout ({ children }: Readonly<{children: React.ReactNode;}> ) {
     return (
         <html lang="en" suppressHydrationWarning>
             <body className={outfit.className}>
@@ -37,5 +39,3 @@ const RootLayout = ({ children }) => {
         </html>
     );
 }
-
-export default RootLayout;

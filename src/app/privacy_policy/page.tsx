@@ -1,4 +1,5 @@
 'use client';
+
 import useTranslation from '../hooks/useTranslation';
 import useIntersectionHide from "@/app/hooks/useIntersectionHide";
 

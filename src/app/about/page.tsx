@@ -2,6 +2,7 @@
 import useTranslation from '../hooks/useTranslation';
 import photo from "../../../public/images/1.jpg";
 import useIntersectionHide from '../hooks/useIntersectionHide';
+import Image from "next/image";
 
 export default function About() {
     const { t } = useTranslation('common')
@@ -56,7 +57,10 @@ export default function About() {
                     </div>
 
                     <div className="about-image">
-                        <img src={photo.src} alt="Obraz" />
+                        <Image src={photo.src} alt="Obraz"
+                           width={photo.width}
+                           height={photo.height}
+                           style={{ width: "100%", height: "auto" }}/>
                     </div>
                 </div>
             </div>

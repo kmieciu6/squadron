@@ -1,8 +1,8 @@
 import nodemailer from "nodemailer";
 
-export async function POST(request) {
+export async function POST(request: { json: () => never; }) {
     try {
-        const body = await request.json();
+        const body = request.json();
         const { name, email, phone, message, recaptchaToken } = body;
 
         // 1. Walidacja minimalna

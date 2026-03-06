@@ -7,6 +7,7 @@ import useTranslation from '../hooks/useTranslation';
 import logo from "../../../public/logos/logo_white.png";
 import rectangle from "../../../public/icons/Rectangle.png";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 // import MapWrapper from "@/app/components/MapWrapper";
 
 const Footer = () => {
@@ -50,6 +51,7 @@ const Footer = () => {
     const pathname = usePathname();
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setInfoVisible(false);
 
         const observerOptions = {
@@ -82,14 +84,18 @@ const Footer = () => {
                     ref={infoRef}
                 >
                     {/*<MapWrapper />*/}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={logo.src} alt="logo" className="logo" />
+                    <Image src={logo.src} alt="logo" className="logo"
+                       width={300}
+                       height={100}
+                    />
                     <a href="https://www.google.com/maps/place/Squadron+Sp.+z+o.o./@54.3856259,18.6330175,164m/data=!3m2!1e3!4b1!4m6!3m5!1s0x46fd74a42ca67505:0xf1f8e3ef31bef071!8m2!3d54.3856251!4d18.6336612!16s%2Fg%2F11gyxfjdqx!5m1!1e2?hl=pl-PL&entry=ttu&g_ep=EgoyMDI1MDMxNy4wIKXMDSoASAFQAw%3D%3D"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="address">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={rectangle.src} alt="rectangle" className="rectangle" />
+                        <Image src={rectangle.src} alt="rectangle" className="rectangle"
+                           width={30}
+                           height={20}
+                        />
                         <div>
                             <h3>
                                 SQUADRON Sp. z o. o.
@@ -105,8 +111,10 @@ const Footer = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="address">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={rectangle.src} alt="rectangle" className="rectangle" />
+                        <Image src={rectangle.src} alt="rectangle" className="rectangle"
+                           width={30}
+                           height={20}
+                        />
                         <div>
                             <h3>
                                 Biuro SQUADRON Sp. z o. o.

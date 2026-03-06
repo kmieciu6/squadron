@@ -1,22 +1,18 @@
-import js from "@eslint/js";
-import nextPlugin from "@next/eslint-plugin-next";
-import react from "eslint-plugin-react";
-import globals from "globals";
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
 
-export default [
-    { ignores: [".next/**", "node_modules/**", "dist/**", "out/**"] },
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  // Override default ignores of eslint-config-next.
+  globalIgnores([
+    // Default ignores of eslint-config-next:
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+  ]),
+]);
 
-    js.configs.recommended,
-    nextPlugin.configs.recommended, // lub core-web-vitals jeśli używasz
-    react.configs.flat.recommended,
-    react.configs.flat["jsx-runtime"],
-
-    {
-        settings: { react: { version: "detect" } },
-        languageOptions: {
-            ecmaVersion: "latest",
-            sourceType: "module",
-            globals: { ...globals.browser },
-        },
-    },
-];
+export default eslintConfig;
