@@ -1,12 +1,21 @@
 import nodemailer from "nodemailer";
+import {NextRequest} from "next/server";
 
-export async function POST(request: { json: () => never; }) {
+type ContactBody = {
+    name: string;
+    email: string;
+    phone?: string;
+    message: string;
+    recaptchaToken: string;
+};
+
+export async function POST(request: NextRequest) {
     try {
-        const body = request.json();
+        const body = request.json() as Partial<ContactBody>;
         const { name, email, phone, message, recaptchaToken } = body;
 
         // 1. Walidacja minimalna
-        if (!name || !email || !message) {
+        if (!name || !email || !message || !recaptchaToken) {
             return Response.json(
                 { error: "Missing required fields" },
                 { status: 400 }
@@ -28,11 +37,15 @@ export async function POST(request: { json: () => never; }) {
             {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: `secret=${secretKey}&response=${recaptchaToken}`,
+                body: new URLSearchParams({
+                    secret: secretKey,
+                    response: recaptchaToken,
+                }),
             }
         );
 
-        const recaptchaData = await recaptchaRes.json();
+        const recaptchaData: { success?: boolean; ["error-codes"]?: string[] } =
+            await recaptchaRes.json();
 
         if (!recaptchaData.success) {
             console.warn("reCAPTCHA failed:", recaptchaData);
@@ -42,12 +55,20 @@ export async function POST(request: { json: () => never; }) {
             );
         }
 
+        const mailUser = process.env.MAIL_USER;
+        const mailPass = process.env.MAIL_PASS;
+
+        if (!mailUser || !mailPass) {
+            console.error("Brak MAIL_USER / MAIL_PASS w env");
+            return Response.json({ error: "Server configuration error" }, { status: 500 });
+        }
+
         // 3. Nodemailer – to samo co w Expressie, tylko w API route
-        const transporter = nodemailer.createTransport({
+        const transporter = nodemailer.createTransport ({
             service: "gmail",
             auth: {
-                user: process.env.MAIL_USER,
-                pass: process.env.MAIL_PASS,
+                user: mailUser,
+                pass: mailPass,
             },
 
             // TYLKO DO TESTÓW LOKALNIE!!!
@@ -56,21 +77,21 @@ export async function POST(request: { json: () => never; }) {
             // }
         });
 
-        const mailOptions = {
-            from: `"${name}" <${email}>`,
-            to: process.env.CONTACT_TO || "jakub.kmiecik96@gmail.com",
+        const to = process.env.CONTACT_TO;
+
+        await transporter.sendMail({
+            from: `"${name}" <${mailUser}>`,
+            to,
             subject: `Wiadomość z formularza ze strony od ${name}`,
             text: `Imię: ${name}
 Email: ${email}
 Telefon: ${phone || "Nie podano."}
 Wiadomość:
 ${message}`,
-        };
-
-        await transporter.sendMail(mailOptions);
+        });
 
         return Response.json({ success: true }, { status: 200 });
-    } catch (error) {
+            } catch (error) {
         console.error("Mail send failed:", error);
         return Response.json(
             { error: "Mail send failed" },
