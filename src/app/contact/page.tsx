@@ -1,19 +1,33 @@
 "use client";
-import { useState, useRef } from "react";
-import useTranslation from "../hooks/useTranslation";
+
+import { useState, useRef, type ChangeEvent, type FormEvent } from "react";
+import Link from "next/link";
 import ReCAPTCHA from "react-google-recaptcha";
+import type ReCAPTCHAType from "react-google-recaptcha";
+import useTranslation from "../hooks/useTranslation";
 import { useCookiesConsent } from "../context/CookiesConsentContext";
 import ConsentPlaceholder from "../components/ConsentPlaceholder";
 import useIntersectionHide from "@/app/hooks/useIntersectionHide";
-import Link from "next/link";
 
-const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? "";
+
+type FormData = {
+    name: string;
+    email: string;
+    phone: string;
+    message: string;
+    consent: boolean;
+};
+
+type FormErrors = Partial<
+    Record<keyof FormData | "recaptcha" | "server", string>
+>;
 
 const Contact = () => {
     const { t } = useTranslation("common");
     const { isAccepted, acceptCookies } = useCookiesConsent();
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormData>({
         name: "",
         email: "",
         phone: "",
@@ -21,29 +35,45 @@ const Contact = () => {
         consent: false,
     });
 
-    const [errors, setError] = useState({});
+    const [errors, setError] = useState<FormErrors>({});
     const [submitted, setSubmitted] = useState(false);
-    const [recaptchaToken, setRecaptchaToken] = useState("");
+    const [recaptchaToken, setRecaptchaToken] = useState<string>("");
     const [isSending, setIsSending] = useState(false);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-    const [secRef, isSecHidden] = useIntersectionHide();
-    const recaptchaRef = useRef(null);
 
-    const handleChange = (e) => {
-        const { name, value, checked, type } = e.target;
+    // jeśli Twój hook zwraca tuple [ref, boolean], to tak jest OK
+    const [secRef, isSecHidden] = useIntersectionHide() as unknown as [
+        React.RefObject<HTMLDivElement>,
+        boolean
+    ];
+
+    const recaptchaRef = useRef<ReCAPTCHAType | null>(null);
+
+    const handleChange = (
+        e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        const { name, value, type } = e.target;
+
+        // checkbox ma checked, reszta value
+        const nextValue =
+            type === "checkbox"
+                ? (e.target as HTMLInputElement).checked
+                : value;
+
         setFormData((prev) => ({
             ...prev,
-            [name]: type === "checkbox" ? checked : value,
+            [name]: nextValue,
         }));
+
         if (submitted) {
-            setError((prevErrors) => ({
-                ...prevErrors,
+            setError((prev) => ({
+                ...prev,
                 [name]: "",
             }));
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const validationErrors = validateForm(formData, recaptchaToken);
@@ -98,55 +128,44 @@ const Contact = () => {
             console.error("Błąd sieci:", err);
         } finally {
             setIsSending(false);
-            if (recaptchaRef.current) {
-                recaptchaRef.current.reset();
-            }
+            recaptchaRef.current?.reset();
             setRecaptchaToken("");
         }
     };
 
-    const validateForm = (data, recaptchaToken) => {
-        const errors = {};
+    const validateForm = (data: FormData, token: string): FormErrors => {
+        const nextErrors: FormErrors = {};
 
-        if (!data.name.trim()) {
-            errors.name = t("field_required");
-        } else if (data.name.trim().length < 2) {
-            errors.name = t("must_contain_two_letters");
-        }
+        if (!data.name.trim()) nextErrors.name = t("field_required");
+        else if (data.name.trim().length < 2)
+            nextErrors.name = t("must_contain_two_letters");
 
-        if (!data.message.trim()) {
-            errors.message = t("field_required");
-        } else if (data.message.trim().length <= 20) {
-            errors.message = t("must_contain"); // np. "Wiadomość musi mieć min. 20 znaków"
-        }
+        if (!data.message.trim()) nextErrors.message = t("field_required");
+        else if (data.message.trim().length <= 20)
+            nextErrors.message = t("must_contain");
 
-        if (!data.email.trim()) {
-            errors.email = t("field_required");
-        } else if (!isValidEmail(data.email)) {
-            errors.email = t("invalid_email");
-        }
+        if (!data.email.trim()) nextErrors.email = t("field_required");
+        else if (!isValidEmail(data.email)) nextErrors.email = t("invalid_email");
 
-        if (!data.consent) {
-            errors.consent = t("consent");
-        }
+        if (!data.consent) nextErrors.consent = t("consent");
 
-        if (!recaptchaToken) {
-            errors.recaptcha = t("verify_recaptcha");
-        }
+        if (!token) nextErrors.recaptcha = t("verify_recaptcha");
 
-        return errors;
+        return nextErrors;
     };
 
-    const isValidEmail = (email) => {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    };
+    const isValidEmail = (email: string): boolean =>
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    const recaptchaAvailable = isAccepted && RECAPTCHA_SITE_KEY.length > 0;
 
     return (
-        <div className='contact'>
-            <div ref={secRef} className={`contact_container ${isSecHidden ? 'hidden' : ''}`}>
-                <h1>
-                    {t('contact')}
-                </h1>
+        <div className="contact">
+            <div
+                ref={secRef}
+                className={`contact_container ${isSecHidden ? "hidden" : ""}`}
+            >
+                <h1>{t("contact")}</h1>
 
                 {showSuccessMessage && (
                     <p className="success">{t("form_submitted_successfully")}</p>
@@ -154,12 +173,7 @@ const Contact = () => {
 
                 {errors.server && <p className="error">{errors.server}</p>}
 
-                <form
-                    autoComplete="on"
-                    onSubmit={handleSubmit}
-                    noValidate
-                    className="form"
-                >
+                <form autoComplete="on" onSubmit={handleSubmit} noValidate className="form">
                     <label htmlFor="name">
                         <p>{t("name")}</p>
                     </label>
@@ -226,40 +240,40 @@ const Contact = () => {
                             <span className="checkmark" />
                             <p>
                                 {`${t("consent_text")} `}
-                                <Link href="/privacy_policy"
-                                    className="link"
-                                    >
+                                <Link href="/privacy_policy" className="link">
                                     {`${t("privacy_policy")}.`}
                                 </Link>
                             </p>
                         </label>
-                        {errors.consent && (
-                            <span className="error">{errors.consent}</span>
-                        )}
+                        {errors.consent && <span className="error">{errors.consent}</span>}
                     </div>
 
-                    {/* reCAPTCHA + cookies */}
                     <div className="recaptcha">
-                        {isAccepted ? (
+                        {recaptchaAvailable ? (
                             <ReCAPTCHA
                                 sitekey={RECAPTCHA_SITE_KEY}
                                 ref={recaptchaRef}
-                                onChange={(token) => setRecaptchaToken(token || "")}
+                                onChange={(token) => setRecaptchaToken(token ?? "")}
                                 theme="light"
                             />
                         ) : (
                             <ConsentPlaceholder
-                                text={t("accept_cookies_to_use_recaptcha")}
+                                text={
+                                    RECAPTCHA_SITE_KEY.length === 0
+                                        ? "Brak klucza reCAPTCHA w env (NEXT_PUBLIC_RECAPTCHA_SITE_KEY)."
+                                        : t("accept_cookies_to_use_recaptcha")
+                                }
                                 onAccept={acceptCookies}
-                                className='consent_placeholder'
+                                className="consent_placeholder"
                             >
-                                <button onClick={acceptCookies}>{t("accept")}</button>
+                                <button type="button" onClick={acceptCookies}>
+                                    {t("accept")}
+                                </button>
                             </ConsentPlaceholder>
                         )}
                     </div>
-                    {errors.recaptcha && (
-                        <span className="error">{errors.recaptcha}</span>
-                    )}
+
+                    {errors.recaptcha && <span className="error">{errors.recaptcha}</span>}
 
                     <div className="button">
                         <button type="submit" disabled={isSending}>

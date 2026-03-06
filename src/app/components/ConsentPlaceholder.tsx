@@ -6,6 +6,7 @@ type ConsentPlaceholderProps = {
     text: ReactNode;
     onAccept: () => void;
     className?: string;
+    children?: ReactNode;
 };
 
 const ConsentPlaceholder = ({ text, onAccept, className }: ConsentPlaceholderProps) => {
