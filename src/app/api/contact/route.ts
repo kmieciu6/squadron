@@ -81,6 +81,7 @@ export async function POST(request: NextRequest) {
 
         await transporter.sendMail({
             from: `"${name}" <${mailUser}>`,
+            replyTo: email,
             to,
             subject: `Wiadomość z formularza ze strony od ${name}`,
             text: `Imię: ${name}
