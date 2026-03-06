@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Squadron
+
+Live: https://projectsquadron.netlify.app
+
+Corporate website built with Next.js (App Router) focused on modular architecture, performance optimization and modern frontend practices.
+The project demonstrates practical use of React, TypeScript, custom hooks, internationalization and server-side API integration.
+
+## Tech Stack
+
+Frontend
+- Next.js (App Router)
+- React
+- TypeScript
+- SCSS
+
+Backend 
+- Next.js API Routes
+- REST API 
+- Nodemailer
+
+Integrations 
+- Google reCAPTCHA v2
+- Google Maps API
+
+DevOps
+- Netlify deployment
+
+## Features
+
+### Modular Architecture
+
+The application is structured using a modular component-based architecture. 
+
+Key elements:
+- reusable UI components
+- separated logic using custom hooks
+- context-based state management 
+- clear separation between UI, logic and API
+
+### Internationalization
+
+The project supports multiple languages using a JSON-based translation system.
+
+Features:
+- dynamic language switching 
+- modular translation files 
+- reusable translation hook
+
+### Custom React Hooks
+
+The project uses several custom hooks to keep the components clean and reusable.
+
+Examples:
+- useTranslation – language management and translations
+- useIntersectionHide – scroll-based UI behavior using IntersectionObserver
+
+### Contact API
+
+A custom API endpoint handles the contact form.
+
+Features:
+- server-side email sending
+- Google reCAPTCHA validation
+- input validation
+- environment variable configuration
+
+### Cookie Consent System
+
+External services such as Google Maps and reCAPTCHA are loaded only after the user accepts cookies.
+
+This improves:
+- privacy compliance
+- performance
+- resource loading
+
+### Performance Optimization
+
+The project focuses on modern frontend optimization techniques.
+
+Implemented solutions:
+- lazy loading
+- code splitting
+- dynamic imports
+- optimized media loading
+- IntersectionObserver animations
+
+### Responsive Design
+
+The UI is designed to work across different devices and screen sizes using responsive layouts and adaptive components.
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
 
 ```bash
+npm install
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open in browser:
+http://localhost:3000
