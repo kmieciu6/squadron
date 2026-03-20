@@ -5,10 +5,19 @@ import { useCookiesConsent } from "../context/CookiesConsentContext";
 import ConsentPlaceholder from "./ConsentPlaceholder";
 import useTranslation from "../hooks/useTranslation";
 
-// dynamiczny import, żeby mapa ładowała się dopiero w przeglądarce
 const RealMap = dynamic(() => import("./RealMap"), { ssr: false });
 
-const MapWrapper = () => {
+export type MapCoords = {
+    lat: number;
+    lng: number;
+};
+
+type MapWrapperProps = {
+    center: MapCoords;
+    zoom?: number;
+}
+
+const MapWrapper = ({center, zoom = 14}: MapWrapperProps) => {
     const { t } = useTranslation('common');
     const { isAccepted, acceptCookies } = useCookiesConsent();
 
@@ -22,7 +31,7 @@ const MapWrapper = () => {
         );
     }
 
-    return <RealMap />;
+    return <RealMap center={center} zoom={zoom} />;
 };
 
 export default MapWrapper;

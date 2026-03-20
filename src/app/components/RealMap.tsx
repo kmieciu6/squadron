@@ -1,13 +1,14 @@
 "use client";
 
 import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps';
+import {MapCoords} from "@/app/components/MapWrapper";
 
-const center = {
-    lat: 54.385569,
-    lng: 18.633790
-};
+type RealMapProps = {
+    center: MapCoords;
+    zoom?: number;
+}
 
-const RealMap = () => {
+const RealMap = ({center, zoom}: RealMapProps) => {
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
     if (!apiKey) {
@@ -19,7 +20,7 @@ const RealMap = () => {
         <APIProvider apiKey={apiKey}>
             <Map
                 className="map"
-                defaultZoom={14}
+                defaultZoom={zoom}
                 defaultCenter={center}
                 mapId={"404f0de6d5b0dc31"}
             >

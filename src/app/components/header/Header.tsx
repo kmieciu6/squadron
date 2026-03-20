@@ -6,11 +6,7 @@ import { useTheme } from 'next-themes';
 import NavLink from './NavLink';
 import { useRouter, usePathname } from 'next/navigation';
 import logo from '../../../../public/logos/logo_white.png';
-import {
-    MdOutlineBrightnessAuto,
-    MdLightMode,
-    MdDarkMode,
-} from 'react-icons/md';
+import { MdOutlineBrightnessAuto, MdLightMode, MdDarkMode } from 'react-icons/md';
 import Image from "next/image";
 
 type HeaderContentProps = {
@@ -66,7 +62,8 @@ const Header = (): JSX.Element => {
     return (
         <div>
             <div ref={staticHeaderRef}>
-                <HeaderContent className="header static-header" />
+                <HeaderContent
+                    className="header static-header" />
             </div>
 
             <HeaderContent
@@ -96,14 +93,14 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
     const SUBPAGE_MENUS: Record<string, SubpageMenuItem[]> = {
         '/privacy_policy': [
             { key: 'home', label: t('main_page'), href: '/' },
-            { key: 'contact', label: t('contact'), href: '/contact' },
+            { key: 'contact', label: t('contact'), href: '/contact_page' },
         ],
-        '/contact': [{ key: 'home', label: t('main_page'), href: '/' }],
+        '/contact_page': [{ key: 'home', label: t('main_page'), href: '/' }],
     };
 
     const DEFAULT_SUBPAGE_MENU: SubpageMenuItem[] = [
         { key: 'home', label: t('main_page'), href: '/' },
-        { key: 'contact', label: t('contact'), href: '/contact' },
+        { key: 'contact', label: t('contact'), href: '/contact_page' },
     ];
 
     const currentSubpageMenu = SUBPAGE_MENUS[pathname] ?? DEFAULT_SUBPAGE_MENU;
@@ -232,162 +229,169 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
 
     return (
         <div className={className}>
-            <div className="logo">
-                <a className="nav-link" onClick={goHomeOrScrollTop}>
-                    <Image src={logo.src} alt="Logo"
-                       width='500'
-                       height={logo.height}
-                       style={{ height: "auto" }}/>
-                </a>
-            </div>
+            <div className='header_content'>
+                <div className="logo">
+                    <a className="nav-link" onClick={goHomeOrScrollTop}>
+                        <Image src={logo.src} alt="Logo"
+                           width='250'
+                           height='100'
+                           style={{ height: "auto" }}
+                           loading="eager"
+                        />
+                    </a>
+                </div>
 
-            <div className="bookmarks">
-                <div ref={burgerMenuRef} className="burger-wrapper">
-                    <div
-                        className={`burger-menu ${isBurgerMenuOpen ? 'open' : ''}`}
-                        onPointerDown={
-                            !isFinePointer
-                                ? (e: React.PointerEvent<HTMLDivElement>) => {
-                                    if (!isBurgerMenuOpen) e.stopPropagation();
-                                }
-                                : undefined
-                        }
-                        onClick={() => setBurgerMenuOpen((o) => !o)}
-                    >
-                        <div className="burger-line" />
-                        <div className="burger-line" />
-                        <div className="burger-line" />
-                    </div>
-
-                    <div className={`nav-links ${isBurgerMenuOpen ? 'open' : ''}`}>
-                        {isHome ? (
-                            <>
-                                <a
-                                    className="nav-link"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        document.getElementById('offer')?.scrollIntoView({ behavior: 'smooth' });
-                                        handleMenuItemClick();
-                                    }}
-                                >
-                                    {t('offer')}
-                                </a>
-
-                                <a
-                                    className="nav-link"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-                                        handleMenuItemClick();
-                                    }}
-                                >
-                                    {t('about')}
-                                </a>
-
-                                <a
-                                    className="nav-link"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        document.getElementById('reference')?.scrollIntoView({ behavior: 'smooth' });
-                                        handleMenuItemClick();
-                                    }}
-                                >
-                                    {t('reference')}
-                                </a>
-
-                                <a
-                                    className="nav-link"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        document.getElementById('cooperation')?.scrollIntoView({ behavior: 'smooth' });
-                                        handleMenuItemClick();
-                                    }}
-                                >
-                                    {t('cooperation')}
-                                </a>
-
-                                <a className="nav-link" href="/contact">
-                                    {t('contact')}
-                                </a>
-                            </>
-                        ) : (
-                            <>
-                                {currentSubpageMenu.map((item) => (
-                                    <a
-                                        key={item.key}
-                                        href={item.href ?? '#'}
-                                        className="nav-link"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-
-                                            if (item.id) {
-                                                document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
-                                            } else if (item.href) {
-                                                router.push(item.href);
-                                            }
-
-                                            handleMenuItemClick();
-                                        }}
-                                    >
-                                        {item.label}
-                                    </a>
-                                ))}
-                            </>
-                        )}
-
+                <div className="bookmarks">
+                    <div ref={burgerMenuRef} className="burger-wrapper">
                         <div
-                            ref={aseRef}
-                            className="ase-switcher"
-                            onMouseEnter={isFinePointer ? () => setAseOpen(true) : undefined}
-                            onMouseLeave={isFinePointer ? () => setAseOpen(false) : undefined}
+                            className={`burger-menu ${isBurgerMenuOpen ? 'open' : ''}`}
+                            onPointerDown={
+                                !isFinePointer
+                                    ? (e: React.PointerEvent<HTMLDivElement>) => {
+                                        if (!isBurgerMenuOpen) e.stopPropagation();
+                                    }
+                                    : undefined
+                            }
+                            onClick={() => setBurgerMenuOpen((o) => !o)}
                         >
-                            <button
-                                className={`nav-link ase-toggle${isAseOpen ? ' active' : ''}`}
-                                onPointerDown={!isFinePointer ? handleAsePointerDown : undefined}
-                                aria-haspopup="menu"
-                                aria-expanded={isAseOpen}
-                            >
-                                ASE GROUP
-                            </button>
-
-                            {isAseOpen && (
-                                <div className="ase-menu" role="menu">
-                                    {aseLinks.map(({ path, label }, i) => (
-                                        <NavLink
-                                            key={`${label}-${i}`}
-                                            className="dropdown-item"
-                                            to={path}
-                                            onClick={handleMenuItemClick}
-                                            target="_blank"
-                                        >
-                                            {label}
-                                        </NavLink>
-                                    ))}
-                                </div>
-                            )}
+                            <div className="burger-line" />
+                            <div className="burger-line" />
+                            <div className="burger-line" />
                         </div>
 
-                        <button
-                            className="nav-link language-toggle"
-                            onClick={() => {
-                                const next = local === 'pl' ? 'en' : 'pl';
-                                changeLanguage(next);
-                                handleMenuItemClick();
-                            }}
-                            aria-label={`Change language, current: ${local.toUpperCase()}`}
-                            title={local === 'pl' ? 'Switch to English' : 'Przełącz na polski'}
-                        >
-                            {local === 'pl' ? 'PL' : 'EN'}
-                        </button>
+                        <div className={`nav-links ${isBurgerMenuOpen ? 'open' : ''}`}>
+                            <div className='nav-container'>
+                                {isHome ? (
+                                    <>
+                                        <a
+                                            className="nav-link"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                document.getElementById('offer')?.scrollIntoView({ behavior: 'smooth' });
+                                                handleMenuItemClick();
+                                            }}
+                                        >
+                                            {t('offer')}
+                                        </a>
 
-                        <button
-                            className="theme-toggle"
-                            onClick={toggleTheme}
-                            aria-label="Toggle theme"
-                            title="Toggle theme"
-                        >
-                            {mounted && Icon ? <Icon /> : null}
-                        </button>
+                                        <a
+                                            className="nav-link"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+                                                handleMenuItemClick();
+                                            }}
+                                        >
+                                            {t('about')}
+                                        </a>
+
+                                        <a
+                                            className="nav-link"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                document.getElementById('reference')?.scrollIntoView({ behavior: 'smooth' });
+                                                handleMenuItemClick();
+                                            }}
+                                        >
+                                            {t('reference')}
+                                        </a>
+
+                                        <a
+                                            className="nav-link"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                document.getElementById('cooperation')?.scrollIntoView({ behavior: 'smooth' });
+                                                handleMenuItemClick();
+                                            }}
+                                        >
+                                            {t('cooperation')}
+                                        </a>
+
+                                        <a className="nav-link" href="/contact_page">
+                                            {t('contact')}
+                                        </a>
+                                    </>
+                                ) : (
+                                    <>
+                                        {currentSubpageMenu.map((item) => (
+                                            <a
+                                                key={item.key}
+                                                href={item.href ?? '#'}
+                                                className="nav-link"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+
+                                                    if (item.id) {
+                                                        document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
+                                                    } else if (item.href) {
+                                                        router.push(item.href);
+                                                    }
+
+                                                    handleMenuItemClick();
+                                                }}
+                                            >
+                                                {item.label}
+                                            </a>
+                                        ))}
+                                    </>
+                                )}
+                            </div>
+                            <div className='nav-container'>
+                                <div
+                                    ref={aseRef}
+                                    className="ase-switcher"
+                                    onMouseEnter={isFinePointer ? () => setAseOpen(true) : undefined}
+                                    onMouseLeave={isFinePointer ? () => setAseOpen(false) : undefined}
+                                >
+                                    <button
+                                        className={`nav-link ase-toggle${isAseOpen ? ' active' : ''}`}
+                                        onPointerDown={!isFinePointer ? handleAsePointerDown : undefined}
+                                        aria-haspopup="menu"
+                                        aria-expanded={isAseOpen}
+                                    >
+                                        ASE GROUP
+                                    </button>
+
+                                    {isAseOpen && (
+                                        <div className="ase-menu" role="menu">
+                                            {aseLinks.map(({ path, label }, i) => (
+                                                <NavLink
+                                                    key={`${label}-${i}`}
+                                                    className="dropdown-item"
+                                                    to={path}
+                                                    onClick={handleMenuItemClick}
+                                                    target="_blank"
+                                                >
+                                                    {label}
+                                                </NavLink>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <button
+                                    className="nav-link language-toggle"
+                                    onClick={() => {
+                                        const next = local === 'pl' ? 'en' : 'pl';
+                                        changeLanguage(next);
+                                        handleMenuItemClick();
+                                    }}
+                                    aria-label={`Change language, current: ${local.toUpperCase()}`}
+                                    title={local === 'pl' ? 'Switch to English' : 'Przełącz na polski'}
+                                >
+                                    {local === 'pl' ? 'PL' : 'EN'}
+                                </button>
+
+                                <button
+                                    className="theme-toggle"
+                                    onClick={toggleTheme}
+                                    aria-label="Toggle theme"
+                                    title="Toggle theme"
+                                >
+                                    {mounted && Icon ? <Icon /> : null}
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
