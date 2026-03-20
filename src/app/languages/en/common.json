@@ -95,15 +95,22 @@
   "security_defence_title1": "Squadron Security and Defense",
   "send": "Send",
   "slide1_text": "",
-  "slide1_title": "",
-  "slide2_title": "",
-  "slide3_title": "",
+  "slide1_title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+  "slide2_title": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque",
+  "slide3_title": "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum",
   "slide4_title": "We provide innovative solutions in the field of critical infrastructure security",
   "studio_text1": "",
   "studio_title1": "Squadron studio",
+
   "verify_recaptcha": "Verify reCAPTCHA",
   "understand_and_accept": "I understand and accept",
   "unmanned_aviation_text1": "",
+
   "unmanned_aviation_title1": "Unmanned aviation",
+  "unmanned_aviation_title2": "Iryda PLUS",
+  "unmanned_aviation_title3": "MALLARD",
+  "unmanned_aviation_title4": "Trainning",
+  "unmanned_aviation_title5": "Expertise",
+  "unmanned_aviation_title6": "",
   "write_to_us": "Write to us"
 }

@@ -232,11 +232,13 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
             <div className='header_content'>
                 <div className="logo">
                     <a className="nav-link" onClick={goHomeOrScrollTop}>
-                        <Image src={logo.src} alt="Logo"
-                           width='250'
-                           height='100'
-                           style={{ height: "auto" }}
-                           loading="eager"
+                        <Image
+                            src={logo}
+                            alt="Logo"
+                            width={250}
+                            height={100}
+                            className="logo_image"
+                            loading="eager"
                         />
                     </a>
                 </div>

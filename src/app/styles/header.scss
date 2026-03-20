@@ -23,7 +23,9 @@
             display: flex;
             justify-content: center;
 
-            img {
+            .logo_image {
+                width: 250px;
+                height: auto;
 
                 @include mobile {
                     width: 150px;

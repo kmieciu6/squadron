@@ -4,12 +4,11 @@
     box-sizing: border-box;
 }
 
-/* absolutny override – nawet jeśli ktoś gdzieś dodał smooth */
 html, body {
     scroll-behavior: auto !important;
     font-family: 'Outfit', sans-serif;
-} 
-  
+}
+
 .page {
     display: flex;
     flex-direction: column;
