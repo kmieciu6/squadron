@@ -95,7 +95,7 @@ const Footer = () => {
                                     biuro@squadron.ase.pl
                                 </h5>
                             </a>
-                            <a href="tel:+48(58)5207720" >
+                            <a href="tel:+48585207720" >
                                 {/*<FontAwesomeIcon icon={faPhone} className="icon" />*/}
                                 <h5>
                                     +48 (58) 520 77 20
