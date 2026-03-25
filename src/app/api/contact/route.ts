@@ -11,7 +11,7 @@ type ContactBody = {
 
 export async function POST(request: NextRequest) {
     try {
-        const body = request.json() as Partial<ContactBody>;
+        const body = (await request.json()) as Partial<ContactBody>;
         const { name, email, phone, message, recaptchaToken } = body;
 
         // 1. Walidacja minimalna
