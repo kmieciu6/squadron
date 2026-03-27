@@ -31,7 +31,7 @@ const MapWrapper = ({center, zoom = 14}: MapWrapperProps) => {
         );
     }
 
-    return <RealMap center={center} zoom={zoom} />;
+    return <RealMap center={center} zoom={zoom} placeId="ChIJBXWmLKR0_UYRcfC-Me_j-PE" />;
 };
 
 export default MapWrapper;

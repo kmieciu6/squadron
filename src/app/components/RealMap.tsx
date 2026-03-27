@@ -6,9 +6,10 @@ import {MapCoords} from "@/app/components/MapWrapper";
 type RealMapProps = {
     center: MapCoords;
     zoom?: number;
+    placeId: string;
 }
 
-const RealMap = ({center, zoom}: RealMapProps) => {
+const RealMap = ({center, zoom, placeId }: RealMapProps) => {
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
     if (!apiKey) {
@@ -17,15 +18,28 @@ const RealMap = ({center, zoom}: RealMapProps) => {
     }
 
     return (
-        <APIProvider apiKey={apiKey}>
-            <Map
-                className="map"
-                defaultZoom={zoom}
-                defaultCenter={center}
-                mapId={"404f0de6d5b0dc31"}
-            >
-                <AdvancedMarker position={center} />
-            </Map>
+        <APIProvider apiKey={apiKey} libraries={['places']}>
+            <section className="company_map_card">
+                <div className="company_map_card__details">
+                    <gmp-place-details-compact
+                        orientation="horizontal"
+                        truncation-preferred
+                    >
+                        <gmp-place-details-place-request place={placeId} />
+                        <gmp-place-all-content />
+                    </gmp-place-details-compact>
+                </div>
+                <div className="company_map_card__map">
+                    <Map
+                        className="map"
+                        defaultZoom={zoom}
+                        defaultCenter={center}
+                        mapId="404f0de6d5b0dc31"
+                    >
+                        <AdvancedMarker position={center} />
+                    </Map>
+                </div>
+            </section>
         </APIProvider>
     );
 };

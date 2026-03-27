@@ -2,10 +2,10 @@
 
 import useIntersectionHide from './hooks/useIntersectionHide';
 import useTranslation from './hooks/useTranslation';
-import wind_farm from '../../public/images/wind_farm.png';
 import drone from '../../public/images/drone.png';
 import studio from '../../public/images/studio.png';
 import security from '../../public/images/security.png';
+import counter_drone from '../../public/images/counter_drone.png';
 import icon1 from '../../public/icons/Rocket car icon.png';
 import icon2 from '../../public/icons/Document icon.png';
 import icon3 from '../../public/icons/Anti-drone systems.png';
@@ -18,22 +18,26 @@ type SlideImage = StaticImageData;
 type Slide =
     | {
     type?: "image";
-    titleText: string;              // do alt / SEO
-    // titleNode: React.ReactNode;     // do renderu (z highlightami)
+    titleText: string;
     content?: string;
     image: SlideImage;
 }
     | {
     type: "video";
     titleText: string;
-    // titleNode: React.ReactNode;
     content?: string;
     video: string;
 };
 
-type OfferOption = {
+type OfferCattegory = {
     key: string;
     img: StaticImageData;
+    title: string;
+    subOptions: SubOption[];
+};
+
+type SubOption = {
+    key: string;
     buttonLabel: string;
     content: React.ReactNode;
 };
@@ -50,53 +54,36 @@ const Home = (): JSX.Element => {
     const [sec2Ref, isSec2Hidden] = useIntersectionHide<HTMLDivElement>();
     const [sec3Ref, isSec3Hidden] = useIntersectionHide<HTMLDivElement>();
     const [sec4Ref, isSec4Hidden] = useIntersectionHide<HTMLDivElement>();
-    const [sec5Ref, isSec5Hidden] = useIntersectionHide<HTMLDivElement>();
     const [currentIndex, setCurrentIndex] = useState<number>(0);
-    const [current, setCurrent] = useState<number>(0);
+    const [currentCategory, setCurrentCategory] = useState<number>(0);
+    const [currentSubOptions, setCurrentSubOptions] = useState<number>(0);
     const [resetTimer, setResetTimer] = useState<boolean>(false);
 
-    // function highlighted(text: string): React.ReactNode {
-    //     const parts = text.split(/\*\*(.*?)\*\*/g);
-    //
-    //     return parts.map((part, i) =>
-    //         i % 2 === 1 ? (
-    //             <span key={i} className="highlight">{part}</span>
-    //         ) : (
-    //             <span key={i}>{part}</span>
-    //         )
-    //     );
-    // }
-
     const slides: Slide[] = useMemo(() => {
-        // const titleText = t("slide1_title");
         return [
             {
                 type: "image",
-                titleText: t("slide1_title"),
-                // titleNode: highlighted(t("slide1_text")),
-                // content: t("slide1_text"),
-                image: wind_farm
-            },
-            {
-                type: "image",
-                titleText: t("slide2_title"),
-                // titleNode: highlighted(titleText),
-                // content: t("slide2_text"),
+                titleText: t("slide_title1"),
+                content: t("slide_text1"),
                 image: drone
             },
             {
                 type: "image",
-                titleText: t("slide3_title"),
-                // titleNode: highlighted(titleText),
-                // content: t("slide2_text"),
+                titleText: t("slide_title2"),
+                content: t("slide_text2"),
+                image: security
+            },
+            {
+                type: "image",
+                titleText: t("slide_title3"),
+                content: t("slide_text3"),
                 image: studio
             },
             {
                 type: "image",
-                titleText: t("slide4_title"),
-                // titleNode: highlighted(titleText),
-                // content: t("slide3_text"),
-                image: security
+                titleText: t("slide_title4"),
+                content: t("slide_text4"),
+                image: counter_drone
             },
         ];
     }, [t]);
@@ -118,100 +105,353 @@ const Home = (): JSX.Element => {
         setResetTimer((prev) => !prev);
     };
 
-    const options: OfferOption[] = useMemo(
+    const goToSlide = (index: number ) => {
+        setCurrentIndex(index);
+        setResetTimer((prev) => !prev);
+    }
+
+    const handleCategoryChange = (idx: number) => {
+        setCurrentCategory(idx);
+        setCurrentSubOptions(0);
+    }
+
+    const categories: OfferCattegory[] = useMemo(
         () => [
         {
-            key: 'offer1',
+            key: "cat1",
             img: icon1,
-            buttonLabel: t("offer_title1"),
-            content : (
-                <>
-                    <h3>{t("offer_title1_1")}</h3>
-                    <li><p>{t("offer_text1_1")}</p></li>
-                    <li><p>{t("offer_text1_2")}</p></li>
-                    <li><p>{t("offer_text1_3")}</p></li>
-                    <br/>
-                    <h3>{t("offer_title1_2")}</h3>
-                    <li><p>{t("offer_text1_4")}</p></li>
-                    <li><p>{t("offer_text1_5")}</p></li>
-                    <li><p>{t("offer_text1_6")}</p></li>
-                    <li><p>{t("offer_text1_7")}</p></li>
-                    <li><p>{t("offer_text1_8")}</p></li>
-                    <br/>
-                    <h3>{t("offer_title1_3")}</h3>
-                    <li><p>{t("offer_text1_9")}</p></li>
-                    <li><p>{t("offer_text1_10")}</p></li>
-                    <li><p>{t("offer_text1_11")}</p></li>
-                    <br/>
-                    <h3>{t("offer_title1_4")}</h3>
-                    <li><p>{t("offer_text1_12")}</p></li>
-                    <li><p>{t("offer_text1_13")}</p></li>
-                    <br/>
-                    <h3>{t("offer_title1_5")}</h3>
-                    <br/>
-                    <h3>{t("offer_title1_6")}</h3>
-                </>
-            ),
+            title: t("offer_category_title1"),
+            subOptions: [
+                {
+                    key: "offer1",
+                    buttonLabel: t("offer1_title1"),
+                    content : (
+                        <>
+                            <h3>{t("offer1_title2")}</h3>
+                            <ul>
+                                <li>{t("offer1_text1")}</li>
+                                <li>{t("offer1_text2")}</li>
+                                <li>{t("offer1_text3")}</li>
+                            </ul>
+                            <br/>
+                            <h3>{t("offer1_title3")}</h3>
+                            <ul>
+                                <li>{t("offer1_text4")}</li>
+                                <li>{t("offer1_text5")}</li>
+                            </ul>
+                        </>
+                    )
+                },
+                {
+                    key: "offer2",
+                    buttonLabel: t("offer2_title1"),
+                    content : (
+                        <>
+                            <h3>{t("offer2_title2")}</h3>
+                            <ul>
+                                <li>{t("offer2_text1")}</li>
+                                <li>{t("offer2_text2")}</li>
+                                <li>{t("offer2_text3")}</li>
+                            </ul>
+                            <br/>
+                            <h3>{t("offer2_title3")}</h3>
+                            <ul>
+                                <li>{t("offer2_text4")}</li>
+                                <li>{t("offer2_text5")}</li>
+                                <li>{t("offer2_text6")}</li>
+                                <li>{t("offer2_text7")}</li>
+                                <li>{t("offer2_text8")}</li>
+                            </ul>
+                        </>
+                    )
+                },
+                {
+                    key: "offer3",
+                    buttonLabel: t("offer3_title1"),
+                    content : (
+                        <>
+                            <h3>{t("offer3_title2")}</h3>
+                            <ul>
+                                <li>{t("offer3_text1")}</li>
+                                <li>{t("offer3_text2")}</li>
+                                <li>{t("offer3_text3")}</li>
+                                <li>{t("offer3_text4")}</li>
+                                <li>{t("offer3_text5")}</li>
+                                <li>{t("offer3_text6")}</li>
+                            </ul>
+                            <br/>
+                            <h3>{t("offer3_title3")}</h3>
+                            <ul>
+                                <li>{t("offer3_text7")}</li>
+                                <li>{t("offer3_text8")}</li>
+                                <li>{t("offer3_text9")}</li>
+                            </ul>
+                        </>
+                    )
+                },
+                {
+                    key: "offer4",
+                    buttonLabel: t("offer4_title1"),
+                    content : (
+                        <>
+                            <h3>{t("offer4_title2")}</h3>
+                            <ul>
+                                <li>{t("offer4_text1")}</li>
+                                <li>{t("offer4_text2")}</li>
+                                <li>{t("offer4_text3")}</li>
+                            </ul>
+                            <br/>
+                            <h3>{t("offer4_title3")}</h3>
+                            <ul>
+                                <li>{t("offer4_text4")}</li>
+                                <li>{t("offer4_text5")}</li>
+                            </ul>
+                        </>
+                    )
+                },
+            ]
         },
         {
-            key: 'offer2',
+            key: "cat2",
             img: icon2,
-            buttonLabel: t("offer_title2"),
-            content : (
-                <>
-                    <h3>{t("offer_title2_1")}</h3>
-                    <li><p>{t("offer_text2_1")}</p></li>
-                    <li><p>{t("offer_text2_2")}</p></li>
-                    <li><p>{t("offer_text2_3")}</p></li>
-                    <li><p>{t("offer_text2_4")}</p></li>
-                    <li><p>{t("offer_text2_5")}</p></li>
-                    <li><p>{t("offer_text2_6")}</p></li>
-                    <li><p>{t("offer_text2_7")}</p></li>
-                    <br/>
-                    <h3>{t("offer_title2_2")}</h3>
-                    <li><p>{t("offer_text2_8")}</p></li>
-                    <li><p>{t("offer_text2_9")}</p></li>
-                    <li><p>{t("offer_text2_10")}</p></li>
-                    <li><p>{t("offer_text2_11")}</p></li>
-                    <li><p>{t("offer_text2_12")}</p></li>
-                    <li><p>{t("offer_text2_13")}</p></li>
-                </>
-            ),
+            title: t("offer_category_title2"),
+            subOptions: [
+                {
+                    key: 'offer5',
+                    buttonLabel: t("offer5_title1"),
+                    content: (
+                        <>
+                            <h3>{t("offer5_title2")}</h3>
+                            <ul>
+                                <li>{t("offer5_text1")}</li>
+                                <li>{t("offer5_text2")}</li>
+                                <li>{t("offer5_text3")}</li>
+                                <li>{t("offer5_text4")}</li>
+                                <li>{t("offer5_text5")}</li>
+                                <li>{t("offer5_text6")}</li>
+                                <li>{t("offer5_text7")}</li>
+                            </ul>
+                            <br/>
+                            <h3>{t("offer5_title3")}</h3>
+                            <ul>
+                                <li>{t("offer5_text8")}</li>
+                                <li>{t("offer5_text9")}</li>
+                                <li>{t("offer5_text10")}</li>
+                                <li>{t("offer5_text11")}</li>
+                                <li>{t("offer5_text12")}</li>
+                                <li>{t("offer5_text13")}</li>
+                            </ul>
+                        </>
+                    ),
+                },
+                {
+                    key: "offer6",
+                    buttonLabel: t("offer6_title1"),
+                    content : (
+                        <>
+                            <h3>{t("offer6_title2")}</h3>
+                            <ul>
+                                <li>{t("offer6_text1")}</li>
+                                <li>{t("offer6_text2")}</li>
+                                <li>{t("offer6_text3")}</li>
+                            </ul>
+                            <br/>
+                            <h3>{t("offer6_title3")}</h3>
+                            <ul>
+                                <li>{t("offer6_text4")}</li>
+                                <li>{t("offer6_text5")}</li>
+                            </ul>
+                        </>
+                    )
+                },
+                // {
+                //     key: "offer7",
+                //     buttonLabel: t("offer7_title1"),
+                //     content : (
+                //         <>
+                //         </>
+                //     )
+                // },
+                // {
+                //     key: "offer8",
+                //     buttonLabel: t("offer8_title1"),
+                //     content : (
+                //         <>
+                //         </>
+                //     )
+                // },
+            ]
         },
         {
-            key: 'offer3',
+            key: "cat3",
             img: icon3,
-            buttonLabel: t("offer_title3"),
-            content : (
-                <>
-                    <h3>{t("offer_title3_1")}</h3>
-                    <li><p>{t("offer_text3_1")}</p></li>
-                    <li><p>{t("offer_text3_2")}</p></li>
-                    <li><p>{t("offer_text3_2")}</p></li>
-                </>
-            ),
+            title: t("offer_category_title3"),
+            subOptions: [
+                {
+                    key: 'offer9',
+                    buttonLabel: t("offer9_title1"),
+                    content: (
+                        <>
+                            <h3>{t("offer9_title2")}</h3>
+                            <ul>
+                                <li>{t("offer9_text1")}</li>
+                                <li>{t("offer9_text2")}</li>
+                                <li>{t("offer9_text3")}</li>
+                                <li>{t("offer9_text4")}</li>
+                                <li>{t("offer9_text5")}</li>
+                                <li>{t("offer9_text6")}</li>
+                                <li>{t("offer9_text7")}</li>
+                            </ul>
+                            <br/>
+                            <h3>{t("offer9_title3")}</h3>
+                            <ul>
+                                <li>{t("offer9_text8")}</li>
+                                <li>{t("offer9_text9")}</li>
+                                <li>{t("offer9_text10")}</li>
+                                <li>{t("offer9_text11")}</li>
+                                <li>{t("offer9_text12")}</li>
+                                <li>{t("offer9_text13")}</li>
+                            </ul>
+                            <br/>
+                            <h3>{t("offer9_title4")}</h3>
+                            <br/>
+                            <h3>{t("offer9_title5")}</h3>
+                        </>
+                    ),
+                },
+                {
+                    key: "offer10",
+                    buttonLabel: t("offer10_title1"),
+                    content : (
+                        <>
+                            <h3>{t("offer10_title2")}</h3>
+                            <ul>
+                                <li>{t("offer10_text1")}</li>
+                                <li>{t("offer10_text2")}</li>
+                                <li>{t("offer10_text3")}</li>
+                            </ul>
+                            <br/>
+                            <h3>{t("offer10_title3")}</h3>
+                            <ul>
+                                <li>{t("offer10_text4")}</li>
+                                <li>{t("offer10_text5")}</li>
+                            </ul>
+                        </>
+                    )
+                },
+                {
+                    key: "offer11",
+                    buttonLabel: t("offer11_title1"),
+                    content : (
+                        <>
+                            <h3>{t("offer11_title2")}</h3>
+                            <ul>
+                                <li>{t("offer11_text1")}</li>
+                                <li>{t("offer11_text2")}</li>
+                                <li>{t("offer11_text3")}</li>
+                            </ul>
+                            <br/>
+                            <h3>{t("offer11_title3")}</h3>
+                            <ul>
+                                <li>{t("offer11_text4")}</li>
+                                <li>{t("offer11_text5")}</li>
+                            </ul>
+                        </>
+                    )
+                },
+                // {
+                //     key: "offer12",
+                //     buttonLabel: t("offer12_title1"),
+                //     content : (
+                //         <>
+                //         </>
+                //     )
+                // },
+            ]
         },
         {
-            key: 'offer4',
+            key: "cat4",
             img: icon4,
-            buttonLabel: t("offer_title4"),
-            content : (
-                <>
-                    <h3>{t("offer_title4_1")}</h3>
-                    <li><p>{t("offer_text4_1")}</p></li>
-                    <li><p>{t("offer_text4_2")}</p></li>
-                    <li><p>{t("offer_text4_3")}</p></li>
-                    <li><p>{t("offer_text4_4")}</p></li>
-                    <li><p>{t("offer_text4_5")}</p></li>
-                    <li><p>{t("offer_text4_6")}</p></li>
-                    <br/>
-                    <h3>{t("offer_title4_2")}</h3>
-                    <li><p>{t("offer_text4_7")}</p></li>
-                    <li><p>{t("offer_text4_8")}</p></li>
-                    <li><p>{t("offer_text4_9")}</p></li>
-                </>
-            ),
-        }
+            title: t("offer_category_title4"),
+            subOptions: [
+                {
+                    key: 'offer13',
+                    buttonLabel: t("offer13_title1"),
+                    content: (
+                        <>
+                            <h3>{t("offer13_title2")}</h3>
+                            <ul>
+                                <li>{t("offer13_text1")}</li>
+                                <li>{t("offer13_text2")}</li>
+                                <li>{t("offer13_text3")}</li>
+                                <li>{t("offer13_text4")}</li>
+                                <li>{t("offer13_text5")}</li>
+                                <li>{t("offer13_text6")}</li>
+                                <li>{t("offer13_text7")}</li>
+                            </ul>
+                            <br/>
+                            <h3>{t("offer13_title3")}</h3>
+                            <ul>
+                                <li>{t("offer13_text8")}</li>
+                                <li>{t("offer13_text9")}</li>
+                                <li>{t("offer13_text10")}</li>
+                                <li>{t("offer13_text11")}</li>
+                                <li>{t("offer13_text12")}</li>
+                                <li>{t("offer13_text13")}</li>
+                            </ul>
+                        </>
+                    ),
+                },
+                {
+                    key: "offer14",
+                    buttonLabel: t("offer14_title1"),
+                    content : (
+                        <>
+                            <h3>{t("offer14_title2")}</h3>
+                            <ul>
+                                <li>{t("offer14_text1")}</li>
+                                <li>{t("offer14_text2")}</li>
+                                <li>{t("offer14_text3")}</li>
+                            </ul>
+                            <br/>
+                            <h3>{t("offer14_title3")}</h3>
+                            <ul>
+                                <li>{t("offer14_text4")}</li>
+                                <li>{t("offer14_text5")}</li>
+                            </ul>
+                        </>
+                    )
+                },
+                {
+                    key: "offer15",
+                    buttonLabel: t("offer15_title1"),
+                    content : (
+                        <>
+                            <h3>{t("offer15_title2")}</h3>
+                            <ul>
+                                <li>{t("offer15_text1")}</li>
+                                <li>{t("offer15_text2")}</li>
+                                <li>{t("offer15_text3")}</li>
+                            </ul>
+                            <br/>
+                            <h3>{t("offer15_title3")}</h3>
+                            <ul>
+                                <li>{t("offer15_text4")}</li>
+                                <li>{t("offer15_text5")}</li>
+                            </ul>
+                        </>
+                    )
+                },
+                // {
+                //     key: "offer16",
+                //     buttonLabel: t("offer16_title1"),
+                //     content : (
+                //         <>
+                //         </>
+                //     )
+                // },
+            ]
+        },
     ], [t]);
 
     const logos: PartnerLogo[] = [
@@ -294,8 +534,21 @@ const Home = (): JSX.Element => {
                                 <div className="overlay">
                                     <div className="text-box">
                                         <div className={`opening_text ${isTitleHidden ? 'hidden' : ''}`} ref={titleRef}>
-                                            <h3>{slide.titleText}</h3>
-                                            {/*<p>{slide.content}</p>*/}
+                                            <h3>{slide.content}</h3>
+                                        </div>
+                                        <div className='carousel-nav'>
+                                            {slides.map((slide, index) => (
+                                                <button
+                                                    key={index}
+                                                    type="button"
+                                                    className={`carousel-nav-item ${index === currentIndex ? "active" : ""}`}
+                                                    onClick={() => goToSlide(index)}
+                                                >
+                                                    <p>
+                                                        {slide.titleText}
+                                                    </p>
+                                                </button>
+                                            ))}
                                         </div>
                                     </div>
                                 </div>
@@ -309,73 +562,88 @@ const Home = (): JSX.Element => {
             <div className="text text_container">
 
                 {/*Core Areas*/}
-                <div className='text1_background' id='core_areas'>
-                    <div ref={sec1Ref} className={`text text1 text_width ${isSec1Hidden ? 'hidden' : ''}`}>
-                        <h1>
-                            {t('core_areas_title1')}
-                        </h1>
-                        <div className='container'>
-                            <div className='content'>
-                                <h2>{t('core_areas_title2')}</h2>
-                                <a href='/studio_page'>
-                                    {t('more')}
-                                </a>
-                            </div>
-                            <div className='content'>
-                                <h2>{t('core_areas_title3')}</h2>
-                                <a href='/unmanned_aviation_page'>
-                                    {t('more')}
-                                </a>
-                            </div>
-                            <div className='content'>
-                                <h2>{t('core_areas_title4')}</h2>
-                                <a href='/security_defence_page'>
-                                    {t('more')}
-                                </a>
-                            </div>
-                            <div className='content'>
-                                <h2>{t('core_areas_title5')}</h2>
-                                <a href='/counter_drone_page'>
-                                    {t('more')}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {/*<div className='text1_background' id='core_areas'>*/}
+                {/*    <div ref={sec1Ref} className={`text text1 text_width ${isSec1Hidden ? 'hidden' : ''}`}>*/}
+                {/*        <h1>*/}
+                {/*            {t('core_areas_title1')}*/}
+                {/*        </h1>*/}
+                {/*        <div className='container'>*/}
+                {/*            <div className='content'>*/}
+                {/*                <h2>{t('core_areas_title2')}</h2>*/}
+                {/*                <a href='/studio_page'>*/}
+                {/*                    {t('more')}*/}
+                {/*                </a>*/}
+                {/*            </div>*/}
+                {/*            <div className='content'>*/}
+                {/*                <h2>{t('core_areas_title3')}</h2>*/}
+                {/*                <a href='/unmanned_aviation_page'>*/}
+                {/*                    {t('more')}*/}
+                {/*                </a>*/}
+                {/*            </div>*/}
+                {/*            <div className='content'>*/}
+                {/*                <h2>{t('core_areas_title4')}</h2>*/}
+                {/*                <a href='/security_defence_page'>*/}
+                {/*                    {t('more')}*/}
+                {/*                </a>*/}
+                {/*            </div>*/}
+                {/*            <div className='content'>*/}
+                {/*                <h2>{t('core_areas_title5')}</h2>*/}
+                {/*                <a href='/counter_drone_page'>*/}
+                {/*                    {t('more')}*/}
+                {/*                </a>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
 
                 {/*Offer*/}
-                <div className='text2_background' id='offer'>
-                    <div ref={sec2Ref} className={`text text2 text_width ${isSec2Hidden ? 'hidden' : ''}`}>
+                <div className='offer' id='offer'>
+                    <div ref={sec1Ref} className={`text text_width ${isSec1Hidden ? 'hidden' : ''}`}>
                         <h1>
                             {t('offer')}
                         </h1>
-                        <div className="text2_container">
-                            <div className="switcher_buttons">
-                                {options.map((opt, idx) => (
+                        <div className="text_container">
+                            <div className="switcher_category_buttons">
+                                {categories.map((opt, idx) => (
                                     <button
                                         key={opt.key}
-                                        className={idx === current ? "active" : ""}
-                                        onClick={() => setCurrent(idx)}
+                                        className={idx === currentCategory ? "active" : ""}
+                                        onClick={() => handleCategoryChange(idx)}
                                     >
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img src={opt.img.src} alt={opt.buttonLabel}
+                                        <Image src={opt.img.src} alt={opt.title}
                                            width={200}
                                            height={100}
                                         />
+                                        <p>{opt.title}</p>
+                                    </button>
+                                ))}
+                            </div>
+
+                            <div className='switcher_offer_buttons'>
+                                {categories[currentCategory].subOptions.map((opt, idx) => (
+                                    <button
+                                        key={opt.key}
+                                        className={idx === currentSubOptions ? "active" : ""}
+                                        onClick={() => setCurrentSubOptions(idx)}
+                                    >
+                                        {/*<Image src={opt.img.src} alt={opt.buttonLabel}*/}
+                                        {/*       width={200}*/}
+                                        {/*       height={100}*/}
+                                        {/*/>*/}
                                         <p>{opt.buttonLabel}</p>
                                     </button>
                                 ))}
                             </div>
                             <div className="switcher_text">
-                                {options[current].content}
+                                {categories[currentCategory].subOptions[currentSubOptions].content}
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/*About*/}
-                <div className='text3_background' id='about'>
-                    <div ref={sec3Ref} className={`text text3 text_width ${isSec3Hidden ? 'hidden' : ''}`}>
+                <div className='about' id='about'>
+                    <div ref={sec2Ref} className={`text text_width ${isSec2Hidden ? 'hidden' : ''}`}>
                         <div className='container'>
                             <div className='content'>
                                 <div>
@@ -406,15 +674,15 @@ const Home = (): JSX.Element => {
                 </div>
 
                 {/*Reference*/}
-                <div className='text4_background' id='reference'>
-                    <div ref={sec4Ref} className={`text text4 text_width ${isSec4Hidden ? 'hidden' : ''}`}>
+                <div className='reference' id='reference'>
+                    <div ref={sec3Ref} className={`text text_width ${isSec3Hidden ? 'hidden' : ''}`}>
                         <h1>{t("reference")}</h1>
                     </div>
                 </div>
 
                 {/*Cooperation*/}
-                <div className='text5_background' id='cooperation'>
-                    <div ref={sec5Ref} className={`text text5 text_width ${isSec5Hidden ? 'hidden' : ''}`}>
+                <div className='cooperation' id='cooperation'>
+                    <div ref={sec4Ref} className={`text text_width ${isSec4Hidden ? 'hidden' : ''}`}>
                         <h1>{t("partners")}</h1>
                         <div className="logo_slider">
                             <div className="logo_slider-track">

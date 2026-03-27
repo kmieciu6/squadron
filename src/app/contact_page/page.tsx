@@ -240,8 +240,8 @@ const ContactPage = () => {
                             <span className="checkmark" />
                             <p>
                                 {`${t("consent_text")} `}
-                                <Link href="/privacy_policy" className="link">
-                                    {`${t("privacy_policy_page")}.`}
+                                <Link href="/privacy_policy_page" className="link">
+                                    {`${t("privacy_policy")}.`}
                                 </Link>
                             </p>
                         </label>

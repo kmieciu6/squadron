@@ -11,7 +11,7 @@ const PrivacyPolicy = () => {
     return (
         <section className="privacy_policy page">
             <div ref={sec1Ref} className={`privacy_policy_container ${isSec1Hidden ? 'hidden' : ''}`}>
-                <h1>{t('privacy_policy_page',)}</h1>
+                <h1>{t('privacy_policy',)}</h1>
             </div>
 
             <div ref={sec2Ref} className={`privacy_policy_container ${isSec2Hidden ? 'hidden' : ''}`}>

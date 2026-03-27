@@ -25,6 +25,29 @@ type AseLink = {
     label: string;
 };
 
+type ThirdLevelItem = {
+    id: string;
+    label: string;
+    href?: string;
+    onClick?: () => void;
+};
+
+type SecondLevelItem = {
+    id: string;
+    label: string;
+    children?: ThirdLevelItem[];
+    href?: string;
+    onClick?: () => void;
+};
+
+type FirstLevelItem = {
+    id: string;
+    label: string;
+    children?: SecondLevelItem[];
+    href?: string;
+    onClick?: () => void;
+};
+
 const HOME_PATHS = ['/'] as const;
 
 const Header = (): JSX.Element => {
@@ -89,6 +112,11 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
     const router = useRouter();
     const pathname = usePathname() ?? '/';
     const isHome = HOME_PATHS.includes(pathname as (typeof HOME_PATHS)[number]);
+
+    const rootRef = useRef<HTMLDivElement | null>(null);
+    const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const [openMenu, setOpenMenu] = useState<string | null>(null);
+    const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
     const SUBPAGE_MENUS: Record<string, SubpageMenuItem[]> = {
         '/privacy_policy': [
@@ -191,7 +219,6 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
     };
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true);
     }, []);
 
@@ -216,6 +243,24 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
             }[current] ?? null;
     }
 
+    const goHomeAndScroll = (sectionId: string) => {
+        if (pathname === "/") {
+            const element = document.getElementById(sectionId);
+
+            if (element) {
+                element.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                });
+            }
+
+            return;
+        }
+
+        sessionStorage.setItem("scrollToIdOnce", sectionId);
+        router.push("/");
+    };
+
     const goHomeOrScrollTop = (e?: React.MouseEvent<HTMLAnchorElement>): void => {
         e?.preventDefault();
         handleMenuItemClick();
@@ -226,6 +271,214 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
             router.push('/');
         }
     };
+
+    const clearCloseTimer = () => {
+        if (closeTimerRef.current) {
+            clearTimeout(closeTimerRef.current);
+            closeTimerRef.current = null;
+        }
+    };
+
+    const startCloseTimer = () => {
+        clearCloseTimer();
+
+        closeTimerRef.current = setTimeout(() => {
+            setOpenMenu(null);
+            setOpenMenu(null);
+        }, 3000);
+    };
+
+    const closeAll = () => {
+        setOpenMenu(null);
+        setOpenSubmenu(null);
+        clearCloseTimer();
+    };
+
+    const navigateItem = (item: { href?: string; onClick?: () => void }) => {
+        if (item.onClick) {
+            item.onClick();
+            return;
+        }
+
+        if (!item.href) return;
+
+        if (item.href === pathname) {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+            return;
+        }
+
+        router.push(item.href);
+    };
+
+    const handleFirstLevelClick = (item: FirstLevelItem) => {
+        if (item.children?.length) {
+            setOpenMenu((prev) => {
+                const nextValue = prev === item.id ? null : item.id;
+                setOpenSubmenu(null);
+                return nextValue;
+            });
+
+            clearCloseTimer();
+            return;
+        }
+
+        navigateItem(item);
+        closeAll();
+    };
+
+    const handleSecondLevelClick = (item: SecondLevelItem) => {
+        if (item.children?.length) {
+            setOpenSubmenu((prev) => (prev === item.id ? null : item.id));
+            clearCloseTimer();
+            return;
+        }
+
+        navigateItem(item);
+        closeAll();
+    };
+
+    const handleThirdLevelClick = (item: ThirdLevelItem) => {
+        navigateItem(item);
+        closeAll();
+        if (item.href === pathname) {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+            return;
+        }
+    };
+
+    useEffect(() => {
+        const handleOutsideClick = (e: MouseEvent) => {
+            if (!rootRef.current?.contains(e.target as Node)) {
+                closeAll();
+            }
+        };
+
+        document.addEventListener("mousedown", handleOutsideClick);
+
+        return () => {
+            document.removeEventListener("mousedown", handleOutsideClick);
+            clearCloseTimer();
+        };
+    }, []);
+
+    const menuData: FirstLevelItem[] = [
+        {
+            id: "offer",
+            label: t("offer"),
+            children: [
+                {
+                    id: "unmanned_aviation",
+                    label: t("offer_category_title1"),
+                    children: [
+                        {
+                            id: "iryda_plus",
+                            label: t("offer1_title1"),
+                            href: "/",
+                        },
+                        {
+                            id: "mallard",
+                            label: t("offer2_title1"),
+                            href: "/",
+                        },
+                        {
+                            id: "training",
+                            label: t("offer3_title1"),
+                            href: "/",
+                        },
+                        {
+                            id: "expertise",
+                            label: t("offer4_title1"),
+                            href: "/",
+                        },
+                    ],
+                },
+                {
+                    id: "squadron_security_and_defence",
+                    label: t("offer_category_title2"),
+                    children: [
+                        {
+                            id: "critical_infrastructure_protection",
+                            label: t("offer5_title1"),
+                            href: "/security_defence_page",
+                        },
+                        {
+                            id: "cimic_consulting",
+                            label: t("offer6_title1"),
+                            href: "/",
+                        },
+                    ],
+                },
+                {
+                    id: "squadron_studio",
+                    label: t("offer_category_title3"),
+                    children: [
+                        {
+                            id: "simulators_and_trainers",
+                            label: t("offer9_title1"),
+                            href: "/",
+                        },
+                        {
+                            id: "video_games",
+                            label: t("offer10_title1"),
+                            href: "/",
+                        },
+                        {
+                            id: "education_and_digital_heritage",
+                            label: t("offer11_title1"),
+                            href: "/",
+                        },
+                    ],
+                },
+                {
+                    id: "counter_drone",
+                    label: t("offer_category_title4"),
+                    children: [
+                        {
+                            id: "iryda_plus",
+                            label: t("offer13_title1"),
+                            href: "/",
+                        },
+                        {
+                            id: "egida_system",
+                            label: t("offer14_title1"),
+                            href: "/",
+                        },
+                        {
+                            id: "expert_assessments",
+                            label: t("offer15_title1"),
+                            href: "/",
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            id: "about",
+            label: t("about"),
+            onClick: () => goHomeAndScroll("about"),
+        },
+        {
+            id: "reference",
+            label: t("reference"),
+            onClick: () => goHomeAndScroll("reference"),
+        },
+        {
+            id: "cooperation",
+            label: t("cooperation"),
+            onClick: () => goHomeAndScroll("cooperation"),
+        },
+        {
+            id: "contact",
+            label: t("contact"),
+            href: "/contact_page"
+        },
+    ];
 
     return (
         <div className={className}>
@@ -265,53 +518,176 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
                             <div className='nav-container'>
                                 {isHome ? (
                                     <>
-                                        <a
-                                            className="nav-link"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                document.getElementById('offer')?.scrollIntoView({ behavior: 'smooth' });
-                                                handleMenuItemClick();
+                                        {/*<a*/}
+                                        {/*    className="nav-link"*/}
+                                        {/*    onClick={(e) => {*/}
+                                        {/*        e.preventDefault();*/}
+                                        {/*        document.getElementById('offer')?.scrollIntoView({ behavior: 'smooth' });*/}
+                                        {/*        handleMenuItemClick();*/}
+                                        {/*    }}*/}
+                                        {/*>*/}
+                                        {/*    {t('offer')}*/}
+                                        {/*</a>*/}
+
+                                        <div
+                                            ref={rootRef}
+                                            className="headerDropdown"
+                                            onMouseEnter={clearCloseTimer}
+                                            onMouseLeave={() => {
+                                                if (openMenu) startCloseTimer();
                                             }}
                                         >
-                                            {t('offer')}
-                                        </a>
+                                            <nav className="headerDropdown__nav">
+                                                <ul className="headerDropdown__list">
+                                                    {menuData.map((item) => {
+                                                        const isMenuOpen = openMenu === item.id;
+                                                        const hasFirstChildren = !!item.children?.length;
 
-                                        <a
-                                            className="nav-link"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-                                                handleMenuItemClick();
-                                            }}
-                                        >
-                                            {t('about')}
-                                        </a>
+                                                        return (
+                                                            <li
+                                                                key={item.id}
+                                                                className={`headerDropdown__item ${isMenuOpen ? "is-open" : ""}`}
+                                                            >
+                                                                <button
+                                                                    type="button"
+                                                                    className={`headerDropdown__trigger ${
+                                                                        hasFirstChildren ? "has-children" : ""
+                                                                    }`}
+                                                                    onClick={() => handleFirstLevelClick(item)}
+                                                                    aria-expanded={isMenuOpen}
+                                                                >
+                                                                    <span>{item.label}</span>
+                                                                    {hasFirstChildren && (
+                                                                        <span className="headerDropdown__arrow">
+                                                                            ▼
+                                                                        </span>
+                                                                    )}
+                                                                </button>
 
-                                        <a
-                                            className="nav-link"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                document.getElementById('reference')?.scrollIntoView({ behavior: 'smooth' });
-                                                handleMenuItemClick();
-                                            }}
-                                        >
-                                            {t('reference')}
-                                        </a>
+                                                                {hasFirstChildren && (
+                                                                    <div
+                                                                        className={`headerDropdown__menu ${
+                                                                            isMenuOpen ? "is-open" : ""
+                                                                        }`}
+                                                                    >
+                                                                        <div className="headerDropdown__columns">
+                                                                            <ul className="headerDropdown__submenuList">
+                                                                                {item.children?.map((subItem) => {
+                                                                                    const isSubmenuOpen = openSubmenu === subItem.id;
+                                                                                    const hasSecondChildren =
+                                                                                        !!subItem.children?.length;
 
-                                        <a
-                                            className="nav-link"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                document.getElementById('cooperation')?.scrollIntoView({ behavior: 'smooth' });
-                                                handleMenuItemClick();
-                                            }}
-                                        >
-                                            {t('cooperation')}
-                                        </a>
+                                                                                    return (
+                                                                                        <li
+                                                                                            key={subItem.id}
+                                                                                            className={`headerDropdown__submenuItem ${
+                                                                                                isSubmenuOpen ? "is-open" : ""
+                                                                                            }`}
+                                                                                        >
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                className={`headerDropdown__submenuButton ${
+                                                                                                    hasSecondChildren
+                                                                                                        ? "has-children"
+                                                                                                        : ""
+                                                                                                }`}
+                                                                                                onClick={() =>
+                                                                                                    handleSecondLevelClick(subItem)
+                                                                                                }
+                                                                                            >
+                                                                                                <span>{subItem.label}</span>
+                                                                                                {hasSecondChildren && (
+                                                                                                    <span className="headerDropdown__subArrow">
+                                                                                                        ▶
+                                                                                                    </span>
+                                                                                                )}
+                                                                                            </button>
+                                                                                        </li>
+                                                                                    );
+                                                                                })}
+                                                                            </ul>
 
-                                        <a className="nav-link" href="/contact_page">
-                                            {t('contact')}
-                                        </a>
+                                                                            <div className="headerDropdown__thirdLevel">
+                                                                                {item.children?.map((subItem) => {
+                                                                                    const isSubmenuOpen = openSubmenu === subItem.id;
+
+                                                                                    if (!isSubmenuOpen || !subItem.children?.length) {
+                                                                                        return null;
+                                                                                    }
+
+                                                                                    return (
+                                                                                        <ul
+                                                                                            key={subItem.id}
+                                                                                            className="headerDropdown__thirdLevelList"
+                                                                                        >
+                                                                                            {subItem.children.map((thirdItem) => (
+                                                                                                <li
+                                                                                                    key={thirdItem.id}
+                                                                                                    className="headerDropdown__thirdLevelItem"
+                                                                                                >
+                                                                                                    <button
+                                                                                                        type="button"
+                                                                                                        className="headerDropdown__thirdLevelButton"
+                                                                                                        onClick={() =>
+                                                                                                            handleThirdLevelClick(
+                                                                                                                thirdItem
+                                                                                                            )
+                                                                                                        }
+                                                                                                    >
+                                                                                                        {thirdItem.label}
+                                                                                                    </button>
+                                                                                                </li>
+                                                                                            ))}
+                                                                                        </ul>
+                                                                                    );
+                                                                                })}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                            </li>
+                                                        );
+                                                    })}
+                                                </ul>
+                                            </nav>
+                                        </div>
+
+                                        {/*<a*/}
+                                        {/*    className="nav-link"*/}
+                                        {/*    onClick={(e) => {*/}
+                                        {/*        e.preventDefault();*/}
+                                        {/*        document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });*/}
+                                        {/*        handleMenuItemClick();*/}
+                                        {/*    }}*/}
+                                        {/*>*/}
+                                        {/*    {t('about')}*/}
+                                        {/*</a>*/}
+
+                                        {/*<a*/}
+                                        {/*    className="nav-link"*/}
+                                        {/*    onClick={(e) => {*/}
+                                        {/*        e.preventDefault();*/}
+                                        {/*        document.getElementById('reference')?.scrollIntoView({ behavior: 'smooth' });*/}
+                                        {/*        handleMenuItemClick();*/}
+                                        {/*    }}*/}
+                                        {/*>*/}
+                                        {/*    {t('reference')}*/}
+                                        {/*</a>*/}
+
+                                        {/*<a*/}
+                                        {/*    className="nav-link"*/}
+                                        {/*    onClick={(e) => {*/}
+                                        {/*        e.preventDefault();*/}
+                                        {/*        document.getElementById('cooperation')?.scrollIntoView({ behavior: 'smooth' });*/}
+                                        {/*        handleMenuItemClick();*/}
+                                        {/*    }}*/}
+                                        {/*>*/}
+                                        {/*    {t('cooperation')}*/}
+                                        {/*</a>*/}
+
+                                        {/*<a className="nav-link" href="/contact_page">*/}
+                                        {/*    {t('contact')}*/}
+                                        {/*</a>*/}
                                     </>
                                 ) : (
                                     <>
