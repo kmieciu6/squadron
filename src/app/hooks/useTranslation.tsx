@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import {useEffect, useState, useCallback, ReactNode, Fragment} from 'react';
 import en_common from '../languages/en/common.json';
 import pl_common from '../languages/pl/common.json';
 
@@ -18,6 +18,25 @@ const supportedLanguages: SupportedLanguage[] = ['en', 'pl'];
 
 const isSupportedLanguage = (v: unknown): v is SupportedLanguage =>
     typeof v === 'string' && (supportedLanguages as string[]).includes(v);
+
+const parseRichText = (text: string): ReactNode[] => {
+    return text
+        .split(/(<strong>.*?<\/strong>|<b>.*?<\/b>|<br\s*\/?>)/g)
+        .filter(Boolean)
+        .map((part, index) => {
+            if (/^<br\s*\/?>$/.test(part)) {
+                return <br key={index} />;
+            }
+
+            const boldMatch = part.match(/^<(strong|b)>(.*?)<\/\1>$/);
+
+            if (boldMatch) {
+                return <strong key={index}>{boldMatch[2]}</strong>;
+            }
+
+            return <Fragment key={index}>{part}</Fragment>;
+        });
+};
 
 const useTranslation = (namespace: Namespace = 'common') => {
     const [local, setLocale] = useState<SupportedLanguage>('en');
@@ -56,6 +75,13 @@ const useTranslation = (namespace: Namespace = 'common') => {
         [messages]
     );
 
+    const tRich = useCallback(
+        (key: string): ReactNode[] => {
+            return parseRichText(t(key));
+        },
+        [t]
+    );
+
     const changeLanguage = useCallback(
         (lang: SupportedLanguage) => {
             if (!supportedLanguages.includes(lang)) return;
@@ -68,7 +94,7 @@ const useTranslation = (namespace: Namespace = 'common') => {
         [namespace]
     );
 
-    return { t, local, changeLanguage };
+    return { t, tRich, local, changeLanguage };
 };
 
 export default useTranslation;

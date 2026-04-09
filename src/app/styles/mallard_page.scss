@@ -1,0 +1,32 @@
+@use "colors" as *;
+@use "mixins" as *;
+
+.mallard_page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .mallard_content {
+        max-width: 1200px;
+        width: 90%;
+
+        @include desktop {
+            width: 100%;
+
+            h1 {
+                padding: 1rem 0 3rem 0;
+            }
+        }
+
+
+        h2 {
+            padding: 2rem 0 0.5rem 0;
+        }
+
+        p {
+            margin: 1.5rem 0;
+        }
+    }
+}

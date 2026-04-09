@@ -89,10 +89,6 @@
                     align-items: center;
                     transition: color 0.3s;
                     height: 60px;
-
-                    &:hover {
-                        color: $main-color !important;
-                    }
                 }
             }
         }
@@ -127,7 +123,6 @@
             }
 
             &__item {
-                //border: 1px solid red;
                 position: relative;
             }
 
@@ -144,6 +139,13 @@
                 text-align: center;
                 font-weight: 400;
                 color: inherit;
+                transition: color 0.3s;
+
+                @include desktop {
+                    &:hover {
+                        color: $main-color !important;
+                    }
+                }
 
                 &.has-children {
                     font-weight: 400;
@@ -166,11 +168,9 @@
 
             &__menu {
                 position: absolute;
-                top: calc(100% + 8px);
                 left: 0;
                 min-width: 480px;
-                border: 1px solid #ddd;
-                border-radius: 12px;
+                border-radius: 0 0 12px 12px;
                 box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
                 opacity: 0;
                 visibility: hidden;
@@ -198,8 +198,6 @@
             &__submenuList {
                 list-style: none;
                 margin: 0;
-                padding: 0.5rem 0;
-                border-right: 1px solid #eee;
                 background: #959595;
             }
 
@@ -231,6 +229,7 @@
 
                 &:hover {
                     background: #3e3e3e;
+                    color: $main-color !important;
                 }
             }
 
@@ -249,9 +248,55 @@
                 transform: rotate(90deg);
             }
 
+            &__submenuItem {
+                width: 100%;
+                position: relative;
+
+                &.is-open {
+                    .headerDropdown__submenuButton {
+                        font-weight: 400;
+                    }
+                }
+            }
+
+            &__submenuDropdown {
+                display: none;
+            }
+
+            &__submenuThirdLevelList {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            &__submenuThirdLevelItem {
+                width: 100%;
+            }
+
+            &__submenuThirdLevelButton {
+                width: 100%;
+                text-align: center;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                padding: 0.9rem 1.1rem;
+                font: inherit;
+                color: inherit;
+                transition: background 0.2s ease;
+                font-weight: 400;
+
+                &:hover {
+                    background: #959595;
+                    color: $main-color !important;
+                }
+            }
+
             &__thirdLevel {
-                padding: 0.75rem 0;
                 background: #3e3e3e;
+
+                @include mobile-tablet {
+                    display: none;
+                }
             }
 
             &__thirdLevelList {
@@ -266,7 +311,7 @@
 
             &__thirdLevelButton {
                 width: 100%;
-                text-align: left;
+                text-align: center;
                 background: transparent;
                 border: none;
                 cursor: pointer;
@@ -278,11 +323,12 @@
 
                 &:hover {
                     background: #959595;
+                    color: $main-color !important;
                 }
             }
 
             @include mobile-tablet {
-                width: 1000%;
+                width: 100%;
 
                 &__nav {
                     width: 100%;
@@ -346,6 +392,33 @@
                 &__submenuButton {
                     justify-content: center;
                     padding: 0.5rem 0;
+                }
+
+                &__submenuItem {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                }
+
+                &__submenuDropdown {
+                    display: block;
+                    width: 100%;
+                    max-height: 0;
+                    opacity: 0;
+                    overflow: hidden;
+                    transition:
+                            max-height 0.25s ease,
+                            opacity 0.2s ease;
+
+                    &.is-open {
+                        max-height: 1000px;
+                        opacity: 1;
+                    }
+                }
+
+                &__submenuThirdLevelButton {
+                    padding: 0.45rem 0;
+                    text-align: center;
                 }
 
                 &__thirdLevel {
@@ -430,13 +503,20 @@
             background: transparent;
             border: none;
             display: flex;
+            justify-content: center;
             align-items: center;
             gap: .5rem;
             cursor: pointer;
-            height: 60px; // by zrównać z .nav-link na desktopie
-            padding: 0 2rem; // jak inne linki
+            padding: 0 2rem;
             font: inherit;
             transition: color .3s;
+            text-align: center;
+            height: 55px;
+
+            @include mobile-tablet {
+                height: 30px;
+                width: 100%;
+            }
 
             &:hover {
                 color: $main-color !important;
@@ -462,6 +542,7 @@
                 width: 100%;
                 max-width: 400px;
                 background: $main-color;
+                margin-top: 8px;
             }
 
             .ase-toggle {
@@ -469,12 +550,6 @@
                 text-align: center;
                 border: none;
                 color: $white-color;
-
-                @include desktop {
-                    &.active {
-                        color: $black-color !important;
-                    }
-                }
             }
 
             .ase-menu {
@@ -483,10 +558,6 @@
                 border-top: 1px solid rgba(255, 255, 255, 0.2);
                 background: inherit;
                 box-shadow: none;
-
-                @include desktop {
-                    background: $dark-background-header;
-                }
 
                 &:active {
                     color: $main-color !important;
@@ -574,6 +645,7 @@
 
                 .ase-toggle {
                     color: inherit;
+                    cursor: pointer;
 
                     &.active {
                         color: $black-color !important;
@@ -587,10 +659,6 @@
                     color: inherit;
                     display: flex;
                     justify-content: center;
-
-                    img {
-                        margin-left: 0.5rem;
-                    }
 
                     &:hover,
                     &:focus {
@@ -617,40 +685,50 @@
 }
 
 .static-header {
-    position: relative; // Statyczny header w przepływie dokumentu
-    background: rgba(#838383, 0.8);
-
+    position: relative;
     z-index: 5;
+    background: rgba($light-background-header, 0.8);
 
     @include desktop {
-        background: rgba(#838383, 0.3);
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
+        background: rgba($light-background-header, 0.3);
     }
 }
 
 .dynamic-header {
-    background: rgba(#838383, 0.8);
-    position: fixed; // Dynamiczny header przyklejony do góry ekranu
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 3;
+    z-index: 4;
+    background: rgba($light-background-header, 0.8);
     transition: transform 0.3s ease-in-out, opacity 0.3s ease;
-
-    @include desktop {
-        background: rgba(#838383, 0.8);
-    }
+    will-change: transform, opacity;
 
     &.visible {
-        transform: translateY(0); // Widoczny
+        transform: translateY(0);
         opacity: 1;
+        pointer-events: auto;
     }
 
     &.hidden {
-        transform: translateY(-100%); // Ukryty
+        transform: translateY(-100%);
         opacity: 0;
+        pointer-events: none;
+    }
+}
+
+.dark .static-header,
+.dark .dynamic-header {
+    background: rgba($dark-background-header, 0.8);
+}
+
+.dark .static-header {
+
+    @include desktop {
+        background: rgba($dark-background-header, 0.3);
     }
 }

@@ -8,8 +8,8 @@ const StudioPage = () => {
     const [sec1Ref, isSec1Hidden] = useIntersectionHide<HTMLDivElement>();
 
     return (
-        <div className='studio page'>
-            <div ref={sec1Ref} className={`text text1 text_width ${isSec1Hidden ? 'hidden' : ''}`}>
+        <div className='studio subpage'>
+            <div ref={sec1Ref} className={`text text_width ${isSec1Hidden ? 'hidden' : ''}`}>
                 <h1>{t('studio_title1')}</h1>
                 <h2>{t('studio_title2')}</h2>
                 <h2>{t('studio_title3')}</h2>

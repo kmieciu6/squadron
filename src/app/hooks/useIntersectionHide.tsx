@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect, type RefObject } from "react";
+import {usePageLoader} from "@/app/context/PageLoaderContext";
 
 type Options = IntersectionObserverInit;
 
@@ -10,37 +11,42 @@ type UseIntersectionHideReturn<T extends Element> = readonly [
 ];
 
 function useIntersectionHide<T extends Element = HTMLDivElement>(
-    desktopOptions: Options = { threshold: 0.2, rootMargin: "100px" },
+    desktopOptions: Options = { threshold: 0.4, rootMargin: "0px" },
     mobileOptions: Options = { threshold: 0.2, rootMargin: "0px" }
 ): UseIntersectionHideReturn<T> {
     const ref = useRef<T | null>(null);
     const [isHidden, setIsHidden] = useState<boolean>(true);
+    const { loading } = usePageLoader();
 
     useEffect(() => {
-        if (typeof window === "undefined") return;
-
-        const isMobile = window.matchMedia("(max-width: 768px)").matches;
-        const observerOptions = isMobile ? mobileOptions : desktopOptions;
+        if (typeof window === "undefined" || loading) return;
 
         const el = ref.current;
         if (!el) return;
 
-        const observer = new IntersectionObserver((entries, obs) => {
-            for (const entry of entries) {
-                if (entry.isIntersecting) {
-                    setIsHidden(false);
-                    obs.unobserve(entry.target);
-                }
-            }
-        }, observerOptions);
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+        const observerOptions = isMobile ? mobileOptions : desktopOptions;
 
-        observer.observe(el);
+        let observer: IntersectionObserver | null = null;
+
+        const rafId = window.requestAnimationFrame(() => {
+            observer = new IntersectionObserver((entries, obs) => {
+                for (const entry of entries) {
+                    if (entry.isIntersecting) {
+                        setIsHidden(false);
+                        obs.unobserve(entry.target);
+                    }
+                }
+            }, observerOptions);
+
+            observer.observe(el);
+        });
 
         return () => {
-            observer.unobserve(el);
-            observer.disconnect();
+            window.cancelAnimationFrame(rafId);
+            observer?.disconnect();
         };
-    }, [desktopOptions, mobileOptions]);
+    }, [desktopOptions, mobileOptions, loading]);
 
     return [ref, isHidden] as const;
 }

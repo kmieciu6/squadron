@@ -13,12 +13,12 @@ type HeaderContentProps = {
     className: string;
 };
 
-type SubpageMenuItem = {
-    key: string;
-    label: string;
-    href?: string;
-    id?: string;
-};
+// type SubpageMenuItem = {
+//     key: string;
+//     label: string;
+//     href?: string;
+//     id?: string;
+// };
 
 type AseLink = {
     path: string;
@@ -48,50 +48,56 @@ type FirstLevelItem = {
     onClick?: () => void;
 };
 
-const HOME_PATHS = ['/'] as const;
+// const HOME_PATHS = ['/'] as const;
 
 const Header = (): JSX.Element => {
-    const [dynamicVisible, setDynamicVisible] = useState<boolean>(false);
+    const [dynamicVisible, setDynamicVisible] = useState(false);
 
     const staticHeaderRef = useRef<HTMLDivElement | null>(null);
-    const lastScrollY = useRef<number>(0);
-    const scrollTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-    const handleScroll = (): void => {
-        const currentScrollY = window.scrollY;
-        const staticHeaderHeight = staticHeaderRef.current?.offsetHeight ?? 0;
-
-        if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
-
-        scrollTimeout.current = setTimeout(() => {
-            if (currentScrollY > staticHeaderHeight && currentScrollY < lastScrollY.current) {
-                setDynamicVisible(true);
-            } else {
-                setDynamicVisible(false);
-            }
-            lastScrollY.current = currentScrollY;
-        }, 10);
-    };
+    const lastScrollY = useRef(0);
 
     useEffect(() => {
-        window.addEventListener('scroll', handleScroll, { passive: true });
+        lastScrollY.current = window.scrollY;
+
+        const handleScroll = (): void => {
+            const currentScrollY = window.scrollY;
+            const isScrollingUp = currentScrollY < lastScrollY.current;
+
+            const staticHeaderRect = staticHeaderRef.current?.getBoundingClientRect();
+
+            if (!staticHeaderRect) {
+                lastScrollY.current = currentScrollY;
+                return;
+            }
+
+            // static header jest jeszcze widoczny / zaczyna wracać
+            const staticHeaderIsVisible = staticHeaderRect.bottom > 0;
+
+            if (staticHeaderIsVisible) {
+                setDynamicVisible(false);
+            } else {
+                setDynamicVisible(isScrollingUp);
+            }
+
+            lastScrollY.current = currentScrollY;
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
 
         return () => {
-            window.removeEventListener('scroll', handleScroll);
-            if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+            window.removeEventListener("scroll", handleScroll);
         };
     }, []);
 
     return (
         <div>
-            <div ref={staticHeaderRef}>
-                <HeaderContent
-                    className="header static-header" />
+            <div ref={staticHeaderRef} className="static-header">
+                <HeaderContent className="header" />
             </div>
 
-            <HeaderContent
-                className={`header dynamic-header ${dynamicVisible ? 'visible' : 'hidden'}`}
-            />
+            <div className={`dynamic-header ${dynamicVisible ? "visible" : "hidden"}`}>
+                <HeaderContent className="header" />
+            </div>
         </div>
     );
 };
@@ -111,27 +117,24 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
 
     const router = useRouter();
     const pathname = usePathname() ?? '/';
-    const isHome = HOME_PATHS.includes(pathname as (typeof HOME_PATHS)[number]);
 
     const rootRef = useRef<HTMLDivElement | null>(null);
     const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [openMenu, setOpenMenu] = useState<string | null>(null);
     const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
-    const SUBPAGE_MENUS: Record<string, SubpageMenuItem[]> = {
-        '/privacy_policy': [
-            { key: 'home', label: t('main_page'), href: '/' },
-            { key: 'contact', label: t('contact'), href: '/contact_page' },
-        ],
-        '/contact_page': [{ key: 'home', label: t('main_page'), href: '/' }],
-    };
-
-    const DEFAULT_SUBPAGE_MENU: SubpageMenuItem[] = [
-        { key: 'home', label: t('main_page'), href: '/' },
-        { key: 'contact', label: t('contact'), href: '/contact_page' },
-    ];
-
-    const currentSubpageMenu = SUBPAGE_MENUS[pathname] ?? DEFAULT_SUBPAGE_MENU;
+    // const SUBPAGE_MENUS: Record<string, SubpageMenuItem[]> = {
+    //     '/privacy_policy': [
+    //         { key: 'home', label: t('main_page'), href: '/' },
+    //         { key: 'contact', label: t('contact'), href: '/contact_page' },
+    //     ],
+    //     '/contact_page': [{ key: 'home', label: t('main_page'), href: '/' }],
+    // };
+    //
+    // const DEFAULT_SUBPAGE_MENU: SubpageMenuItem[] = [
+    //     { key: 'home', label: t('main_page'), href: '/' },
+    //     { key: 'contact', label: t('contact'), href: '/contact_page' },
+    // ];
 
     const aseLinks: AseLink[] = [
         { path: 'https://ase.pl/', label: 'ASE GROUP' },
@@ -219,6 +222,7 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
     };
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true);
     }, []);
 
@@ -261,6 +265,37 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
         router.push("/");
     };
 
+    useEffect(() => {
+        if (pathname !== "/") return;
+
+        const sectionId = sessionStorage.getItem("scrollToIdOnce");
+        if (!sectionId) return;
+
+        const scrollToSection = () => {
+            const element = document.getElementById(sectionId);
+
+            if (element) {
+                element.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                });
+
+                sessionStorage.removeItem("scrollToIdOnce");
+                return true;
+            }
+
+            return false;
+        };
+
+        if (scrollToSection()) return;
+
+        const timeout = setTimeout(() => {
+            scrollToSection();
+        }, 200);
+
+        return () => clearTimeout(timeout);
+    }, [pathname]);
+
     const goHomeOrScrollTop = (e?: React.MouseEvent<HTMLAnchorElement>): void => {
         e?.preventDefault();
         handleMenuItemClick();
@@ -284,7 +319,7 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
 
         closeTimerRef.current = setTimeout(() => {
             setOpenMenu(null);
-            setOpenMenu(null);
+            setOpenSubmenu(null);
         }, 3000);
     };
 
@@ -379,12 +414,12 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
                         {
                             id: "iryda_plus",
                             label: t("offer1_title1"),
-                            href: "/",
+                            href: "/iryda_plus_page",
                         },
                         {
                             id: "mallard",
                             label: t("offer2_title1"),
-                            href: "/",
+                            href: "/mallard_page",
                         },
                         {
                             id: "training",
@@ -461,7 +496,8 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
         {
             id: "about",
             label: t("about"),
-            onClick: () => goHomeAndScroll("about"),
+            // onClick: () => goHomeAndScroll("/about"),
+            href: "/about_page",
         },
         {
             id: "reference",
@@ -488,8 +524,6 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
                         <Image
                             src={logo}
                             alt="Logo"
-                            width={250}
-                            height={100}
                             className="logo_image"
                             loading="eager"
                         />
@@ -516,203 +550,155 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
 
                         <div className={`nav-links ${isBurgerMenuOpen ? 'open' : ''}`}>
                             <div className='nav-container'>
-                                {isHome ? (
-                                    <>
-                                        {/*<a*/}
-                                        {/*    className="nav-link"*/}
-                                        {/*    onClick={(e) => {*/}
-                                        {/*        e.preventDefault();*/}
-                                        {/*        document.getElementById('offer')?.scrollIntoView({ behavior: 'smooth' });*/}
-                                        {/*        handleMenuItemClick();*/}
-                                        {/*    }}*/}
-                                        {/*>*/}
-                                        {/*    {t('offer')}*/}
-                                        {/*</a>*/}
 
-                                        <div
-                                            ref={rootRef}
-                                            className="headerDropdown"
-                                            onMouseEnter={clearCloseTimer}
-                                            onMouseLeave={() => {
-                                                if (openMenu) startCloseTimer();
-                                            }}
-                                        >
-                                            <nav className="headerDropdown__nav">
-                                                <ul className="headerDropdown__list">
-                                                    {menuData.map((item) => {
-                                                        const isMenuOpen = openMenu === item.id;
-                                                        const hasFirstChildren = !!item.children?.length;
+                                <div
+                                    ref={rootRef}
+                                    className="headerDropdown"
+                                    onMouseEnter={clearCloseTimer}
+                                    onMouseLeave={() => {
+                                        if (openMenu) startCloseTimer();
+                                    }}
+                                >
+                                    <nav className="headerDropdown__nav">
+                                        <ul className="headerDropdown__list">
+                                            {menuData.map((item) => {
+                                                const isMenuOpen = openMenu === item.id;
+                                                const hasFirstChildren = !!item.children?.length;
 
-                                                        return (
-                                                            <li
-                                                                key={item.id}
-                                                                className={`headerDropdown__item ${isMenuOpen ? "is-open" : ""}`}
+                                                return (
+                                                    <li
+                                                        key={item.id}
+                                                        className={`headerDropdown__item ${isMenuOpen ? "is-open" : ""}`}
+                                                    >
+                                                        <button
+                                                            type="button"
+                                                            className={`headerDropdown__trigger ${
+                                                                hasFirstChildren ? "has-children" : ""
+                                                            }`}
+                                                            onClick={() => handleFirstLevelClick(item)}
+                                                            aria-expanded={isMenuOpen}
+                                                        >
+                                                            <span>{item.label}</span>
+                                                            {hasFirstChildren && (
+                                                                <span className="headerDropdown__arrow">
+                                                                    ▼
+                                                                </span>
+                                                            )}
+                                                        </button>
+
+                                                        {hasFirstChildren && (
+                                                            <div
+                                                                className={`headerDropdown__menu ${
+                                                                    isMenuOpen ? "is-open" : ""
+                                                                }`}
                                                             >
-                                                                <button
-                                                                    type="button"
-                                                                    className={`headerDropdown__trigger ${
-                                                                        hasFirstChildren ? "has-children" : ""
-                                                                    }`}
-                                                                    onClick={() => handleFirstLevelClick(item)}
-                                                                    aria-expanded={isMenuOpen}
-                                                                >
-                                                                    <span>{item.label}</span>
-                                                                    {hasFirstChildren && (
-                                                                        <span className="headerDropdown__arrow">
-                                                                            ▼
-                                                                        </span>
-                                                                    )}
-                                                                </button>
+                                                                <div className="headerDropdown__columns">
+                                                                    <ul className="headerDropdown__submenuList">
+                                                                        {item.children?.map((subItem) => {
+                                                                            const isSubmenuOpen = openSubmenu === subItem.id;
+                                                                            const hasSecondChildren =
+                                                                                !!subItem.children?.length;
 
-                                                                {hasFirstChildren && (
-                                                                    <div
-                                                                        className={`headerDropdown__menu ${
-                                                                            isMenuOpen ? "is-open" : ""
-                                                                        }`}
-                                                                    >
-                                                                        <div className="headerDropdown__columns">
-                                                                            <ul className="headerDropdown__submenuList">
-                                                                                {item.children?.map((subItem) => {
-                                                                                    const isSubmenuOpen = openSubmenu === subItem.id;
-                                                                                    const hasSecondChildren =
-                                                                                        !!subItem.children?.length;
+                                                                            return (
+                                                                                <li
+                                                                                    key={subItem.id}
+                                                                                    className={`headerDropdown__submenuItem ${
+                                                                                        isSubmenuOpen ? "is-open" : ""
+                                                                                    }`}
+                                                                                >
+                                                                                    <button
+                                                                                        type="button"
+                                                                                        className={`headerDropdown__submenuButton ${
+                                                                                            hasSecondChildren
+                                                                                                ? "has-children"
+                                                                                                : ""
+                                                                                        }`}
+                                                                                        onClick={() =>
+                                                                                            handleSecondLevelClick(subItem)
+                                                                                        }
+                                                                                    >
+                                                                                        <span>{subItem.label}</span>
+                                                                                        {hasSecondChildren && (
+                                                                                            <span className="headerDropdown__subArrow">
+                                                                                                ▶
+                                                                                            </span>
+                                                                                        )}
+                                                                                    </button>
 
-                                                                                    return (
-                                                                                        <li
-                                                                                            key={subItem.id}
-                                                                                            className={`headerDropdown__submenuItem ${
+                                                                                    {hasSecondChildren && (
+                                                                                        <div
+                                                                                            className={`headerDropdown__submenuDropdown ${
                                                                                                 isSubmenuOpen ? "is-open" : ""
                                                                                             }`}
                                                                                         >
+                                                                                            <ul className="headerDropdown__submenuThirdLevelList">
+                                                                                                {subItem.children?.map((thirdItem) => (
+                                                                                                    <li
+                                                                                                        key={thirdItem.id}
+                                                                                                        className="headerDropdown__submenuThirdLevelItem"
+                                                                                                    >
+                                                                                                        <button
+                                                                                                            type="button"
+                                                                                                            className="headerDropdown__submenuThirdLevelButton"
+                                                                                                            onClick={() => handleThirdLevelClick(thirdItem)}
+                                                                                                        >
+                                                                                                            {thirdItem.label}
+                                                                                                        </button>
+                                                                                                    </li>
+                                                                                                ))}
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    )}
+                                                                                </li>
+                                                                            );
+                                                                        })}
+                                                                    </ul>
+
+                                                                    <div className="headerDropdown__thirdLevel">
+                                                                        {item.children?.map((subItem) => {
+                                                                            const isSubmenuOpen = openSubmenu === subItem.id;
+
+                                                                            if (!isSubmenuOpen || !subItem.children?.length) {
+                                                                                return null;
+                                                                            }
+
+                                                                            return (
+                                                                                <ul
+                                                                                    key={subItem.id}
+                                                                                    className="headerDropdown__thirdLevelList"
+                                                                                >
+                                                                                    {subItem.children.map((thirdItem) => (
+                                                                                        <li
+                                                                                            key={thirdItem.id}
+                                                                                            className="headerDropdown__thirdLevelItem"
+                                                                                        >
                                                                                             <button
                                                                                                 type="button"
-                                                                                                className={`headerDropdown__submenuButton ${
-                                                                                                    hasSecondChildren
-                                                                                                        ? "has-children"
-                                                                                                        : ""
-                                                                                                }`}
+                                                                                                className="headerDropdown__thirdLevelButton"
                                                                                                 onClick={() =>
-                                                                                                    handleSecondLevelClick(subItem)
+                                                                                                    handleThirdLevelClick(
+                                                                                                        thirdItem
+                                                                                                    )
                                                                                                 }
                                                                                             >
-                                                                                                <span>{subItem.label}</span>
-                                                                                                {hasSecondChildren && (
-                                                                                                    <span className="headerDropdown__subArrow">
-                                                                                                        ▶
-                                                                                                    </span>
-                                                                                                )}
+                                                                                                {thirdItem.label}
                                                                                             </button>
                                                                                         </li>
-                                                                                    );
-                                                                                })}
-                                                                            </ul>
-
-                                                                            <div className="headerDropdown__thirdLevel">
-                                                                                {item.children?.map((subItem) => {
-                                                                                    const isSubmenuOpen = openSubmenu === subItem.id;
-
-                                                                                    if (!isSubmenuOpen || !subItem.children?.length) {
-                                                                                        return null;
-                                                                                    }
-
-                                                                                    return (
-                                                                                        <ul
-                                                                                            key={subItem.id}
-                                                                                            className="headerDropdown__thirdLevelList"
-                                                                                        >
-                                                                                            {subItem.children.map((thirdItem) => (
-                                                                                                <li
-                                                                                                    key={thirdItem.id}
-                                                                                                    className="headerDropdown__thirdLevelItem"
-                                                                                                >
-                                                                                                    <button
-                                                                                                        type="button"
-                                                                                                        className="headerDropdown__thirdLevelButton"
-                                                                                                        onClick={() =>
-                                                                                                            handleThirdLevelClick(
-                                                                                                                thirdItem
-                                                                                                            )
-                                                                                                        }
-                                                                                                    >
-                                                                                                        {thirdItem.label}
-                                                                                                    </button>
-                                                                                                </li>
-                                                                                            ))}
-                                                                                        </ul>
-                                                                                    );
-                                                                                })}
-                                                                            </div>
-                                                                        </div>
+                                                                                    ))}
+                                                                                </ul>
+                                                                            );
+                                                                        })}
                                                                     </div>
-                                                                )}
-                                                            </li>
-                                                        );
-                                                    })}
-                                                </ul>
-                                            </nav>
-                                        </div>
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    </li>
+                                                );
+                                            })}
+                                        </ul>
+                                    </nav>
+                                </div>
 
-                                        {/*<a*/}
-                                        {/*    className="nav-link"*/}
-                                        {/*    onClick={(e) => {*/}
-                                        {/*        e.preventDefault();*/}
-                                        {/*        document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });*/}
-                                        {/*        handleMenuItemClick();*/}
-                                        {/*    }}*/}
-                                        {/*>*/}
-                                        {/*    {t('about')}*/}
-                                        {/*</a>*/}
-
-                                        {/*<a*/}
-                                        {/*    className="nav-link"*/}
-                                        {/*    onClick={(e) => {*/}
-                                        {/*        e.preventDefault();*/}
-                                        {/*        document.getElementById('reference')?.scrollIntoView({ behavior: 'smooth' });*/}
-                                        {/*        handleMenuItemClick();*/}
-                                        {/*    }}*/}
-                                        {/*>*/}
-                                        {/*    {t('reference')}*/}
-                                        {/*</a>*/}
-
-                                        {/*<a*/}
-                                        {/*    className="nav-link"*/}
-                                        {/*    onClick={(e) => {*/}
-                                        {/*        e.preventDefault();*/}
-                                        {/*        document.getElementById('cooperation')?.scrollIntoView({ behavior: 'smooth' });*/}
-                                        {/*        handleMenuItemClick();*/}
-                                        {/*    }}*/}
-                                        {/*>*/}
-                                        {/*    {t('cooperation')}*/}
-                                        {/*</a>*/}
-
-                                        {/*<a className="nav-link" href="/contact_page">*/}
-                                        {/*    {t('contact')}*/}
-                                        {/*</a>*/}
-                                    </>
-                                ) : (
-                                    <>
-                                        {currentSubpageMenu.map((item) => (
-                                            <a
-                                                key={item.key}
-                                                href={item.href ?? '#'}
-                                                className="nav-link"
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-
-                                                    if (item.id) {
-                                                        document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
-                                                    } else if (item.href) {
-                                                        router.push(item.href);
-                                                    }
-
-                                                    handleMenuItemClick();
-                                                }}
-                                            >
-                                                {item.label}
-                                            </a>
-                                        ))}
-                                    </>
-                                )}
                             </div>
                             <div className='nav-container'>
                                 <div
@@ -748,7 +734,7 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
                                 </div>
 
                                 <button
-                                    className="nav-link language-toggle"
+                                    className=" language-toggle"
                                     onClick={() => {
                                         const next = local === 'pl' ? 'en' : 'pl';
                                         changeLanguage(next);

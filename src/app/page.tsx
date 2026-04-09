@@ -53,7 +53,8 @@ const Home = (): JSX.Element => {
     const [sec1Ref, isSec1Hidden] = useIntersectionHide<HTMLDivElement>();
     const [sec2Ref, isSec2Hidden] = useIntersectionHide<HTMLDivElement>();
     const [sec3Ref, isSec3Hidden] = useIntersectionHide<HTMLDivElement>();
-    const [sec4Ref, isSec4Hidden] = useIntersectionHide<HTMLDivElement>();
+    // const [sec4Ref, isSec4Hidden] = useIntersectionHide<HTMLDivElement>();
+
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [currentCategory, setCurrentCategory] = useState<number>(0);
     const [currentSubOptions, setCurrentSubOptions] = useState<number>(0);
@@ -264,22 +265,30 @@ const Home = (): JSX.Element => {
                         </>
                     )
                 },
-                // {
-                //     key: "offer7",
-                //     buttonLabel: t("offer7_title1"),
-                //     content : (
-                //         <>
-                //         </>
-                //     )
-                // },
-                // {
-                //     key: "offer8",
-                //     buttonLabel: t("offer8_title1"),
-                //     content : (
-                //         <>
-                //         </>
-                //     )
-                // },
+                {
+                    key: "offer7",
+                    buttonLabel: t("offer7_title1"),
+                    content : (
+                        <>
+                        </>
+                    )
+                },
+                {
+                    key: "offer8",
+                    buttonLabel: t("offer8_title1"),
+                    content : (
+                        <>
+                            <iframe
+                                src="https://docs.google.com/presentation/d/10qFqRrjAWiMn92TMHgGQOXumw2Jovo7h96_t0yUc1do/edit?slide=id.g3d36bb218e4_2_85#slide=id.g3d36bb218e4_2_85"
+                                width="100%"
+                                height="600"
+                                allowFullScreen
+                                loading="lazy"
+                                className='iframe'
+                            />
+                        </>
+                    )
+                },
             ]
         },
         {
@@ -536,20 +545,20 @@ const Home = (): JSX.Element => {
                                         <div className={`opening_text ${isTitleHidden ? 'hidden' : ''}`} ref={titleRef}>
                                             <h3>{slide.content}</h3>
                                         </div>
-                                        <div className='carousel-nav'>
-                                            {slides.map((slide, index) => (
-                                                <button
-                                                    key={index}
-                                                    type="button"
-                                                    className={`carousel-nav-item ${index === currentIndex ? "active" : ""}`}
-                                                    onClick={() => goToSlide(index)}
-                                                >
-                                                    <p>
-                                                        {slide.titleText}
-                                                    </p>
-                                                </button>
-                                            ))}
-                                        </div>
+                                    </div>
+                                    <div className={`carousel-nav ${isTitleHidden ? 'hidden' : ''}`} ref={titleRef}>
+                                        {slides.map((slide, index) => (
+                                            <button
+                                                key={index}
+                                                type="button"
+                                                className={`carousel-nav-item ${index === currentIndex ? "active" : ""}`}
+                                                onClick={() => goToSlide(index)}
+                                            >
+                                                <p>
+                                                    {slide.titleText}
+                                                </p>
+                                            </button>
+                                        ))}
                                     </div>
                                 </div>
                           </div>
@@ -559,42 +568,7 @@ const Home = (): JSX.Element => {
                 </div>
             </div>
 
-            <div className="text text_container">
-
-                {/*Core Areas*/}
-                {/*<div className='text1_background' id='core_areas'>*/}
-                {/*    <div ref={sec1Ref} className={`text text1 text_width ${isSec1Hidden ? 'hidden' : ''}`}>*/}
-                {/*        <h1>*/}
-                {/*            {t('core_areas_title1')}*/}
-                {/*        </h1>*/}
-                {/*        <div className='container'>*/}
-                {/*            <div className='content'>*/}
-                {/*                <h2>{t('core_areas_title2')}</h2>*/}
-                {/*                <a href='/studio_page'>*/}
-                {/*                    {t('more')}*/}
-                {/*                </a>*/}
-                {/*            </div>*/}
-                {/*            <div className='content'>*/}
-                {/*                <h2>{t('core_areas_title3')}</h2>*/}
-                {/*                <a href='/unmanned_aviation_page'>*/}
-                {/*                    {t('more')}*/}
-                {/*                </a>*/}
-                {/*            </div>*/}
-                {/*            <div className='content'>*/}
-                {/*                <h2>{t('core_areas_title4')}</h2>*/}
-                {/*                <a href='/security_defence_page'>*/}
-                {/*                    {t('more')}*/}
-                {/*                </a>*/}
-                {/*            </div>*/}
-                {/*            <div className='content'>*/}
-                {/*                <h2>{t('core_areas_title5')}</h2>*/}
-                {/*                <a href='/counter_drone_page'>*/}
-                {/*                    {t('more')}*/}
-                {/*                </a>*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
+            <div className="text_container">
 
                 {/*Offer*/}
                 <div className='offer' id='offer'>
@@ -602,87 +576,93 @@ const Home = (): JSX.Element => {
                         <h1>
                             {t('offer')}
                         </h1>
-                        <div className="text_container">
+                        <div className="text_content">
                             <div className="switcher_category_buttons">
                                 {categories.map((opt, idx) => (
-                                    <button
-                                        key={opt.key}
-                                        className={idx === currentCategory ? "active" : ""}
-                                        onClick={() => handleCategoryChange(idx)}
-                                    >
-                                        <Image src={opt.img.src} alt={opt.title}
-                                           width={200}
-                                           height={100}
-                                        />
-                                        <p>{opt.title}</p>
-                                    </button>
+                                    // <button
+                                    //     key={opt.key}
+                                    //     className={idx === currentCategory ? "active" : ""}
+                                    //     onClick={() => handleCategoryChange(idx)}
+                                    // >
+                                    //     <Image
+                                    //         src={opt.img}
+                                    //         alt={opt.title}
+                                    //         className='img'
+                                    //         loading="eager"
+                                    //     />
+                                    //     <p>{opt.title}</p>
+                                    // </button>
+
+                                    <React.Fragment key={opt.key}>
+                                        <button
+                                            className={idx === currentCategory ? "active" : ""}
+                                            onClick={() => handleCategoryChange(idx)}
+                                        >
+                                            <Image
+                                                src={opt.img}
+                                                alt={opt.title}
+                                                className="img"
+                                                loading="eager"
+                                            />
+                                            <p>{opt.title}</p>
+                                        </button>
+
+                                        {idx === currentCategory && (
+                                            <div className="mobile_only">
+                                                <div className="switcher_offer_buttons">
+                                                    {categories[currentCategory].subOptions.map((opt, subIdx) => (
+                                                        <button
+                                                            key={opt.key}
+                                                            className={subIdx === currentSubOptions ? "active" : ""}
+                                                            onClick={() => setCurrentSubOptions(subIdx)}
+                                                        >
+                                                            <p>{opt.buttonLabel}</p>
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                                <div className="switcher_text">
+                                                    {categories[currentCategory].subOptions[currentSubOptions].content}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </React.Fragment>
                                 ))}
                             </div>
 
-                            <div className='switcher_offer_buttons'>
+                            <div className='switcher_offer_buttons desktop_only'>
                                 {categories[currentCategory].subOptions.map((opt, idx) => (
                                     <button
                                         key={opt.key}
                                         className={idx === currentSubOptions ? "active" : ""}
                                         onClick={() => setCurrentSubOptions(idx)}
                                     >
-                                        {/*<Image src={opt.img.src} alt={opt.buttonLabel}*/}
-                                        {/*       width={200}*/}
-                                        {/*       height={100}*/}
+                                        {/*<Image*/}
+                                        {/*    src={opt.img}*/}
+                                        {/*    alt={opt.buttonLabel}*/}
+                                        {/*    className='img'*/}
+                                        {/*    loading="eager"*/}
                                         {/*/>*/}
                                         <p>{opt.buttonLabel}</p>
                                     </button>
                                 ))}
                             </div>
-                            <div className="switcher_text">
+                            <div className="switcher_text desktop_only">
                                 {categories[currentCategory].subOptions[currentSubOptions].content}
                             </div>
                         </div>
                     </div>
                 </div>
-
-                {/*About*/}
-                <div className='about' id='about'>
-                    <div ref={sec2Ref} className={`text text_width ${isSec2Hidden ? 'hidden' : ''}`}>
-                        <div className='container'>
-                            <div className='content'>
-                                <div>
-                                    <h2>{t("about_title1")}</h2>
-                                    <p>{t("about_text1")}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className='container'>
-                            <div className='content'>
-                                <div>
-                                  <h2>{t("about_title2")}</h2>
-                                  <p>{t("about_text2")}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className='container'>
-                            <div className='content'>
-                                <div>
-                                    <h2>{t("about_title3")}</h2>
-                                    <p>{t("about_text3")}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                
                 {/*Reference*/}
                 <div className='reference' id='reference'>
-                    <div ref={sec3Ref} className={`text text_width ${isSec3Hidden ? 'hidden' : ''}`}>
+                    <div ref={sec2Ref} className={`text text_width ${isSec2Hidden ? 'hidden' : ''}`}>
                         <h1>{t("reference")}</h1>
                     </div>
                 </div>
 
                 {/*Cooperation*/}
                 <div className='cooperation' id='cooperation'>
-                    <div ref={sec4Ref} className={`text text_width ${isSec4Hidden ? 'hidden' : ''}`}>
+                    <div ref={sec3Ref} className={`text text_width ${isSec3Hidden ? 'hidden' : ''}`}>
                         <h1>{t("partners")}</h1>
                         <div className="logo_slider">
                             <div className="logo_slider-track">

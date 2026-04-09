@@ -4,7 +4,6 @@
 
 .dark {
     .offer,
-    .about,
     .reference {
         background-color: $main-color2;
     }
@@ -26,29 +25,6 @@
         }
     }
 
-    .about .container {
-
-        .content {
-            background-color: rgba($black-color, 0.4) !important;
-        }
-
-        @include desktop {
-
-            .content {
-                background-color: rgba($main-color2, 0.7) !important;
-            }
-
-            &:nth-of-type(2) .content {
-                background-color: rgba($main-color2, 1) !important;
-            }
-
-            &:last-of-type .content {
-                background-color: rgba($main-color2, 0.8) !important;
-
-            }
-        }
-    }
-
     .cooperation {
         background-color: $black-color;
 
@@ -60,7 +36,6 @@
 
 .light {
     .offer,
-    .about,
     .reference {
         background-color: $main-color3;
     }
@@ -91,8 +66,12 @@
             position: relative;
             z-index: 1;     // <-- karuzela jest warstwą "1"
             width: 100%;
-            height: 100vh;
+            height: 94vh;
             overflow: hidden;
+
+            @include desktop {
+                height: 100vh;
+            }
 
             .carousel-inner {
                 position: relative;
@@ -131,17 +110,14 @@
                     background: rgba(0,0,0,.45);
                     color: #fff;
                     pointer-events: none; // <-- overlay NIE blokuje kliknięć poza tekstem
-                    // (klik przejdzie do slajdu / strzałek)
 
                     .text-box {
                         max-width: 1000px;
                         height: 250px;
                         display: flex;
                         flex-direction: column;
-                        //justify-content: center;
                         align-items: center;
                         width: 100%;
-                        //padding: 2rem 3rem;
                         border-radius: 10px;
                         backdrop-filter: blur(3px);
                         pointer-events: auto; // <-- tekst nadal można zaznaczyć, linki kliknąć
@@ -174,58 +150,76 @@
                                 color: $main-color;
                             }
                         }
+                    }
 
-                        .carousel-nav {
+                    .carousel-nav {
+                        position: absolute;
+                        left: 50%;
+                        bottom: 100px;
+                        transform: translateX(-50%);
+                        z-index: 5;
+                        transition: opacity 3s ease;
+
+                        &.hidden {
+                            opacity: 0;
+                        }
+
+                        width: min(calc(100% - 2rem), 1100px);
+                        display: flex;
+                        align-items: flex-end;
+                        justify-content: center;
+                        gap: clamp(0.75rem, 2vw, 2rem);
+                        pointer-events: auto;
+
+                        p {
+                            margin: 0;
+                            text-align: center;
+                        }
+
+                        button {
+                            flex: 1 1 0;
+                            min-width: 0;
+                            padding: 0.75rem 1rem;
+                            background: transparent;
+                            border: none;
                             display: flex;
+                            justify-content: center;
                             align-items: center;
-                            justify-content: space-around;
-                            margin-top: 5rem;
-
-                            @include desktop {
-                                position: absolute;
-                                width: 1200px;
-                                bottom: -250px;
-                            }
 
                             p {
-                                @include mobile {
-                                    display: none;
-                                }
+                                color: #ffffff;
+                                white-space: normal;
+                                text-wrap: balance;
+                            }
+                        }
+
+                        .active {
+                            p {
+                                color: $main-color;
+                                font-weight: 700;
+                            }
+                        }
+
+                        @include mobile {
+                            width: auto;
+                            gap: 2rem;
+
+                            p {
+                                display: none;
                             }
 
                             button {
-                                margin: 0 1rem;
-                                width: 180px;
-                                padding: 1rem 0;
-
-                                p {
-                                    color: #ffffff;
-                                }
-
-                                &:nth-last-of-type(3) {
-                                    width: 270px;
-                                }
-
-                                @include mobile {
-                                    width: 10px !important;
-                                    height: 10px;
-                                    padding: 0;
-                                    background-color: #ffffff;
-                                    border-radius: 1rem;
-                                    margin: 1rem 1.5rem;
-                                }
+                                flex: 0 0 auto;
+                                width: 10px;
+                                height: 10px;
+                                min-width: 10px;
+                                padding: 0;
+                                border-radius: 50%;
+                                background-color: #ffffff;
                             }
 
                             .active {
-
-                                p {
-                                    color: $main-color;
-                                    font-weight: bold;
-                                }
-
-                                @include mobile {
-                                    background-color: $main-color;
-                                }
+                                background-color: $main-color;
                             }
                         }
                     }
@@ -276,25 +270,21 @@
     }
 
     .text_container {
-        position: relative;
-        width: 100vw;
-        height: auto;
-        overflow: hidden;
     }
 
-    .text {
+    .text_container {
+        position: relative;
+        width: 100%;
+        height: auto;
+        overflow: hidden;
         display: flex;
         flex-direction: column;
-        width: 100%;
         opacity: 1;
         transition: opacity 1.5s ease 0.2s;
 
-        &.hidden {
-            opacity: 0;
-        }
-        
         .text_width {
             max-width: 90%;
+            transition: opacity 3s ease;
 
             @include desktop {
                 max-width: 1500px;
@@ -304,6 +294,9 @@
                 }
             }
 
+            &.hidden {
+                opacity: 0;
+            }
         }
 
         p {
@@ -337,16 +330,27 @@
                     text-align: left;
                 }
 
-                .text_container {
+                .text_content {
                     width: 100%;
                     display: flex;
                     justify-content: space-around;
                     margin-top: 5rem;
 
+                    @include desktop {
+
+                        .mobile_only {
+                            display: none;
+                        }
+                    }
+
                     @include mobile-tablet {
                         flex-direction: column;
                         justify-content: center;
                         margin-top: 2rem;
+
+                        .desktop_only {
+                            display: none !important;
+                        }
                     }
 
                     .switcher_category_buttons {
@@ -369,6 +373,7 @@
                         @include mobile {
                             margin: 1rem 0;
                             gap: 1rem;
+
                         }
 
                         button {
@@ -380,8 +385,10 @@
                             display: flex;
                             align-items: center;
                             font-weight: 700;
+                            text-wrap: balance;
 
-                            img {
+
+                            .img {
                                 width: 50px;
                                 height: auto;
                             }
@@ -392,7 +399,7 @@
                                     padding-left: 1rem;
                                 }
 
-                                img {
+                                .img {
                                     width: 100px;
                                     height: auto;
                                 }
@@ -422,8 +429,13 @@
                         flex-wrap: wrap;
                         justify-content: center;
 
+                        p {
+                            text-align: center;
+                            text-wrap: balance;
+                        }
+
                         @include desktop {
-                            width: 400px;
+                            max-width: 300px;
                             flex-direction: column;
                             justify-content: start;
                         }
@@ -431,14 +443,15 @@
                         button {
                             display: flex;
                             justify-content: center;
+                            align-items: center;
                             border-radius: .5rem;
-                            text-align: center;
+                            text-align: right;
                             padding: 1rem;
                             margin: 1rem;
 
                             @include desktop {
-                                padding: 2rem ;
-                                margin: 2rem 4rem;
+                                padding: 1.5rem;
+                                margin: 2rem;
                             }
                         }
                     }
@@ -451,126 +464,9 @@
                             text-align: left;
                             width: 60%;
                         }
-                    }
-                }
-            }
-        }
 
-        .about {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-
-            .text {
-                align-items: center;
-                margin: 2rem 0;
-
-                @include desktop {
-                    max-width: 2000px;
-                    margin: 4rem 0;
-                }
-
-                .container {
-                    position: relative;
-                    width: 100%;
-                    margin: 2rem 0;
-                    overflow: hidden;
-                    aspect-ratio: 16 / 9;
-                    min-height: 360px;
-                    max-height: 900px;
-                    background-position: center;
-                    background-size: cover;
-                    background-repeat: no-repeat;
-
-                    @include desktop {
-                        margin: 0;
-                        width: 80%;
-                        aspect-ratio: 21 / 9;
-                    }
-
-                    .content {
-                        position: absolute;
-                        background-color: rgba($white-color, 0.4);
-                        bottom: 0;
-                        border-radius: 0 0 25px 25px;
-                        padding: 3rem;
-
-                        p {
-                            padding-top: 2rem;
-                            text-align: left;
-                        }
-
-                        @include desktop {
-                            background-color: rgba($main-color3, 0.7);
-                            padding: 2rem;
-                            bottom: 0;
-                            width: 40%;
-                            display: flex;
-                            flex-direction: column;
-                            justify-content: center;
-                            align-items: center;
-
-                            div {
-                                max-width: 500px;
-                            }
-                        }
-                    }
-
-                    &:first-of-type {
-                        background-image: url("../../../public/images/Iryda.jpg");
-                        background-position: 60% 50%;
-
-                        @include desktop {
-                            width: 100%;
-
-                            .content {
-                                border-radius: 25px 25px 0 0;
-                                left: 10%;
-                                background-color: rgba($main-color2, .7);
-                                width: 32%;
-
-                                h2, p {
-                                    color: $white-color;
-                                }
-                            }
-                        }
-                    }
-
-                    &:nth-of-type(2) {
-                        background-image: url("../../../public/images/dron_sea1.jpg");
-                        background-position: 50% 20%;
-
-                        @include desktop {
-                            height: 90vh;
-                            border-radius: 0;
-
-                            .content {
-                                border-radius: 0;
-                                background-color: rgba($main-color3, 1);
-                                right: 0;
-                                width: 60%;
-                                height: 100%;
-                            }
-
-                        }
-                    }
-
-                    &:last-of-type {
-                        background-image: url("../../../public/images/Windmills.jpg");
-                        background-position: 50% 50%;
-
-                        @include desktop {
-                            border-radius: 0 25px 25px 25px;
-
-                            .content {
-                                background-color: rgba($main-color2, .7);
-                                height: 100%;
-                                border-radius: 0 0 0 25px;
-
-                                h2, p {
-                                    color: $white-color;
-                                }
-                            }
+                        .iframe {
+                            max-width: 1200px;
                         }
                     }
                 }
@@ -582,13 +478,21 @@
             height: 80vh;
             display: flex;
             justify-content: center;
+            align-items: center;
 
             .text {
+                display: flex;
+                flex-direction: column;
                 align-items: center;
                 margin: 4rem 0;
+                width: 100%;
 
                 @include desktop {
                     margin: 6rem 0;
+                }
+
+                h1 {
+                    margin-bottom: 2rem;
                 }
             }
         }
