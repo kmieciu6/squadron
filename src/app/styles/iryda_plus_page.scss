@@ -11,7 +11,9 @@
 
     .opening {
         margin-bottom: 3rem;
-        background: url("../../../public/images/Iryda.jpg")center center/cover no-repeat;
+        background:
+            linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)),
+            url("../../../public/images/Iryda.jpg")center center/cover no-repeat;
         width: 100%;
         min-height: 60vh;
 

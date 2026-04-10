@@ -5,8 +5,7 @@ import useIntersectionHide from "@/app/hooks/useIntersectionHide";
 import React from "react";
 
 const IrydaPlusPage = () => {
-    const { t } = useTranslation("common");
-    const { tRich } = useTranslation();
+    const { t, tRich } = useTranslation("common");
     const [sec1Ref, isSec1Hidden] = useIntersectionHide<HTMLDivElement>();
     const [sec2Ref, isSec2Hidden] = useIntersectionHide<HTMLDivElement>();
     const [sec3Ref, isSec3Hidden] = useIntersectionHide<HTMLDivElement>();

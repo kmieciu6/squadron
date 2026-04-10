@@ -5,8 +5,7 @@ import useIntersectionHide from "@/app/hooks/useIntersectionHide";
 import React from "react";
 
 const MallardPage = () => {
-    const { t } = useTranslation("common");
-    const { tRich } = useTranslation();
+    const { t, tRich } = useTranslation("common");
     const [sec1Ref, isSec1Hidden] = useIntersectionHide<HTMLDivElement>();
     const [sec2Ref, isSec2Hidden] = useIntersectionHide<HTMLDivElement>();
     const [sec3Ref, isSec3Hidden] = useIntersectionHide<HTMLDivElement>();
@@ -20,10 +19,10 @@ const MallardPage = () => {
 
     return (
         <div className='mallard_page subpage'>
+            <div ref={sec1Ref} className={`container opening ${isSec1Hidden ? 'hidden' : ''}`}>
+                {/*<h1>{t('mallard_title1')}</h1>*/}
+            </div>
             <div className='mallard_content'>
-                <div ref={sec1Ref} className={`container ${isSec1Hidden ? 'hidden' : ''}`}>
-                    <h1>{t('mallard_title1')}</h1>
-                </div>
                 <div ref={sec2Ref} className={`container text ${isSec2Hidden ? 'hidden' : ''}`}>
                     <h2>{t("mallard_title2")}</h2>
                     <p>{tRich("mallard_text1")}</p>
