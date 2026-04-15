@@ -279,7 +279,7 @@ const Home = (): JSX.Element => {
                     content : (
                         <>
                             <iframe
-                                src="https://docs.google.com/presentation/d/10qFqRrjAWiMn92TMHgGQOXumw2Jovo7h96_t0yUc1do/edit?slide=id.g3d36bb218e4_2_85#slide=id.g3d36bb218e4_2_85"
+                                src="https://docs.google.com/presentation/d/e/2PACX-1vQ-XBJn8_0R0JoOkc204tphTzZIdat07_oDo42aCvJbHXTfurpxG7iIk-neJ9OME1S3iGvYKjpKoBxN/pubembed?start=true&loop=true&delayms=3000"
                                 width="100%"
                                 height="600"
                                 allowFullScreen
