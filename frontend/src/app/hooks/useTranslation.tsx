@@ -8,7 +8,6 @@ type SupportedLanguage = 'en' |'pl';
 type Namespace = 'common';
 type Messages = Record<string, unknown>;
 
-
 const translations: Record<SupportedLanguage, Record<Namespace, Messages>> = {
     en: { common: en_common as Messages },
     pl: { common: pl_common as Messages },
@@ -87,9 +86,12 @@ const useTranslation = (namespace: Namespace = 'common') => {
             if (!supportedLanguages.includes(lang)) return;
 
             localStorage.setItem('locale', lang);
+            document.cookie = `locale=${lang}; path=/; max-age=31536000; samesite=lax`;
+
             setLocale(lang);
             setMessages(translations[lang][namespace] ?? {});
             window.location.reload();
+            // router.refresh();
         },
         [namespace]
     );
