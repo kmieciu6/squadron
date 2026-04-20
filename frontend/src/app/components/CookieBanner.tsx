@@ -1,7 +1,9 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import { useCookiesConsent } from "../context/CookiesConsentContext";
 import useTranslation from "../hooks/useTranslation";
+import Link from "next/link";
 
 const CookieBanner = () => {
     const { t } = useTranslation('common');
@@ -19,7 +21,7 @@ const CookieBanner = () => {
         <div className="cookie_banner">
             <p>
                 {t('cookies_text')}
-                <a href="/privacy_policy">{`${t('privacy_policy_page_page')}.`}</a>
+                <Link href="/privacy_policy">{`${t('privacy_policy_page_page')}.`}</Link>
             </p>
             <div className="cookie_buttons">
                 <button onClick={acceptCookies}>{t('accept')}</button>
