@@ -1,5 +1,13 @@
 export async function getPageBySlug(slug: string, locale: string) {
-    const base = process.env.NEXT_PUBLIC_STRAPI_URL;
+    const isServer = typeof window === 'undefined';
+
+    const base = isServer
+        ? process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL
+        : process.env.NEXT_PUBLIC_API_URL;
+
+    if (!base) {
+        throw new Error('Missing API base URL');
+    }
 
     console.log("locale:", locale, "slug:", slug);
 

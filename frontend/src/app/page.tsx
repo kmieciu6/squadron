@@ -1,15 +1,7 @@
 "use client";
 
-import useIntersectionHide from './hooks/useIntersectionHide';
-import useTranslation from './hooks/useTranslation';
-import drone from '../../public/images/drone.png';
-import studio from '../../public/images/studio.png';
-import security from '../../public/images/security.png';
-import counter_drone from '../../public/images/counter_drone.png';
-import icon1 from '../../public/icons/Rocket car icon.png';
-import icon2 from '../../public/icons/Document icon.png';
-import icon3 from '../../public/icons/Anti-drone systems.png';
-import icon4 from '../../public/icons/Drone icon.png';
+import useIntersectionHide from '@/hooks/useIntersectionHide';
+import useTranslation from '@/hooks/useTranslation';
 import React, {JSX, useEffect, useMemo, useState} from "react";
 import Image, {StaticImageData} from "next/image";
 
@@ -20,7 +12,7 @@ type Slide =
     type?: "image";
     titleText: string;
     content?: string;
-    image: SlideImage;
+    image: string;
 }
     | {
     type: "video";
@@ -31,7 +23,7 @@ type Slide =
 
 type OfferCattegory = {
     key: string;
-    img: StaticImageData;
+    img: string;
     title: string;
     subOptions: SubOption[];
 };
@@ -66,25 +58,25 @@ const Home = (): JSX.Element => {
                 type: "image",
                 titleText: t("slide_title1"),
                 content: t("slide_text1"),
-                image: drone
+                image: "/images/drone.png"
             },
             {
                 type: "image",
                 titleText: t("slide_title2"),
                 content: t("slide_text2"),
-                image: security
+                image: "/images/security.png"
             },
             {
                 type: "image",
                 titleText: t("slide_title3"),
                 content: t("slide_text3"),
-                image: studio
+                image: "/images/studio.png"
             },
             {
                 type: "image",
                 titleText: t("slide_title4"),
                 content: t("slide_text4"),
-                image: counter_drone
+                image: "/images/counter_drone.png"
             },
         ];
     }, [t]);
@@ -120,7 +112,7 @@ const Home = (): JSX.Element => {
         () => [
         {
             key: "cat1",
-            img: icon1,
+            img: "/icons/Rocket car icon.png",
             title: t("offer_category_title1"),
             subOptions: [
                 {
@@ -214,7 +206,7 @@ const Home = (): JSX.Element => {
         },
         {
             key: "cat2",
-            img: icon2,
+            img: "/icons/Document icon.png",
             title: t("offer_category_title2"),
             subOptions: [
                 {
@@ -293,7 +285,7 @@ const Home = (): JSX.Element => {
         },
         {
             key: "cat3",
-            img: icon3,
+            img: "/icons/Anti-drone systems.png",
             title: t("offer_category_title3"),
             subOptions: [
                 {
@@ -380,7 +372,7 @@ const Home = (): JSX.Element => {
         },
         {
             key: "cat4",
-            img: icon4,
+            img: "/icons/Drone icon.png",
             title: t("offer_category_title4"),
             subOptions: [
                 {
@@ -533,7 +525,7 @@ const Home = (): JSX.Element => {
                                     />
                                 ) : (
                                     <Image
-                                        src={slide.image.src}
+                                        src={slide.image}
                                         alt={slide.titleText}
                                         className="slide-image"
                                         width={1200}
@@ -601,6 +593,8 @@ const Home = (): JSX.Element => {
                                             <Image
                                                 src={opt.img}
                                                 alt={opt.title}
+                                                width={100}
+                                                height={100}
                                                 className="img"
                                                 loading="eager"
                                             />
@@ -639,6 +633,8 @@ const Home = (): JSX.Element => {
                                         {/*<Image*/}
                                         {/*    src={opt.img}*/}
                                         {/*    alt={opt.buttonLabel}*/}
+                                        {/*    width={100}*/}
+                                        {/*    height={100}*/}
                                         {/*    className='img'*/}
                                         {/*    loading="eager"*/}
                                         {/*/>*/}

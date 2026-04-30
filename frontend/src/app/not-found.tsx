@@ -1,6 +1,6 @@
 'use client';
 
-import useTranslation from './hooks/useTranslation';
+import useTranslation from '../hooks/useTranslation';
 import Link from "next/link";
 import Image from 'next/image';
 
@@ -13,7 +13,7 @@ const NotFoundPage = () => {
             <p>
                 {t('not_found_page')}
             </p>
-            <Link href='/'><button>{t('main_page')}</button></Link>
+            <Link href='/'><button>{t('main')}</button></Link>
             <Image
                 src="/images/page_not_found.jpg"
                 alt="not found"
