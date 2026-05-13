@@ -21,8 +21,7 @@ export function getStrapiMediaUrl(url?: string | null): string {
         return url;
     }
 
-    return `${PUBLIC_STRAPI_URL}${url}`;
-}
+    return new URL(url, PUBLIC_STRAPI_URL).toString();}
 
 export async function strapiFetch<T>(
     path: string,
