@@ -7,6 +7,7 @@ import NavLink from './NavLink';
 import { useRouter, usePathname } from 'next/navigation';
 import { MdOutlineBrightnessAuto, MdLightMode, MdDarkMode } from 'react-icons/md';
 import Image from "next/image";
+import Link from "next/link";
 
 type HeaderContentProps = {
     className: string;
@@ -519,7 +520,7 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
         <div className={className}>
             <div className='header_content'>
                 <div className="logo">
-                    <a className="nav-link" onClick={goHomeOrScrollTop}>
+                    <Link className="nav-link" onClick={goHomeOrScrollTop} href={""}>
                         <Image
                             src="/logos/logo_white.png"
                             alt="Logo"
@@ -528,7 +529,7 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
                             className="logo_image"
                             loading="eager"
                         />
-                    </a>
+                    </Link>
                 </div>
 
                 <div className="bookmarks">

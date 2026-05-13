@@ -1,41 +1,61 @@
-export async function getPageBySlug(slug: string, locale: string) {
-    const isServer = typeof window === 'undefined';
+const INTERNAL_STRAPI_URL =
+    process.env.INTERNAL_API_URL ?? process.env.NEXT_PUBLIC_API_URL;
 
-    const base = isServer
-        ? process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL
-        : process.env.NEXT_PUBLIC_API_URL;
+const PUBLIC_STRAPI_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 
-    if (!base) {
-        throw new Error('Missing API base URL');
+export const STRAPI_CACHE_TAG = "strapi";
+
+const STRAPI_REVALIDATE_TIME = 300;
+
+type StrapiFetchOptions = {
+    locale?: string;
+    revalidate?: number;
+    cache?: RequestCache;
+    tags?: string[];
+};
+
+export function getStrapiMediaUrl(url?: string | null): string {
+    if (!url) return "";
+
+    if (url.startsWith("http")) {
+        return url;
     }
 
-    console.log("locale:", locale, "slug:", slug);
+    return `${PUBLIC_STRAPI_URL}${url}`;
+}
 
-    const makeUrl = (loc: string) => {
-        const qs = new URLSearchParams({
-        "filters[slug][$eq]": slug,
-        locale: loc,
-        });
-
-        return `${base}/api/pages?${qs.toString()}`;
+export async function strapiFetch<T>(
+    path: string,
+    options?: StrapiFetchOptions
+): Promise<T> {
+    if (!INTERNAL_STRAPI_URL) {
+        throw new Error("Missing INTERNAL_API_URL or NEXT_PUBLIC_API_URL");
     }
 
-    let res = await fetch(makeUrl(locale), {
-        next: { revalidate: 10 }, // odświeżanie co 10s
+    const url = new URL(path, INTERNAL_STRAPI_URL);
+
+    if (options?.locale) {
+        url.searchParams.set("locale", options.locale);
+    }
+
+    const res = await fetch(url.toString(), {
+        cache: options?.cache,
+        next:
+            options?.cache === "no-store"
+                ? undefined
+                : {
+                    revalidate: options?.revalidate ?? STRAPI_REVALIDATE_TIME,
+                    tags: options?.tags ?? [STRAPI_CACHE_TAG],
+                },
     });
 
-    if (!res.ok) throw new Error("Failed to fetch page");
+    if (!res.ok) {
+        const text = await res.text();
 
-    let json = await res.json();
-    let page = json.data?.[0] ?? null;
-
-    if (!page && locale !== "en") {
-        res = await fetch(makeUrl("en"), { next: { revalidate: 10 } })
-        if (!res.ok) throw new Error("Failed to fetch fallback page");
-        json = await res.json();
-        page = json.data?.[0] ?? null;
+        throw new Error(
+            `Strapi fetch failed: ${res.status} ${res.statusText}. Body: ${text}`
+        );
     }
-    console.log("content sample:", String(page?.content ?? "").slice(0, 300));
 
-    return page;
+    return res.json();
 }

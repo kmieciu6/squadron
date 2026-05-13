@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getAboutPage } from "@/lib/strapi/about";
+import { getAboutPage } from "@/lib/api/pages";
 import AboutPage from "@/templates/AboutPage";
 import {cookies} from "next/headers";
 

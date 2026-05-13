@@ -1,8 +1,7 @@
 "use client";
 
 import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps';
-import {MapCoords} from "@/components/MapWrapper";
-import {useEffect, useRef} from "react";
+import { MapCoords } from "@/components/MapWrapper";
 
 type RealMapProps = {
     center: MapCoords;
@@ -12,14 +11,6 @@ type RealMapProps = {
 
 const RealMap = ({center, zoom, placeId }: RealMapProps) => {
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-    const placeDetailsRef = useRef<HTMLElementTagNameMap['gmp-place-details-compact'] | null>(null);
-
-    useEffect(() => {
-        if (!placeDetailsRef.current) return;
-
-        placeDetailsRef.current.setAttribute('orientation', 'horizontal');
-        placeDetailsRef.current.setAttribute('truncation-preferred', '');
-    }, []);
 
     if (!apiKey) {
         console.error("Brak NEXT_PUBLIC_GOOGLE_MAPS_API_KEY w .env");
@@ -31,7 +22,8 @@ const RealMap = ({center, zoom, placeId }: RealMapProps) => {
             <section className="company_map_card">
                 <div className="company_map_card__details">
                     <gmp-place-details-compact
-                        ref={placeDetailsRef}
+                        orientation="HORIZONTAL"
+                        truncationPreferred
                     >
                         <gmp-place-details-place-request place={placeId} />
                         <gmp-place-all-content />
