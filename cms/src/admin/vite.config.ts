@@ -7,6 +7,9 @@ export default (config: UserConfig) => {
       alias: {
         '@': '/src',
       },
+      server: {
+        allowedHosts: ['cms.squadron.com.pl'],
+      },
     },
   });
 };
