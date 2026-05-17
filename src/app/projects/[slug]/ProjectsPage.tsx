@@ -13,7 +13,7 @@ export default function ProjectsPage({ data }: Props) {
     const [sec2Ref, isSec2Hidden] = useIntersectionHide<HTMLDivElement>();
 
     return (
-        <main className="subpage">
+        <main className="project_page subpage">
             <section className="projects_content">
                 <div ref={sec1Ref} className={`container opening ${isSec1Hidden ? "hidden" : ""}`}>
                     <h1>{data.title}</h1>
