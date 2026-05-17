@@ -3,7 +3,7 @@ const INTERNAL_STRAPI_URL =
 
 const PUBLIC_STRAPI_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 
-const STRAPI_CACHE_TAG = process.env.STRAPI_CACHE_TAG ?? 'strapi';
+export const STRAPI_CACHE_TAG = process.env.STRAPI_CACHE_TAG ?? 'strapi';
 
 const STRAPI_REVALIDATE_TIME = 300;
 
