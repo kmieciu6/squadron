@@ -1,24 +1,16 @@
-'use client';
+import { notFound } from "next/navigation";
+import { getPrivacyPolicyPage } from "@/lib/api/pages";
+import PrivacyPolicyPage from "@/templates/PrivacyPolicyPage";
+import {cookies} from "next/headers";
 
-import useTranslation from '@/hooks/useTranslation';
-import useIntersectionHide from "@/hooks/useIntersectionHide";
+export default async function PrivacyPolicy() {
+    const cookieStore = await cookies();
+    const locale = cookieStore.get("locale")?.value ?? "en";
+    const data = await getPrivacyPolicyPage(locale);
 
-const PrivacyPolicy = () => {
-    const { t } = useTranslation('common')
-    const [sec1Ref, isSec1Hidden] = useIntersectionHide();
-    const [sec2Ref, isSec2Hidden] = useIntersectionHide();
+    if (!data) return notFound();
 
     return (
-        <section className="privacy_policy subpage">
-            <div ref={sec1Ref} className={`container ${isSec1Hidden ? 'hidden' : ''}`}>
-                <h1>{t('privacy_policy')}</h1>
-            </div>
-
-            <div ref={sec2Ref} className={`container ${isSec2Hidden ? 'hidden' : ''}`}>
-
-            </div>
-        </section>
+        <PrivacyPolicyPage data={data} />
     );
 }
-
-export default PrivacyPolicy;

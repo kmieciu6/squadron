@@ -55,6 +55,18 @@ type StrapiProjectPage = {
     slug?: string | null;
 };
 
+export type PrivacyPolicyData = {
+    title: string;
+    content: string;
+    image?: PageImage;
+};
+
+type StrapiPrivacyPolicyPage = {
+    title?: string | null;
+    content?: string | null;
+    image?: StrapiImage | null;
+};
+
 function mapImage(image?: StrapiImage | null): PageImage | undefined {
     if (!image) return undefined;
 
@@ -127,6 +139,27 @@ export async function getPageBySlug(
         title: item.title ?? "",
         content: item.content ?? "",
         image: mapImage(item.image),
+    };
+}
+
+export async function getPrivacyPolicyPage(
+    locale: string
+): Promise<PrivacyPolicyData | null> {
+    const json = await strapiFetch<StrapiSingleResponse<StrapiPrivacyPolicyPage>>(
+        "/api/privacy-policy-page?populate=image",
+        {
+            locale,
+        }
+    );
+
+    if (!json.data) {
+        return null;
+    }
+
+    return {
+        title: json.data.title ?? "",
+        content: json.data.content ?? "",
+        image: mapImage(json.data.image),
     };
 }
 

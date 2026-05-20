@@ -3,7 +3,7 @@ import { getAboutPage } from "@/lib/api/pages";
 import AboutPage from "@/templates/AboutPage";
 import {cookies} from "next/headers";
 
-export default async function Page() {
+export default async function About() {
     const cookieStore = await cookies();
     const locale = cookieStore.get("locale")?.value ?? "en";
     const data = await getAboutPage(locale);
