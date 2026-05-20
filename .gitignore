@@ -1,0 +1,26 @@
+# env
+.env
+.env.*
+cms/.env
+cms/.env.*
+
+# dependencies
+node_modules/
+cms/node_modules/
+
+# Strapi / Next build cache
+.cache/
+.tmp/
+build/
+dist/
+.next/
+cms/.cache/
+cms/.tmp/
+cms/build/
+cms/dist/
+
+# uploads - pliki z CMS nie do repo
+cms/public/uploads/
+
+# system
+.DS_Store
