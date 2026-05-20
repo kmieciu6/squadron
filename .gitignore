@@ -18,6 +18,8 @@ cms/.cache/
 cms/.tmp/
 cms/build/
 cms/dist/
+.idea/
+.ai/
 
 # uploads - pliki z CMS nie do repo
 cms/public/uploads/
