@@ -1,19 +1,19 @@
 'use client'
 
 import useIntersectionHide from "@/hooks/useIntersectionHide";
-import { PrivacyPolicyPageData } from "@/lib/api/privacy-policy";
+import { StudioPageData } from "@/lib/api/studio";
 import { MarkdownContent } from "@/components/MarkdownContent";
 
 type Props = {
-    data: PrivacyPolicyPageData;
+    data: StudioPageData;
 };
 
-export default function PrivacyPolicyPage({ data}: Props) {
+export default function StudioPage({ data}: Props) {
     const [sec1Ref, isSec1Hidden] = useIntersectionHide<HTMLDivElement>();
     const [sec2Ref, isSec2Hidden] = useIntersectionHide<HTMLDivElement>();
 
     return (
-        <main className='privacy_policy_page subpage'>
+        <main className='studio_page subpage'>
             <div ref={sec1Ref} className={`container opening ${isSec1Hidden ? 'hidden' : ''}`}>
                 <div>
                     <h1>{data.title}</h1>
@@ -21,7 +21,7 @@ export default function PrivacyPolicyPage({ data}: Props) {
                 </div>
                 <span/>
             </div>
-            <section className="about_content">
+            <section className="studio_content">
                 <div className="text_content">
                     <div ref={sec2Ref} className={`container text ${isSec2Hidden ? "hidden" : ""}`}>
                         <MarkdownContent content={data.content}/>

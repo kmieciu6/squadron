@@ -414,12 +414,12 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
                         {
                             id: "iryda_plus",
                             label: t("offer1_title1"),
-                            href: "/iryda_plus",
+                            href: "/projects/iryda-plus",
                         },
                         {
                             id: "mallard",
                             label: t("offer2_title1"),
-                            href: "/mallard",
+                            href: "projects//mallard",
                         },
                         {
                             id: "training",

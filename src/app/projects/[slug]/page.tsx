@@ -1,7 +1,7 @@
-import { notFound } from "next/navigation";
-import { getPageBySlug } from "@/lib/api/pages";
 import { cookies } from "next/headers";
-import ProjectsPage from "./ProjectsPage";
+import { getPageBySlug } from "@/lib/api/projects";
+import { notFound } from "next/navigation";
+import ProjectsPage from "../../../templates/ProjectsPage";
 
 type Props = {
     params: Promise<{ slug: string }>;

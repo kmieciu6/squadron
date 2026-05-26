@@ -1,27 +1,16 @@
-'use client'
+import { cookies } from "next/headers";
+import { getStudioPage } from "@/lib/api/studio";
+import { notFound } from "next/navigation";
+import StudioPage from "@/templates/StudioPage";
 
-import useTranslation from "@/hooks/useTranslation";
-import useIntersectionHide from "@/hooks/useIntersectionHide";
+export default async function Studio() {
+    const cookieStore = await cookies();
+    const locale = cookieStore.get("locale")?.value ?? "en";
+    const data = await getStudioPage(locale);
 
-const StudioPage = () => {
-    const { t } = useTranslation("common");
-    const [sec1Ref, isSec1Hidden] = useIntersectionHide<HTMLDivElement>();
+    if (!data) return notFound();
 
     return (
-        <div className='studio subpage'>
-            <div ref={sec1Ref} className={`text text_width ${isSec1Hidden ? 'hidden' : ''}`}>
-                <h1>{t('studio_title1')}</h1>
-                <h2>{t('studio_title2')}</h2>
-                <h2>{t('studio_title3')}</h2>
-                <h2>{t('studio_title4')}</h2>
-                <h2>{t('studio_title5')}</h2>
-                <h2>{t('studio_title6')}</h2>
-                <h2>{t('studio_title7')}</h2>
-                <h2>{t('studio_title8')}</h2>
-                <h2>{t('studio_title9')}</h2>
-            </div>
-        </div>
-    )
+        <StudioPage data={data} />
+    );
 }
-
-export default StudioPage;

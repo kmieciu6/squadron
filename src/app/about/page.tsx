@@ -1,7 +1,7 @@
-import { notFound } from "next/navigation";
-import { getAboutPage } from "@/lib/api/pages";
 import AboutPage from "@/templates/AboutPage";
-import {cookies} from "next/headers";
+import { cookies } from "next/headers";
+import { getAboutPage } from "@/lib/api/about";
+import { notFound } from "next/navigation";
 
 export default async function About() {
     const cookieStore = await cookies();

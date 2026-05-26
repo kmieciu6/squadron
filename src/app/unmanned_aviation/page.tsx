@@ -1,19 +1,16 @@
-'use client'
+import { cookies } from "next/headers";
+import { getUnmannedAviationPage } from "@/lib/api/unmanned-aviation";
+import { notFound } from "next/navigation";
+import UnmannedAviationPage from "@/templates/UnmannedAviationPage";
 
-import useTranslation from "@/hooks/useTranslation";
-import useIntersectionHide from "@/hooks/useIntersectionHide";
+export default async function UnmannedAviation() {
+    const cookieStore = await cookies();
+    const locale = cookieStore.get("locale")?.value ?? "en";
+    const data = await getUnmannedAviationPage(locale);
 
-const UnmannedAviationPage = () => {
-    const { t } = useTranslation("common");
-    const [sec1Ref, isSec1Hidden] = useIntersectionHide<HTMLDivElement>();
+    if (!data) return notFound();
 
     return (
-        <div className='unmanned_aviation subpage'>
-            <div ref={sec1Ref} className={`container ${isSec1Hidden ? 'hidden' : ''}`}>
-                <h1>{t('unmanned_aviation_title1')}</h1>
-            </div>
-        </div>
-    )
+        <UnmannedAviationPage data={data} />
+    );
 }
-
-export default UnmannedAviationPage;

@@ -1,7 +1,7 @@
+import { cookies } from "next/headers";
+import { getPrivacyPolicyPage } from "@/lib/api/privacy-policy";
 import { notFound } from "next/navigation";
-import { getPrivacyPolicyPage } from "@/lib/api/pages";
 import PrivacyPolicyPage from "@/templates/PrivacyPolicyPage";
-import {cookies} from "next/headers";
 
 export default async function PrivacyPolicy() {
     const cookieStore = await cookies();

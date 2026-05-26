@@ -1,7 +1,7 @@
 'use client'
 
 import useIntersectionHide from "@/hooks/useIntersectionHide";
-import { AboutPageData } from "@/lib/api/pages";
+import { AboutPageData } from "@/lib/api/about";
 import { MarkdownContent } from "@/components/MarkdownContent";
 
 type Props = {

@@ -1,9 +1,7 @@
 const INTERNAL_STRAPI_URL =
     process.env.INTERNAL_API_URL ?? process.env.NEXT_PUBLIC_API_URL;
 
-const PUBLIC_STRAPI_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
-
-export const STRAPI_CACHE_TAG = process.env.STRAPI_CACHE_TAG ?? 'strapi';
+export const STRAPI_CACHE_TAG = process.env.STRAPI_CACHE_TAG ?? "strapi";
 
 const STRAPI_REVALIDATE_TIME = 300;
 
@@ -13,15 +11,6 @@ type StrapiFetchOptions = {
     cache?: RequestCache;
     tags?: string[];
 };
-
-export function getStrapiMediaUrl(url?: string | null): string {
-    if (!url) return "";
-
-    if (url.startsWith("http")) {
-        return url;
-    }
-
-    return new URL(url, PUBLIC_STRAPI_URL).toString();}
 
 export async function strapiFetch<T>(
     path: string,

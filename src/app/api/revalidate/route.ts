@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { STRAPI_CACHE_TAG } from "@/lib/strapi";
+import { STRAPI_CACHE_TAG } from "@/lib/strapi/client";
 import { revalidateTag } from "next/cache";
 
 export async function POST(request: Request) {
