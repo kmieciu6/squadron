@@ -1,9 +1,5 @@
 .markdown_content {
-
-    p {
-        margin-bottom: 1rem;
-        line-height: 1.7;
-    }
+    white-space: normal;
 
     strong {
         font-weight: 700;
@@ -27,17 +23,20 @@
 
     ul,
     ol {
-        margin-bottom: 1rem;
         padding-left: 1.5rem;
     }
 
     li {
-        margin-bottom: 0.35rem;
+        padding-bottom: 0.5rem;
     }
 
     h2,
     h3,
     h4 {
-        margin: 1.5rem 0 0.75rem;
+        margin: 2rem 0 1rem 0;
+    }
+
+    p {
+        padding: 1rem 0;
     }
 }

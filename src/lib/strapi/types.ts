@@ -1,5 +1,3 @@
-import { getStrapiMediaUrl} from "@/lib/strapi/media";
-
 export type StrapiSingleResponse<T> = {
     data: T | null;
 };
@@ -21,16 +19,3 @@ export type PageImage = {
     url: string;
     alternativeText: string;
 };
-
-export function mapImage(
-    image?: StrapiImage | StrapiImage[] | null
-): PageImage | undefined {
-    const imageItem = Array.isArray(image) ? image[0] : image;
-
-    if (!imageItem?.url) return undefined;
-
-    return {
-        url: getStrapiMediaUrl(imageItem.url),
-        alternativeText: imageItem.alternativeText ?? "",
-    };
-}

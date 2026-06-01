@@ -3,7 +3,7 @@
 import useIntersectionHide from "@/hooks/useIntersectionHide";
 import useTranslation from '@/hooks/useTranslation';
 import { HomePageData } from "@/lib/api/home";
-// import { MarkdownContent } from "@/components/MarkdownContent";
+import { MarkdownContent } from "@/components/MarkdownContent";
 import React, {useEffect, useMemo, useState} from "react";
 import Image from "next/image";
 
@@ -21,7 +21,7 @@ type Slide =
     video: string;
 };
 
-type OfferCattegory = {
+type OfferCategory = {
     key: string;
     img: string;
     title: string;
@@ -35,7 +35,7 @@ type SubOption = {
 };
 
 type PartnerLogo = {
-    logo: string; // ścieżka w /public
+    logo: string;
     link: string;
 };
 
@@ -61,25 +61,25 @@ export default function HomePage({ data}: Props) {
             type: "image",
             titleText: data.title_opening1,
             content: data.text_opening1,
-            image: "/images/drone.png"
+            image: data.images?.[0]?.url ?? "/images/drone.png",
         },
         {
             type: "image",
             titleText: data.title_opening2,
             content: data.text_opening2,
-            image: "/images/security.png"
+            image: data.images?.[1]?.url ?? "/images/security.png",
         },
         {
             type: "image",
             titleText: data.title_opening3,
             content: data.text_opening3,
-            image: "/images/studio.png"
+            image: data.images?.[2]?.url ?? "/images/studio.png",
         },
         {
             type: "image",
             titleText: data.title_opening4,
             content: data.text_opening4,
-            image: "/images/counter_drone.png"
+            image: data.images?.[3]?.url ?? "/images/counter_drone.png",
         },
     ];
 
@@ -110,98 +110,39 @@ export default function HomePage({ data}: Props) {
         setCurrentSubOptions(0);
     }
 
-    const categories: OfferCattegory[] = useMemo(
+    const categories: OfferCategory[] = useMemo(
         () => [
             {
                 key: "cat1",
                 img: "/icons/Rocket car icon.png",
-                title: t("offer_category_title1"),
+                title: data.cat1_title,
                 subOptions: [
                     {
                         key: "offer1",
-                        buttonLabel: t("offer1_title1"),
-                        content : (
-                            <>
-                                <h3>{t("offer1_title2")}</h3>
-                                <ul>
-                                    <li>{t("offer1_text1")}</li>
-                                    <li>{t("offer1_text2")}</li>
-                                    <li>{t("offer1_text3")}</li>
-                                </ul>
-                                <br/>
-                                <h3>{t("offer1_title3")}</h3>
-                                <ul>
-                                    <li>{t("offer1_text4")}</li>
-                                    <li>{t("offer1_text5")}</li>
-                                </ul>
-                            </>
+                        buttonLabel: data.cat1_offer1_title,
+                        content: (
+                                <MarkdownContent content={data.cat1_offer1}/>
                         )
                     },
                     {
                         key: "offer2",
-                        buttonLabel: t("offer2_title1"),
-                        content : (
-                            <>
-                                <h3>{t("offer2_title2")}</h3>
-                                <ul>
-                                    <li>{t("offer2_text1")}</li>
-                                    <li>{t("offer2_text2")}</li>
-                                    <li>{t("offer2_text3")}</li>
-                                </ul>
-                                <br/>
-                                <h3>{t("offer2_title3")}</h3>
-                                <ul>
-                                    <li>{t("offer2_text4")}</li>
-                                    <li>{t("offer2_text5")}</li>
-                                    <li>{t("offer2_text6")}</li>
-                                    <li>{t("offer2_text7")}</li>
-                                    <li>{t("offer2_text8")}</li>
-                                </ul>
-                            </>
+                        buttonLabel: data.cat1_offer2_title,
+                        content: (
+                            <MarkdownContent content={data.cat1_offer2}/>
                         )
                     },
                     {
                         key: "offer3",
-                        buttonLabel: t("offer3_title1"),
-                        content : (
-                            <>
-                                <h3>{t("offer3_title2")}</h3>
-                                <ul>
-                                    <li>{t("offer3_text1")}</li>
-                                    <li>{t("offer3_text2")}</li>
-                                    <li>{t("offer3_text3")}</li>
-                                    <li>{t("offer3_text4")}</li>
-                                    <li>{t("offer3_text5")}</li>
-                                    <li>{t("offer3_text6")}</li>
-                                </ul>
-                                <br/>
-                                <h3>{t("offer3_title3")}</h3>
-                                <ul>
-                                    <li>{t("offer3_text7")}</li>
-                                    <li>{t("offer3_text8")}</li>
-                                    <li>{t("offer3_text9")}</li>
-                                </ul>
-                            </>
+                        buttonLabel: data.cat1_offer3_title,
+                        content: (
+                            <MarkdownContent content={data.cat1_offer3}/>
                         )
                     },
                     {
                         key: "offer4",
-                        buttonLabel: t("offer4_title1"),
-                        content : (
-                            <>
-                                <h3>{t("offer4_title2")}</h3>
-                                <ul>
-                                    <li>{t("offer4_text1")}</li>
-                                    <li>{t("offer4_text2")}</li>
-                                    <li>{t("offer4_text3")}</li>
-                                </ul>
-                                <br/>
-                                <h3>{t("offer4_title3")}</h3>
-                                <ul>
-                                    <li>{t("offer4_text4")}</li>
-                                    <li>{t("offer4_text5")}</li>
-                                </ul>
-                            </>
+                        buttonLabel: data.cat1_offer4_title,
+                        content: (
+                            <MarkdownContent content={data.cat1_offer4}/>
                         )
                     },
                 ]
@@ -209,68 +150,33 @@ export default function HomePage({ data}: Props) {
             {
                 key: "cat2",
                 img: "/icons/Document icon.png",
-                title: t("offer_category_title2"),
+                title: data.cat2_title,
                 subOptions: [
                     {
                         key: 'offer5',
-                        buttonLabel: t("offer5_title1"),
+                        buttonLabel: data.cat2_offer1_title,
                         content: (
-                            <>
-                                <h3>{t("offer5_title2")}</h3>
-                                <ul>
-                                    <li>{t("offer5_text1")}</li>
-                                    <li>{t("offer5_text2")}</li>
-                                    <li>{t("offer5_text3")}</li>
-                                    <li>{t("offer5_text4")}</li>
-                                    <li>{t("offer5_text5")}</li>
-                                    <li>{t("offer5_text6")}</li>
-                                    <li>{t("offer5_text7")}</li>
-                                </ul>
-                                <br/>
-                                <h3>{t("offer5_title3")}</h3>
-                                <ul>
-                                    <li>{t("offer5_text8")}</li>
-                                    <li>{t("offer5_text9")}</li>
-                                    <li>{t("offer5_text10")}</li>
-                                    <li>{t("offer5_text11")}</li>
-                                    <li>{t("offer5_text12")}</li>
-                                    <li>{t("offer5_text13")}</li>
-                                </ul>
-                            </>
+                            <MarkdownContent content={data.cat2_offer1}/>
                         ),
                     },
                     {
                         key: "offer6",
-                        buttonLabel: t("offer6_title1"),
-                        content : (
-                            <>
-                                <h3>{t("offer6_title2")}</h3>
-                                <ul>
-                                    <li>{t("offer6_text1")}</li>
-                                    <li>{t("offer6_text2")}</li>
-                                    <li>{t("offer6_text3")}</li>
-                                </ul>
-                                <br/>
-                                <h3>{t("offer6_title3")}</h3>
-                                <ul>
-                                    <li>{t("offer6_text4")}</li>
-                                    <li>{t("offer6_text5")}</li>
-                                </ul>
-                            </>
+                        buttonLabel: data.cat2_offer2_title,
+                        content: (
+                            <MarkdownContent content={data.cat2_offer2}/>
                         )
                     },
                     {
                         key: "offer7",
-                        buttonLabel: t("offer7_title1"),
-                        content : (
-                            <>
-                            </>
+                        buttonLabel: data.cat2_offer3_title,
+                        content: (
+                            <MarkdownContent content={data.cat2_offer3}/>
                         )
                     },
                     {
                         key: "offer8",
-                        buttonLabel: t("offer8_title1"),
-                        content : (
+                        buttonLabel: data.cat2_offer4_title,
+                        content: (
                             <>
                                 <iframe
                                     src="https://docs.google.com/presentation/d/e/2PACX-1vQ-XBJn8_0R0JoOkc204tphTzZIdat07_oDo42aCvJbHXTfurpxG7iIk-neJ9OME1S3iGvYKjpKoBxN/pubembed?start=true&loop=true&delayms=3000"
@@ -288,86 +194,34 @@ export default function HomePage({ data}: Props) {
             {
                 key: "cat3",
                 img: "/icons/Anti-drone systems.png",
-                title: t("offer_category_title3"),
+                title: data.cat3_title,
                 subOptions: [
                     {
                         key: 'offer9',
-                        buttonLabel: t("offer9_title1"),
+                        buttonLabel: data.cat3_offer1_title,
                         content: (
-                            <>
-                                <h3>{t("offer9_title2")}</h3>
-                                <ul>
-                                    <li>{t("offer9_text1")}</li>
-                                    <li>{t("offer9_text2")}</li>
-                                    <li>{t("offer9_text3")}</li>
-                                    <li>{t("offer9_text4")}</li>
-                                    <li>{t("offer9_text5")}</li>
-                                    <li>{t("offer9_text6")}</li>
-                                    <li>{t("offer9_text7")}</li>
-                                </ul>
-                                <br/>
-                                <h3>{t("offer9_title3")}</h3>
-                                <ul>
-                                    <li>{t("offer9_text8")}</li>
-                                    <li>{t("offer9_text9")}</li>
-                                    <li>{t("offer9_text10")}</li>
-                                    <li>{t("offer9_text11")}</li>
-                                    <li>{t("offer9_text12")}</li>
-                                    <li>{t("offer9_text13")}</li>
-                                </ul>
-                                <br/>
-                                <h3>{t("offer9_title4")}</h3>
-                                <br/>
-                                <h3>{t("offer9_title5")}</h3>
-                            </>
+                            <MarkdownContent content={data.cat3_offer1}/>
                         ),
                     },
                     {
                         key: "offer10",
-                        buttonLabel: t("offer10_title1"),
-                        content : (
-                            <>
-                                <h3>{t("offer10_title2")}</h3>
-                                <ul>
-                                    <li>{t("offer10_text1")}</li>
-                                    <li>{t("offer10_text2")}</li>
-                                    <li>{t("offer10_text3")}</li>
-                                </ul>
-                                <br/>
-                                <h3>{t("offer10_title3")}</h3>
-                                <ul>
-                                    <li>{t("offer10_text4")}</li>
-                                    <li>{t("offer10_text5")}</li>
-                                </ul>
-                            </>
+                        buttonLabel: data.cat3_offer2_title,
+                        content: (
+                            <MarkdownContent content={data.cat3_offer2}/>
                         )
                     },
                     {
                         key: "offer11",
-                        buttonLabel: t("offer11_title1"),
-                        content : (
-                            <>
-                                <h3>{t("offer11_title2")}</h3>
-                                <ul>
-                                    <li>{t("offer11_text1")}</li>
-                                    <li>{t("offer11_text2")}</li>
-                                    <li>{t("offer11_text3")}</li>
-                                </ul>
-                                <br/>
-                                <h3>{t("offer11_title3")}</h3>
-                                <ul>
-                                    <li>{t("offer11_text4")}</li>
-                                    <li>{t("offer11_text5")}</li>
-                                </ul>
-                            </>
+                        buttonLabel: data.cat3_offer3_title,
+                        content: (
+                            <MarkdownContent content={data.cat3_offer3}/>
                         )
                     },
                     // {
                     //     key: "offer12",
-                    //     buttonLabel: t("offer12_title1"),
-                    //     content : (
-                    //         <>
-                    //         </>
+                    //     buttonLabel: data.cat3_offer4_title,
+                    //     content: (
+                    //         <MarkdownContent content={data.cat3_offer4}/>
                     //     )
                     // },
                 ]
@@ -375,87 +229,39 @@ export default function HomePage({ data}: Props) {
             {
                 key: "cat4",
                 img: "/icons/Drone icon.png",
-                title: t("offer_category_title4"),
+                title: data.cat4_title,
                 subOptions: [
                     {
                         key: 'offer13',
-                        buttonLabel: t("offer13_title1"),
+                        buttonLabel: data.cat4_offer1_title,
                         content: (
-                            <>
-                                <h3>{t("offer13_title2")}</h3>
-                                <ul>
-                                    <li>{t("offer13_text1")}</li>
-                                    <li>{t("offer13_text2")}</li>
-                                    <li>{t("offer13_text3")}</li>
-                                    <li>{t("offer13_text4")}</li>
-                                    <li>{t("offer13_text5")}</li>
-                                    <li>{t("offer13_text6")}</li>
-                                    <li>{t("offer13_text7")}</li>
-                                </ul>
-                                <br/>
-                                <h3>{t("offer13_title3")}</h3>
-                                <ul>
-                                    <li>{t("offer13_text8")}</li>
-                                    <li>{t("offer13_text9")}</li>
-                                    <li>{t("offer13_text10")}</li>
-                                    <li>{t("offer13_text11")}</li>
-                                    <li>{t("offer13_text12")}</li>
-                                    <li>{t("offer13_text13")}</li>
-                                </ul>
-                            </>
+                            <MarkdownContent content={data.cat4_offer1}/>
                         ),
                     },
                     {
                         key: "offer14",
-                        buttonLabel: t("offer14_title1"),
-                        content : (
-                            <>
-                                <h3>{t("offer14_title2")}</h3>
-                                <ul>
-                                    <li>{t("offer14_text1")}</li>
-                                    <li>{t("offer14_text2")}</li>
-                                    <li>{t("offer14_text3")}</li>
-                                </ul>
-                                <br/>
-                                <h3>{t("offer14_title3")}</h3>
-                                <ul>
-                                    <li>{t("offer14_text4")}</li>
-                                    <li>{t("offer14_text5")}</li>
-                                </ul>
-                            </>
+                        buttonLabel: data.cat4_offer2_title,
+                        content: (
+                            <MarkdownContent content={data.cat4_offer2}/>
                         )
                     },
                     {
                         key: "offer15",
-                        buttonLabel: t("offer15_title1"),
-                        content : (
-                            <>
-                                <h3>{t("offer15_title2")}</h3>
-                                <ul>
-                                    <li>{t("offer15_text1")}</li>
-                                    <li>{t("offer15_text2")}</li>
-                                    <li>{t("offer15_text3")}</li>
-                                </ul>
-                                <br/>
-                                <h3>{t("offer15_title3")}</h3>
-                                <ul>
-                                    <li>{t("offer15_text4")}</li>
-                                    <li>{t("offer15_text5")}</li>
-                                </ul>
-                            </>
+                        buttonLabel: data.cat4_offer3_title,
+                        content: (
+                            <MarkdownContent content={data.cat4_offer3}/>
                         )
                     },
                     // {
                     //     key: "offer16",
-                    //     buttonLabel: t("offer16_title1"),
-                    //     content : (
-                    //         <>
-                    //         </>
+                    //     buttonLabel: data.cat4_offer4_title,
+                    //     content: (
+                    //         <MarkdownContent content={data.cat4_offer4}/>
                     //     )
                     // },
                 ]
             },
-        ], [t]);
+        ], [data.cat1_offer1, data.cat1_offer1_title, data.cat1_offer2, data.cat1_offer2_title, data.cat1_offer3, data.cat1_offer3_title, data.cat1_offer4, data.cat1_offer4_title, data.cat1_title, data.cat2_offer1, data.cat2_offer1_title, data.cat2_offer2, data.cat2_offer2_title, data.cat2_offer3, data.cat2_offer3_title, data.cat2_offer4_title, data.cat2_title, data.cat3_offer1, data.cat3_offer1_title, data.cat3_offer2, data.cat3_offer2_title, data.cat3_offer3, data.cat3_offer3_title, data.cat3_title, data.cat4_offer1, data.cat4_offer1_title, data.cat4_offer2, data.cat4_offer2_title, data.cat4_offer3, data.cat4_offer3_title, data.cat4_title]);
 
     const logos: PartnerLogo[] = [
         {
@@ -683,18 +489,3 @@ export default function HomePage({ data}: Props) {
     </div>
     )
 }
-
-
-
-
-
-//
-// const Home = (): JSX.Element => {
-//
-//
-//     return (
-//
-//     );
-// };
-//
-// export default Home;

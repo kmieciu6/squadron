@@ -8,6 +8,11 @@
     justify-content: center;
     align-items: center;
     padding-top: 0 !important;
+    padding-bottom: 5rem;
+
+    @include desktop {
+        padding-bottom: 10rem;
+    }
 
     .projects_content {
         width: 100%;
