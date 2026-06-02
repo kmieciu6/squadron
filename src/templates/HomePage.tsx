@@ -263,6 +263,9 @@ export default function HomePage({ data}: Props) {
             },
         ], [data.cat1_offer1, data.cat1_offer1_title, data.cat1_offer2, data.cat1_offer2_title, data.cat1_offer3, data.cat1_offer3_title, data.cat1_offer4, data.cat1_offer4_title, data.cat1_title, data.cat2_offer1, data.cat2_offer1_title, data.cat2_offer2, data.cat2_offer2_title, data.cat2_offer3, data.cat2_offer3_title, data.cat2_offer4_title, data.cat2_title, data.cat3_offer1, data.cat3_offer1_title, data.cat3_offer2, data.cat3_offer2_title, data.cat3_offer3, data.cat3_offer3_title, data.cat3_title, data.cat4_offer1, data.cat4_offer1_title, data.cat4_offer2, data.cat4_offer2_title, data.cat4_offer3, data.cat4_offer3_title, data.cat4_title]);
 
+    const selectedCategory = categories[currentCategory];
+    const selectedSubOption = selectedCategory?.subOptions[currentSubOptions];
+
     const logos: PartnerLogo[] = [
         {
             logo: "/logos/ASE GROUP LOGO.png",
@@ -339,6 +342,7 @@ export default function HomePage({ data}: Props) {
                                     className="slide-image"
                                     width={1200}
                                     height={800}
+                                    loading="eager"
                                 />
                             )}
                             <div className="overlay">
@@ -377,82 +381,95 @@ export default function HomePage({ data}: Props) {
                     <h1>
                         {t('offer')}
                     </h1>
-                    <div className="text_content">
-                        <div className="switcher_category_buttons">
-                            {categories.map((opt, idx) => (
-                                // <button
-                                //     key={opt.key}
-                                //     className={idx === currentCategory ? "active" : ""}
-                                //     onClick={() => handleCategoryChange(idx)}
-                                // >
-                                //     <Image
-                                //         src={opt.img}
-                                //         alt={opt.title}
-                                //         className='img'
-                                //         loading="eager"
-                                //     />
-                                //     <p>{opt.title}</p>
-                                // </button>
-
-                                <React.Fragment key={opt.key}>
+                    <div className="offer_content">
+                        <div className="offer_categories">
+                            {categories.map((category, idx) => (
                                     <button
-                                        className={idx === currentCategory ? "active" : ""}
+                                        key={category.key}
+                                        type="button"
+                                        className={`offer_category_card ${idx === currentCategory ? "active" : ""}`}
                                         onClick={() => handleCategoryChange(idx)}
                                     >
                                         <Image
-                                            src={opt.img}
-                                            alt={opt.title}
+                                            src={category.img}
+                                            alt={category.title}
                                             width={100}
                                             height={100}
-                                            className="img"
+                                            className="offer_category_icon"
                                             loading="eager"
                                         />
-                                        <p>{opt.title}</p>
+                                        <p>{category.title}</p>
                                     </button>
-
-                                    {idx === currentCategory && (
-                                        <div className="mobile_only">
-                                            <div className="switcher_offer_buttons">
-                                                {categories[currentCategory].subOptions.map((opt, subIdx) => (
-                                                    <button
-                                                        key={opt.key}
-                                                        className={subIdx === currentSubOptions ? "active" : ""}
-                                                        onClick={() => setCurrentSubOptions(subIdx)}
-                                                    >
-                                                        <p>{opt.buttonLabel}</p>
-                                                    </button>
-                                                ))}
-                                            </div>
-                                            <div className="switcher_text">
-                                                {categories[currentCategory].subOptions[currentSubOptions].content}
-                                            </div>
-                                        </div>
-                                    )}
-                                </React.Fragment>
                             ))}
                         </div>
 
-                        <div className='switcher_offer_buttons desktop_only'>
-                            {categories[currentCategory].subOptions.map((opt, idx) => (
+                        <div className='offer_desktop_panel desktop_only'>
+                            <div className="offer_subnav">
+                            {selectedCategory.subOptions.map((option, idx) => (
                                 <button
-                                    key={opt.key}
-                                    className={idx === currentSubOptions ? "active" : ""}
+                                    key={option.key}
+                                    type="button"
+                                    className={`offer_subnav_button ${idx === currentSubOptions ? "active" : ""}`}
                                     onClick={() => setCurrentSubOptions(idx)}
                                 >
-                                    {/*<Image*/}
-                                    {/*    src={opt.img}*/}
-                                    {/*    alt={opt.buttonLabel}*/}
-                                    {/*    width={100}*/}
-                                    {/*    height={100}*/}
-                                    {/*    className='img'*/}
-                                    {/*    loading="eager"*/}
-                                    {/*/>*/}
-                                    <p>{opt.buttonLabel}</p>
+                                    <p>{option.buttonLabel}</p>
                                 </button>
                             ))}
                         </div>
-                        <div className="switcher_text desktop_only">
-                            {categories[currentCategory].subOptions[currentSubOptions].content}
+                            <div className="offer_text_card">
+                                {selectedSubOption?.buttonLabel && (
+                                    <h2>{selectedSubOption.buttonLabel}</h2>
+                                )}
+
+                                <div className="offer_text_content">
+                                    {selectedSubOption?.content}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="offer_mobile_panel mobile_only">
+                            {categories.map((category, categoryIdx) => (
+                                <div
+                                    key={category.key}
+                                    className={`offer_mobile_group ${categoryIdx === currentCategory ? "active" : ""}`}
+                                >
+                                    <button
+                                        type="button"
+                                        className="offer_mobile_category"
+                                        onClick={() => handleCategoryChange(categoryIdx)}
+                                    >
+                                        <span>{category.title}</span>
+                                        <span>{categoryIdx === currentCategory ? "−" : "+"}</span>
+                                    </button>
+
+                                    {categoryIdx === currentCategory && (
+                                        <div className="offer_mobile_content">
+                                            <div className="offer_mobile_subnav">
+                                                {category.subOptions.map((option, subIdx) => (
+                                                    <button
+                                                        key={option.key}
+                                                        type="button"
+                                                        className={`offer_mobile_subnav_button ${subIdx === currentSubOptions ? "active" : ""}`}
+                                                        onClick={() => setCurrentSubOptions(subIdx)}
+                                                    >
+                                                        {option.buttonLabel}
+                                                    </button>
+                                                ))}
+                                            </div>
+
+                                            <div className="offer_text_card">
+                                                {selectedSubOption?.buttonLabel && (
+                                                    <h2>{selectedSubOption.buttonLabel}</h2>
+                                                )}
+
+                                                <div className="offer_text_content">
+                                                    {selectedSubOption?.content}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>

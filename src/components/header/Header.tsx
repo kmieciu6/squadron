@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState, useEffect, useRef, JSX} from 'react';
+import React, {useState, useEffect, useRef, JSX, useCallback} from 'react';
 import useTranslation from '../../hooks/useTranslation';
 import { useTheme } from 'next-themes';
 import NavLink from './NavLink';
@@ -307,12 +307,12 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
         }
     };
 
-    const clearCloseTimer = () => {
+    const clearCloseTimer = useCallback(() => {
         if (closeTimerRef.current) {
             clearTimeout(closeTimerRef.current);
             closeTimerRef.current = null;
         }
-    };
+    }, []);
 
     const startCloseTimer = () => {
         clearCloseTimer();
@@ -323,11 +323,11 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
         }, 3000);
     };
 
-    const closeAll = () => {
+    const closeAll = useCallback(() => {
         setOpenMenu(null);
         setOpenSubmenu(null);
         clearCloseTimer();
-    };
+    }, [clearCloseTimer]);
 
     const navigateItem = (item: { href?: string; onClick?: () => void }) => {
         if (item.onClick) {
@@ -400,7 +400,7 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
             document.removeEventListener("mousedown", handleOutsideClick);
             clearCloseTimer();
         };
-    }, []);
+    }, [clearCloseTimer, closeAll]);
 
     const menuData: FirstLevelItem[] = [
         {
@@ -419,7 +419,7 @@ function HeaderContent({ className }: HeaderContentProps): JSX.Element {
                         {
                             id: "mallard",
                             label: t("offer2_title1"),
-                            href: "projects//mallard",
+                            href: "/projects/mallard",
                         },
                         {
                             id: "training",

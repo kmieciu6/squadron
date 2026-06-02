@@ -1,6 +1,7 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
 
 type MarkdownContentProps = {
     content?: string | null,
@@ -17,7 +18,8 @@ export function MarkdownContent({ content, className = "", allowHtml = true }: M
         <div className={`markdown_content ${className}`}>
             <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
-                rehypePlugins={allowHtml ? [rehypeRaw] : []}
+                rehypePlugins={allowHtml ? [rehypeRaw, rehypeSanitize] : []}
+                skipHtml={!allowHtml}
             >
                 {value}
             </ReactMarkdown>
