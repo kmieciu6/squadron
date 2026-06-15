@@ -1,7 +1,7 @@
 'use client'
 
 import useIntersectionHide from "@/hooks/useIntersectionHide";
-import useTranslation from '@/hooks/useTranslation';
+// import useTranslation from '@/hooks/useTranslation';
 import { HomePageData } from "@/lib/api/home";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import React, {useEffect, useMemo, useRef, useState} from "react";
@@ -43,13 +43,13 @@ type Props = {
     data: HomePageData;
 };
 
-export default function HomePage({ data}: Props) {
-    const { t } = useTranslation('common')
+export default function HomePage({ data }: Props) {
+    // const { t } = useTranslation('common')
     const [titleRef, isTitleHidden] = useIntersectionHide<HTMLDivElement>();
     const [sec1Ref, isSec1Hidden] = useIntersectionHide<HTMLDivElement>();
     const [sec2Ref, isSec2Hidden] = useIntersectionHide<HTMLDivElement>();
     const [sec3Ref, isSec3Hidden] = useIntersectionHide<HTMLDivElement>();
-    // const [sec4Ref, isSec4Hidden] = useIntersectionHide<HTMLDivElement>();
+    const [sec4Ref, isSec4Hidden] = useIntersectionHide<HTMLDivElement>();
 
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [currentCategory, setCurrentCategory] = useState<number>(0);
@@ -100,25 +100,25 @@ export default function HomePage({ data}: Props) {
             type: "image",
             titleText: data.title_opening1,
             content: data.text_opening1,
-            image: data.images?.[0]?.url ?? "/images/drone.png",
+            image: data.image_opening?.[0]?.url ?? "/images/drone.png",
         },
         {
             type: "image",
             titleText: data.title_opening2,
             content: data.text_opening2,
-            image: data.images?.[1]?.url ?? "/images/security.png",
+            image: data.image_opening?.[1]?.url ?? "/images/security.png",
         },
         {
             type: "image",
             titleText: data.title_opening3,
             content: data.text_opening3,
-            image: data.images?.[2]?.url ?? "/images/studio.png",
+            image: data.image_opening?.[2]?.url ?? "/images/studio.png",
         },
         {
             type: "image",
             titleText: data.title_opening4,
             content: data.text_opening4,
-            image: data.images?.[3]?.url ?? "/images/counter_drone.png",
+            image: data.image_opening?.[3]?.url ?? "/images/counter_drone.png",
         },
     ];
 
@@ -148,6 +148,20 @@ export default function HomePage({ data}: Props) {
         setCurrentCategory(idx);
         setCurrentSubOptions(0);
     }
+
+    const applicationPoints = [
+        data.application_point1,
+        data.application_point2,
+        data.application_point3,
+        data.application_point4,
+    ].filter(Boolean);
+
+    const getApplicationImage = (index: number, fallback: string) => {
+        return data.image_application?.[index]?.url ?? fallback;
+    };
+
+    const applicationMainImage = getApplicationImage(0, "/images/security.png");
+    const applicationSecondImage = getApplicationImage(1, "/images/drone.png");
 
     const categories: OfferCategory[] = useMemo(
         () => [
@@ -305,6 +319,33 @@ export default function HomePage({ data}: Props) {
     const selectedCategory = categories[currentCategory];
     const selectedSubOption = selectedCategory?.subOptions[currentSubOptions];
 
+    const references = [
+        {
+            title: data.title_reference_topic1,
+            text: data.text_reference_topic1
+        },
+        {
+            title: data.title_reference_topic2,
+            text: data.text_reference_topic2
+        },
+        {
+            title: data.title_reference_topic3,
+            text: data.text_reference_topic3
+        },
+        {
+            title: data.title_reference_topic4,
+            text: data.text_reference_topic4
+        },
+        {
+            title: data.title_reference_topic5,
+            text: data.text_reference_topic5
+        },
+        {
+            title: data.title_reference_topic6,
+            text: data.text_reference_topic6
+        },
+    ];
+
     const logos: PartnerLogo[] = [
         {
             logo: "/logos/ASE GROUP LOGO.png",
@@ -414,11 +455,66 @@ export default function HomePage({ data}: Props) {
 
         <div className="text_container">
 
+            {/*Application Areas*/}
+            <div className="application_areas" id="application-areas">
+                <div ref={sec2Ref} className={`application_areas_inner text text_width ${isSec2Hidden ? 'hidden' : ''}`}>
+                    <div className="application_areas_text">
+                        <span className="section_label">
+                            {data.label_application}
+                        </span>
+
+                        <h1>{data.title_application}</h1>
+
+                        <div className="application_areas_description">
+                            <MarkdownContent content={data.text_application} />
+                        </div>
+
+                        {applicationPoints.length > 0 && (
+                            <div className="application_areas_points">
+                                {applicationPoints.map((item) => (
+                                    <div key={item} className="application_area_point">
+                                        <span className="point_dot" />
+                                        <p>{item}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="application_areas_visual">
+                        <div className="application_main_image">
+                            <Image
+                                src={applicationMainImage}
+                                alt={data.title_application || "Squadron operational areas"}
+                                width={900}
+                                height={650}
+                                className="image"
+                            />
+                        </div>
+
+                        <div className="application_floating_image">
+                            <Image
+                                src={applicationSecondImage}
+                                alt=""
+                                width={360}
+                                height={260}
+                                className="image"
+                            />
+                        </div>
+
+                        <div className="application_areas_badge">
+                            <strong>{data.badge_application_title}</strong>
+                            <span>{data.badge_application_text}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {/*Offer*/}
             <div className='offer' id='offer'>
                 <div ref={sec1Ref} className={`text text_width ${isSec1Hidden ? 'hidden' : ''}`}>
                     <h1>
-                        {t('offer')}
+                        {data.title_offer}
                     </h1>
                     <div className="offer_content">
                         <div className="offer_categories">
@@ -519,15 +615,30 @@ export default function HomePage({ data}: Props) {
 
             {/*Reference*/}
             <div className='reference' id='reference'>
-                <div ref={sec2Ref} className={`text text_width ${isSec2Hidden ? 'hidden' : ''}`}>
-                    <h1>{t("reference")}</h1>
+                <div ref={sec3Ref} className={`text text_width ${isSec3Hidden ? 'hidden' : ''}`}>
+                    <h1>
+                        {data.title_reference}
+                    </h1>
+
+                    <p className="reference_intro">
+                        {data.text_reference}
+                    </p>
+
+                    <div className="reference_grid">
+                        {references.map((item) => (
+                            <article key={item.title} className="reference_card">
+                                <h3>{item.title}</h3>
+                                <p>{item.text}</p>
+                            </article>
+                        ))}
+                    </div>
                 </div>
             </div>
 
             {/*Cooperation*/}
             <div className='cooperation' id='cooperation'>
-                <div ref={sec3Ref} className={`text text_width ${isSec3Hidden ? 'hidden' : ''}`}>
-                    <h1>{t("partners")}</h1>
+                <div ref={sec4Ref} className={`text text_width ${isSec4Hidden ? 'hidden' : ''}`}>
+                    <h1>{data.title_cooperation}</h1>
                     <div className="logo_slider">
                         <div className="logo_slider-track">
                             {allLogos.map((item, index) => (

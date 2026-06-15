@@ -3,6 +3,20 @@
 @use "fonts" as *;
 
 .dark {
+
+    .application_areas {
+        background-color: $main-color2;
+
+        .application_main_image,
+        .application_floating_image {
+            box-shadow: 0 24px 70px rgba(0, 0, 0, .45);
+        }
+
+        .application_area_point {
+            background: #2f2f2f;
+        }
+    }
+
     .offer,
     .reference {
         background-color: $main-color2;
@@ -33,6 +47,15 @@
         }
     }
 
+    .reference {
+        background-color: $main-color2;
+
+        .reference_card {
+            background: #2f2f2f;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, .25);
+        }
+    }
+
     .cooperation {
         background-color: $black-color;
 
@@ -43,6 +66,20 @@
 }
 
 .light {
+
+    .application_areas {
+        background-color: $main-color3;
+
+        .application_main_image,
+        .application_floating_image {
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .12);
+        }
+
+        .application_area_point {
+            background: rgba(255, 255, 255, 0.75);
+        }
+    }
+
     .offer,
     .reference {
         background-color: $main-color3;
@@ -68,6 +105,15 @@
                 border: 2px solid $main-color;
                 background: white;
             }
+        }
+    }
+
+    .reference {
+        background-color: $main-color3;
+
+        .reference_card {
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .08);
         }
     }
 }
@@ -316,6 +362,281 @@
             text-align: justify;
         }
 
+        //.application_areas {
+        //    width: 100%;
+        //    padding: 4rem 0;
+        //    display: flex;
+        //    justify-content: center;
+        //
+        //    @include desktop {
+        //        padding: 6rem 0;
+        //    }
+        //
+        //    .text {
+        //        width: 90%;
+        //        display: flex;
+        //        flex-direction: column;
+        //        align-items: center;
+        //
+        //        @include desktop {
+        //            width: 100%;
+        //        }
+        //    }
+        //
+        //    .section_label {
+        //        color: $main-color;
+        //        font-weight: 700;
+        //        text-transform: uppercase;
+        //        letter-spacing: .08em;
+        //        margin-bottom: 1rem;
+        //        text-align: center;
+        //    }
+        //
+        //    h1 {
+        //        max-width: 1000px;
+        //        text-align: center;
+        //        margin-bottom: 1.5rem;
+        //    }
+        //
+        //    .application_areas_intro {
+        //        max-width: 900px;
+        //        text-align: center;
+        //        line-height: 1.8;
+        //        margin-bottom: 3rem;
+        //    }
+        //
+        //    .application_areas_grid {
+        //        width: 100%;
+        //        display: grid;
+        //        grid-template-columns: 1fr;
+        //        gap: 1rem;
+        //
+        //        @media (min-width: 700px) {
+        //            grid-template-columns: repeat(2, 1fr);
+        //        }
+        //
+        //        @include desktop {
+        //            grid-template-columns: repeat(4, 1fr);
+        //            gap: 1.5rem;
+        //        }
+        //    }
+        //
+        //    .application_area_card {
+        //        width: 100%;
+        //        min-width: 0;
+        //        border-radius: 1.25rem;
+        //        padding: 1.5rem;
+        //        transition: transform .2s ease, box-shadow .2s ease;
+        //
+        //        @include desktop {
+        //            padding: 2rem;
+        //            min-height: 240px;
+        //        }
+        //
+        //        &:hover {
+        //            @include desktop {
+        //                transform: translateY(-4px);
+        //            }
+        //        }
+        //
+        //        h3 {
+        //            color: $main-color;
+        //            margin-bottom: 1rem;
+        //            text-align: left;
+        //        }
+        //
+        //        p {
+        //            text-align: left;
+        //            line-height: 1.7;
+        //            margin: 0;
+        //        }
+        //    }
+        //}
+
+        .application_areas {
+            width: 100%;
+            padding: 4rem 0;
+            display: flex;
+            justify-content: center;
+
+            @include desktop {
+                padding: 7rem 0;
+            }
+
+            .application_areas_inner {
+                width: 90%;
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                align-items: center;
+
+                @include desktop {
+                    width: 100%;
+                    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+                    gap: 5rem;
+                }
+            }
+
+            .application_areas_text {
+                .section_label {
+                    display: block;
+                    color: $main-color;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    letter-spacing: .08em;
+                    margin-bottom: 1rem;
+                    text-align: left;
+                }
+
+                h1 {
+                    max-width: 760px;
+                    margin-bottom: 1.5rem;
+                    text-align: left;
+                }
+            }
+
+            .application_areas_description {
+                max-width: 760px;
+                margin-bottom: 2rem;
+
+                p {
+                    text-align: left;
+                    line-height: 1.8;
+                    margin-bottom: 1rem;
+                }
+            }
+
+            .application_areas_points {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 1rem;
+
+                @media (min-width: 700px) {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+
+            .application_area_point {
+                display: flex;
+                align-items: center;
+                gap: .85rem;
+                padding: 1rem;
+                border-radius: 1rem;
+
+                .point_dot {
+                    width: 10px;
+                    height: 10px;
+                    flex: 0 0 auto;
+                    border-radius: 50%;
+                    background: $main-color;
+                }
+
+                p {
+                    margin: 0;
+                    text-align: left;
+                    font-weight: 700;
+                    line-height: 1.5;
+                }
+            }
+
+            .application_areas_visual {
+                position: relative;
+                min-height: 360px;
+
+                @include desktop {
+                    min-height: 580px;
+                }
+            }
+
+            .application_main_image {
+                position: relative;
+                width: 100%;
+                height: 360px;
+                border-radius: 1.5rem;
+                overflow: hidden;
+
+                @include desktop {
+                    height: 560px;
+                }
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    background: linear-gradient(
+                            180deg,
+                            rgba(0, 0, 0, 0.02),
+                            rgba(0, 0, 0, 0.5)
+                    );
+                    z-index: 1;
+                }
+
+                .image {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                }
+            }
+
+            .application_floating_image {
+                display: none;
+
+                @include desktop {
+                    display: block;
+                    position: absolute;
+                    right: -2rem;
+                    bottom: -2rem;
+                    width: 330px;
+                    height: 230px;
+                    border-radius: 1.25rem;
+                    overflow: hidden;
+                    z-index: 3;
+                    border: 6px solid $main-color2;
+                }
+
+                .image {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                }
+            }
+
+            .application_areas_badge {
+                position: absolute;
+                left: 1rem;
+                right: 1rem;
+                bottom: 1rem;
+                z-index: 4;
+                padding: 1rem;
+                border-radius: 1rem;
+                backdrop-filter: blur(10px);
+                background: rgba(0, 0, 0, .5);
+                color: $white-color;
+
+                @include desktop {
+                    left: 2rem;
+                    right: auto;
+                    bottom: 2rem;
+                    max-width: 360px;
+                    padding: 1.5rem;
+                }
+
+                strong {
+                    display: block;
+                    color: $main-color;
+                    margin-bottom: .5rem;
+                    font-size: 1.2rem;
+                }
+
+                span {
+                    display: block;
+                    line-height: 1.5;
+                }
+            }
+        }
+
         .offer {
             padding: 3rem 0;
             display: flex;
@@ -556,24 +877,87 @@
 
         .reference {
             width: 100%;
-            height: 80vh;
+            padding-bottom: 5rem;
             display: flex;
             justify-content: center;
-            align-items: center;
+
+            @include desktop {
+                padding: 3rem 0 7rem 0;
+            }
 
             .text {
+                width: 90%;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                margin: 4rem 0;
-                width: 100%;
 
                 @include desktop {
-                    margin: 6rem 0;
+                    width: 100%;
+                }
+            }
+
+            h1 {
+                text-align: center;
+            }
+
+            .reference_intro {
+                max-width: 850px;
+                text-align: center;
+                line-height: 1.7;
+                margin: 2rem 0 3rem 0;
+
+                @include desktop {
+                    margin: 3rem 0 5rem 0;
+                }
+            }
+
+            .reference_grid {
+                width: 100%;
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 2rem;
+
+                @include tablet {
+                    grid-template-columns: repeat(2, 1fr);
                 }
 
-                h1 {
-                    margin-bottom: 2rem;
+                @include desktop {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+            }
+
+            .reference_card {
+                border-radius: 1.25rem;
+                padding: 1.5rem;
+                min-height: auto;
+                transition: transform .2s ease, box-shadow .2s ease;
+
+                @include desktop {
+                    padding: 2rem;
+                    min-height: 220px;
+                }
+
+                &:hover {
+                    @include desktop {
+                        transform: translateY(-4px);
+                    }
+                }
+
+                h3 {
+                    color: $main-color;
+                    margin-bottom: 1rem;
+                    text-align: left;
+                    font-size: 1.1rem;
+
+                    @include desktop {
+                        font-size: 1.25rem;
+                    }
+                }
+
+                p {
+                    text-align: left;
+                    line-height: 1.7;
+                    margin: 0;
                 }
             }
         }
