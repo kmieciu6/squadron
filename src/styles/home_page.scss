@@ -317,9 +317,13 @@
         }
 
         .offer {
-            padding: 5rem 0;
+            padding: 3rem 0;
             display: flex;
             justify-content: center;
+
+            @include desktop {
+                padding: 5rem 0;
+            }
 
             p {
                 text-align: center;
@@ -334,7 +338,11 @@
 
                 h1 {
                     text-align: center;
-                    margin-bottom: 3rem;
+                    margin-bottom: 1rem;
+
+                    @include desktop {
+                        margin-bottom: 3rem;
+                    }
                 }
             }
 
@@ -390,6 +398,10 @@
                     min-height: 170px;
                 }
 
+                @include mobile-tablet{
+                    display: none;
+                }
+
                 &:hover {
                     transform: translateY(-4px);
                 }
@@ -424,7 +436,7 @@
             .offer_subnav {
                 display: flex;
                 flex-direction: column;
-                gap: 1rem;
+                gap: 3rem;
                 position: sticky;
                 top: 120px;
             }

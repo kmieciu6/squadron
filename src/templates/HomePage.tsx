@@ -4,7 +4,7 @@ import useIntersectionHide from "@/hooks/useIntersectionHide";
 import useTranslation from '@/hooks/useTranslation';
 import { HomePageData } from "@/lib/api/home";
 import { MarkdownContent } from "@/components/MarkdownContent";
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 import Image from "next/image";
 
 type Slide =
@@ -55,6 +55,45 @@ export default function HomePage({ data}: Props) {
     const [currentCategory, setCurrentCategory] = useState<number>(0);
     const [currentSubOptions, setCurrentSubOptions] = useState<number>(0);
     const [resetTimer, setResetTimer] = useState<boolean>(false);
+    const mobileGroupRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const mobileTextRef = useRef<HTMLDivElement | null>(null);
+
+    const isMobileOffer = () => {
+        if (typeof window === "undefined") return false;
+
+        return window.matchMedia("(max-width: 1023px)").matches;
+    };
+
+    const scrollAfterRender = (callback: () => void) => {
+        if (!isMobileOffer()) return;
+
+        window.setTimeout(() => {
+            window.requestAnimationFrame(callback);
+        }, 0);
+    };
+
+    const handleMobileCategoryChange = (idx: number) => {
+        setCurrentCategory(idx);
+        setCurrentSubOptions(0);
+
+        scrollAfterRender(() => {
+            mobileGroupRefs.current[idx]?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+        });
+    };
+
+    const handleMobileSubOptionChange = (idx: number) => {
+        setCurrentSubOptions(idx);
+
+        scrollAfterRender(() => {
+            mobileTextRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+        });
+    };
 
     const slides: Slide[] = [
         {
@@ -431,12 +470,15 @@ export default function HomePage({ data}: Props) {
                             {categories.map((category, categoryIdx) => (
                                 <div
                                     key={category.key}
+                                    ref={(el) => {
+                                        mobileGroupRefs.current[categoryIdx] = el;
+                                    }}
                                     className={`offer_mobile_group ${categoryIdx === currentCategory ? "active" : ""}`}
                                 >
                                     <button
                                         type="button"
                                         className="offer_mobile_category"
-                                        onClick={() => handleCategoryChange(categoryIdx)}
+                                        onClick={() => handleMobileCategoryChange(categoryIdx)}
                                     >
                                         <span>{category.title}</span>
                                         <span>{categoryIdx === currentCategory ? "−" : "+"}</span>
@@ -444,13 +486,13 @@ export default function HomePage({ data}: Props) {
 
                                     {categoryIdx === currentCategory && (
                                         <div className="offer_mobile_content">
-                                            <div className="offer_mobile_subnav">
+                                            <div ref={mobileTextRef} className="offer_mobile_subnav">
                                                 {category.subOptions.map((option, subIdx) => (
                                                     <button
                                                         key={option.key}
                                                         type="button"
                                                         className={`offer_mobile_subnav_button ${subIdx === currentSubOptions ? "active" : ""}`}
-                                                        onClick={() => setCurrentSubOptions(subIdx)}
+                                                        onClick={() => handleMobileSubOptionChange(subIdx)}
                                                     >
                                                         {option.buttonLabel}
                                                     </button>
