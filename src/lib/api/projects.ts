@@ -5,6 +5,7 @@ import {
     strapiFetch,
     StrapiImage,
 } from "@/lib/strapi";
+import {SupportedLanguage} from "@/lib/i18n/types";
 
 export type ProjectsPageData = {
     title: string;
@@ -30,7 +31,7 @@ type StrapiProjectPage = {
 
 export async function getPageBySlug(
     slug: string,
-    locale: string
+    locale: SupportedLanguage
 ): Promise<ProjectsPageData | null> {
     const json = await strapiFetch<StrapiCollectionResponse<StrapiProjectPage>>(
         `/api/projects-pages?filters[slug][$eq]=${encodeURIComponent(slug)}&populate=image`,

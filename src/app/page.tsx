@@ -1,11 +1,10 @@
 import { notFound } from "next/navigation";
 import { getHomePage } from "@/lib/api/home";
 import HomePage from "@/templates/HomePage";
-import {cookies} from "next/headers";
+import { getRequestLocale } from "@/lib/i18n/getRequestLocale";
 
 export default async function Home() {
-    const cookieStore = await cookies();
-    const locale = cookieStore.get("locale")?.value ?? "en";
+    const locale = await getRequestLocale();
     const data = await getHomePage(locale);
 
     if (!data) return notFound();

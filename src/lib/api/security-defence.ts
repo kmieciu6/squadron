@@ -5,6 +5,7 @@ import {
     strapiFetch,
     StrapiImage,
 } from "@/lib/strapi";
+import {SupportedLanguage} from "@/lib/i18n/types";
 
 export type SecurityDefencePageData = {
     title: string;
@@ -20,7 +21,7 @@ type StrapiSecurityDefencePage = {
 
 
 export async function getSecurityDefencePage(
-    locale: string
+    locale: SupportedLanguage
 ): Promise<SecurityDefencePageData | null> {
     const json = await strapiFetch<StrapiSingleResponse<StrapiSecurityDefencePage>>(
         "/api/security-defence-page?populate=image",

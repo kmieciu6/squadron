@@ -1,11 +1,10 @@
 import AboutPage from "@/templates/AboutPage";
-import { cookies } from "next/headers";
 import { getAboutPage } from "@/lib/api/about";
 import { notFound } from "next/navigation";
+import { getRequestLocale } from "@/lib/i18n/getRequestLocale";
 
 export default async function About() {
-    const cookieStore = await cookies();
-    const locale = cookieStore.get("locale")?.value ?? "en";
+    const locale = await getRequestLocale();
     const data = await getAboutPage(locale);
 
     if (!data) return notFound();

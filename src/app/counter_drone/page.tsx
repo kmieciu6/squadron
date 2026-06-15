@@ -1,11 +1,10 @@
 import CounterDronePage from "@/templates/CounterDronePage";
-import { cookies } from "next/headers";
 import { getCounterDronePage } from "@/lib/api/counter-drone";
 import { notFound } from "next/navigation";
+import { getRequestLocale } from "@/lib/i18n/getRequestLocale";
 
 export default async function CounterDrone() {
-    const cookieStore = await cookies();
-    const locale = cookieStore.get("locale")?.value ?? "en";
+    const locale = await getRequestLocale();
     const data = await getCounterDronePage(locale);
 
     if (!data) return notFound();

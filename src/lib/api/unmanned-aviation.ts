@@ -5,6 +5,7 @@ import {
     strapiFetch,
     StrapiImage,
 } from "@/lib/strapi";
+import {SupportedLanguage} from "@/lib/i18n/types";
 
 export type UnmannedAviationPageData = {
     title: string;
@@ -20,7 +21,7 @@ type StrapiUnmannedAviationPage = {
 
 
 export async function getUnmannedAviationPage(
-    locale: string
+    locale: SupportedLanguage
 ): Promise<UnmannedAviationPageData | null> {
     const json = await strapiFetch<StrapiSingleResponse<StrapiUnmannedAviationPage>>(
         "/api/unmanned-aviation-page?populate=image",

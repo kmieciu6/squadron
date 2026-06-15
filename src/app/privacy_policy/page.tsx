@@ -1,11 +1,10 @@
-import { cookies } from "next/headers";
 import { getPrivacyPolicyPage } from "@/lib/api/privacy-policy";
 import { notFound } from "next/navigation";
 import PrivacyPolicyPage from "@/templates/PrivacyPolicyPage";
+import { getRequestLocale } from "@/lib/i18n/getRequestLocale";
 
 export default async function PrivacyPolicy() {
-    const cookieStore = await cookies();
-    const locale = cookieStore.get("locale")?.value ?? "en";
+    const locale = await getRequestLocale();
     const data = await getPrivacyPolicyPage(locale);
 
     if (!data) return notFound();

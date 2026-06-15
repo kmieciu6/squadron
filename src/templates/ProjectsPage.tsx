@@ -24,13 +24,14 @@ export default function ProjectsPage({ data }: Props) {
             <section className="projects_content">
                 <div
                     ref={sec1Ref}
-                    className={`container opening ${isSec1Hidden ? "hidden" : ""}`}
+                    className={`opening ${isSec1Hidden ? "hidden" : ""}`}
                 >
                     {image?.url && (
                         <Image
                             src={image.url}
                             alt={image.alternativeText || data.title}
-                            fill
+                            width={1920}
+                            height={1080}
                             priority
                             sizes="100vw"
                             className="opening_image"
@@ -39,9 +40,9 @@ export default function ProjectsPage({ data }: Props) {
 
                     <div className="opening_overlay" />
 
-                    <div className="opening_content">
-                        <h1>{data.title}</h1>
-                    </div>
+                    {/*<div className="opening_content">*/}
+                    {/*    <h1>{data.title}</h1>*/}
+                    {/*</div>*/}
                 </div>
 
                 <div className="text_content">

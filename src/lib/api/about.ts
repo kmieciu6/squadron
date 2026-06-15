@@ -5,6 +5,7 @@ import {
     strapiFetch,
     StrapiImage,
 } from "@/lib/strapi";
+import {SupportedLanguage} from "@/lib/i18n/types";
 
 export type AboutPageData = {
     title: string;
@@ -20,7 +21,7 @@ type StrapiAboutPage = {
 
 
 export async function getAboutPage(
-    locale: string
+    locale: SupportedLanguage
 ): Promise<AboutPageData | null> {
     const json = await strapiFetch<StrapiSingleResponse<StrapiAboutPage>>(
         "/api/about-page?populate=image",

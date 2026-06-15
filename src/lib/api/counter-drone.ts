@@ -5,6 +5,7 @@ import {
     strapiFetch,
     StrapiImage,
 } from "@/lib/strapi";
+import {SupportedLanguage} from "@/lib/i18n/types";
 
 export type CounterDronePageData = {
     title: string;
@@ -20,7 +21,7 @@ type StrapiCounterDronePage = {
 
 
 export async function getCounterDronePage(
-    locale: string
+    locale: SupportedLanguage
 ): Promise<CounterDronePageData | null> {
     const json = await strapiFetch<StrapiSingleResponse<StrapiCounterDronePage>>(
         "/api/counter-drone-page?populate=image",

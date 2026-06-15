@@ -5,6 +5,7 @@ import {
     strapiFetch,
     StrapiImage,
 } from "@/lib/strapi";
+import {SupportedLanguage} from "@/lib/i18n/types";
 
 export type PrivacyPolicyPageData = {
     title: string;
@@ -20,7 +21,7 @@ type StrapiPrivacyPolicyPage = {
 
 
 export async function getPrivacyPolicyPage(
-    locale: string
+    locale: SupportedLanguage
 ): Promise<PrivacyPolicyPageData | null> {
     const json = await strapiFetch<StrapiSingleResponse<StrapiPrivacyPolicyPage>>(
         "/api/privacy-policy-page?populate=image",

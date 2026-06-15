@@ -4,6 +4,7 @@ import {
     strapiFetch,
     StrapiImage, mapImages,
 } from "@/lib/strapi";
+import {SupportedLanguage} from "@/lib/i18n/types";
 
 export type HomePageData = {
     title_opening1: string;
@@ -230,7 +231,7 @@ function mapHomePage(data: StrapiHomePage): HomePageData {
 }
 
 export async function getHomePage(
-    locale: string
+    locale: SupportedLanguage
 ): Promise<HomePageData | null> {
     const json = await strapiFetch<StrapiSingleResponse<StrapiHomePage>>(
         "/api/home-page?populate[image_opening]=true&populate[image_application]=true",
