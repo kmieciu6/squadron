@@ -2,12 +2,14 @@
 
 import { createContext, useContext } from 'react';
 
-type PageLoaderContextValue = {
+export type PageLoaderContextValue = {
     loading: boolean;
+    targetHash: string | null;
 };
 
 export const PageLoaderContext = createContext<PageLoaderContextValue>({
-    loading: true,
+    loading: false,
+    targetHash: null,
 });
 
-export const usePageLoader = (): PageLoaderContextValue => useContext(PageLoaderContext);
+export const usePageLoader = () => useContext(PageLoaderContext);

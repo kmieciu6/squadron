@@ -9,12 +9,14 @@ type Props = {
 };
 
 export default function CounterDronePage({ data}: Props) {
+    const [titleRef, isTitleHidden] = useIntersectionHide<HTMLDivElement>({
+        revealDelayMs: 150,
+    });
     const [sec1Ref, isSec1Hidden] = useIntersectionHide<HTMLDivElement>();
-    const [sec2Ref, isSec2Hidden] = useIntersectionHide<HTMLDivElement>();
 
     return (
         <main className='counter_drone_page subpage'>
-            <div ref={sec1Ref} className={`container opening ${isSec1Hidden ? 'hidden' : ''}`}>
+            <div ref={titleRef} className={`container opening reveal-on-scroll ${isTitleHidden ? 'hidden' : ''}`}>
                 <div>
                     <h1>{data.title}</h1>
                     <h4>{data.title}</h4>
@@ -23,7 +25,7 @@ export default function CounterDronePage({ data}: Props) {
             </div>
             <section className="counter_drone_content">
                 <div className="text_content">
-                    <div ref={sec2Ref} className={`container text ${isSec2Hidden ? "hidden" : ""}`}>
+                    <div ref={sec1Ref} className={`container text ${isSec1Hidden ? "hidden" : ""}`}>
                         <MarkdownContent content={data.content}/>
                     </div>
                 </div>

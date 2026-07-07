@@ -6,6 +6,7 @@ import { HomePageData } from "@/lib/api/home";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import React, {useEffect, useMemo, useRef, useState} from "react";
 import Image from "next/image";
+import LazySection from "@/components/LazySection";
 
 type Slide =
     | {
@@ -121,6 +122,8 @@ export default function HomePage({ data }: Props) {
             image: data.image_opening?.[3]?.url ?? "/images/counter_drone.png",
         },
     ];
+
+    const currentSlide = slides[currentIndex];
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -393,7 +396,6 @@ export default function HomePage({ data }: Props) {
 
     const allLogos = [...logos, ...logos];
 
-
     return (
     <div className='home page' id='home'>
 
@@ -406,9 +408,9 @@ export default function HomePage({ data }: Props) {
                             key={index}
                             className={`slide ${index === currentIndex ? "active" : ""}`}
                         >
-                            {slide.type === "video" ? (
+                            {currentSlide.type === "video" ? (
                                 <video
-                                    src={slide.video}
+                                    src={currentSlide.video}
                                     className="slide-image"
                                     autoPlay
                                     loop
@@ -417,21 +419,22 @@ export default function HomePage({ data }: Props) {
                                 />
                             ) : (
                                 <Image
-                                    src={slide.image}
-                                    alt={slide.titleText}
+                                    src={currentSlide.image}
+                                    alt={currentSlide.titleText}
                                     className="slide-image"
                                     width={1200}
                                     height={800}
-                                    loading="eager"
+                                    preload={currentIndex === 0}
+                                    loading={currentIndex === 0 ?"eager" : "lazy"}
                                 />
                             )}
                             <div className="overlay">
                                 <div className="text-box">
                                     <div className={`opening_text ${isTitleHidden ? 'hidden' : ''}`} ref={titleRef}>
-                                        <h3>{slide.content}</h3>
+                                        <h3>{currentSlide.content}</h3>
                                     </div>
                                 </div>
-                                <div className={`carousel-nav ${isTitleHidden ? 'hidden' : ''}`} ref={titleRef}>
+                                <div className={`carousel-nav ${isTitleHidden ? 'hidden' : ''}`}>
                                     {slides.map((slide, index) => (
                                         <button
                                             key={index}
@@ -456,7 +459,7 @@ export default function HomePage({ data }: Props) {
         <div className="text_container">
 
             {/*Application Areas*/}
-            <div className="application_areas" id="application-areas">
+            <LazySection className="application_areas" id="application-areas" placeholderHeight="80vh">
                 <div ref={sec2Ref} className={`application_areas_inner text text_width ${isSec2Hidden ? 'hidden' : ''}`}>
                     <div className="application_areas_text">
                         <span className="section_label">
@@ -508,10 +511,10 @@ export default function HomePage({ data }: Props) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </LazySection>
 
             {/*Offer*/}
-            <div className='offer' id='offer'>
+            <LazySection className='offer' id='offer' placeholderHeight="90vh">
                 <div ref={sec1Ref} className={`text text_width ${isSec1Hidden ? 'hidden' : ''}`}>
                     <h1>
                         {data.title_offer}
@@ -531,7 +534,6 @@ export default function HomePage({ data }: Props) {
                                             width={100}
                                             height={100}
                                             className="offer_category_icon"
-                                            loading="eager"
                                         />
                                         <p>{category.title}</p>
                                     </button>
@@ -611,10 +613,10 @@ export default function HomePage({ data }: Props) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </LazySection>
 
             {/*Reference*/}
-            <div className='reference' id='reference'>
+            <LazySection className='reference' id='reference' placeholderHeight="70vh">
                 <div ref={sec3Ref} className={`text text_width ${isSec3Hidden ? 'hidden' : ''}`}>
                     <h1>
                         {data.title_reference}
@@ -633,10 +635,10 @@ export default function HomePage({ data }: Props) {
                         ))}
                     </div>
                 </div>
-            </div>
+            </LazySection>
 
             {/*Cooperation*/}
-            <div className='cooperation' id='cooperation'>
+            <LazySection className='cooperation' id='cooperation' placeholderHeight="50vh">
                 <div ref={sec4Ref} className={`text text_width ${isSec4Hidden ? 'hidden' : ''}`}>
                     <h1>{data.title_cooperation}</h1>
                     <div className="logo_slider">
@@ -654,7 +656,7 @@ export default function HomePage({ data }: Props) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </LazySection>
         </div>
     </div>
     )

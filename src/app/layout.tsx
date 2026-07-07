@@ -3,10 +3,10 @@ import "./globals.scss";
 import PageLoader from "../components/PageLoader";
 import Header from "../components/header/Header";
 import Footer from "../components/Footer";
-import {CookiesConsentProvider} from "@/context/CookiesConsentContext";
+import { CookiesConsentProvider } from "@/context/CookiesConsentContext";
 import CookieBanner from "@/components/CookieBanner";
-import {Outfit} from "next/font/google";
-import {Metadata} from "next";
+import { Outfit } from "next/font/google";
+import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {

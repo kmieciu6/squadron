@@ -1,52 +1,147 @@
-"use client";
+'use client';
 
-import { useRef, useState, useEffect, type RefObject } from "react";
-import {usePageLoader} from "@/context/PageLoaderContext";
+import {
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+    type RefCallback,
+} from 'react';
+import { usePageLoader } from '@/context/PageLoaderContext';
 
 type Options = IntersectionObserverInit;
 
+type UseIntersectionHideConfig = {
+    desktopOptions?: Options;
+    mobileOptions?: Options;
+    waitForLoader?: boolean;
+    revealDelayMs?: number;
+    disabled?: boolean;
+};
+
 type UseIntersectionHideReturn<T extends Element> = readonly [
-    RefObject<T | null>,
-    boolean
+    RefCallback<T>,
+    boolean,
 ];
 
+const DEFAULT_DESKTOP_OPTIONS: Options = {
+    threshold: 0.4,
+    rootMargin: '0px',
+};
+
+const DEFAULT_MOBILE_OPTIONS: Options = {
+    threshold: 0.2,
+    rootMargin: '0px',
+};
+
 function useIntersectionHide<T extends Element = HTMLDivElement>(
-    desktopOptions: Options = { threshold: 0.4, rootMargin: "0px" },
-    mobileOptions: Options = { threshold: 0.2, rootMargin: "0px" }
+    config: UseIntersectionHideConfig = {},
 ): UseIntersectionHideReturn<T> {
-    const ref = useRef<T | null>(null);
+    const {
+        desktopOptions = DEFAULT_DESKTOP_OPTIONS,
+        mobileOptions = DEFAULT_MOBILE_OPTIONS,
+        waitForLoader = true,
+        revealDelayMs = 0,
+        disabled = false,
+    } = config;
+
+    const [node, setNode] = useState<T | null>(null);
     const [isHidden, setIsHidden] = useState<boolean>(true);
+
+    const observerRef = useRef<IntersectionObserver | null>(null);
+    const revealTimerRef = useRef<number | null>(null);
+
     const { loading } = usePageLoader();
 
+    const ref = useCallback((element: T | null) => {
+        setNode(element);
+    }, []);
+
+    const observerOptions = useMemo(() => {
+        if (typeof window === 'undefined') {
+            return desktopOptions;
+        }
+
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+        return isMobile ? mobileOptions : desktopOptions;
+    }, [desktopOptions, mobileOptions]);
+
+    const reveal = useCallback(() => {
+        if (revealTimerRef.current !== null) {
+            window.clearTimeout(revealTimerRef.current);
+        }
+
+        revealTimerRef.current = window.setTimeout(() => {
+            window.requestAnimationFrame(() => {
+                setIsHidden(false);
+            });
+        }, revealDelayMs);
+    }, [revealDelayMs]);
+
     useEffect(() => {
-        if (typeof window === "undefined" || loading) return;
+        if (disabled) {
+            reveal();
 
-        const el = ref.current;
-        if (!el) return;
+            return () => {
+                if (revealTimerRef.current !== null) {
+                    window.clearTimeout(revealTimerRef.current);
+                    revealTimerRef.current = null;
+                }
+            };
+        }
 
-        const isMobile = window.matchMedia("(max-width: 768px)").matches;
-        const observerOptions = isMobile ? mobileOptions : desktopOptions;
+        if (waitForLoader && loading) {
+            return;
+        }
 
-        let observer: IntersectionObserver | null = null;
+        if (!node) {
+            return;
+        }
 
-        const rafId = window.requestAnimationFrame(() => {
-            observer = new IntersectionObserver((entries, obs) => {
+        observerRef.current?.disconnect();
+        observerRef.current = null;
+
+        let rafId: number | null = null;
+
+        rafId = window.requestAnimationFrame(() => {
+            observerRef.current = new IntersectionObserver((entries, observer) => {
                 for (const entry of entries) {
                     if (entry.isIntersecting) {
-                        setIsHidden(false);
-                        obs.unobserve(entry.target);
+                        reveal();
+
+                        observer.unobserve(entry.target);
+                        observer.disconnect();
+                        observerRef.current = null;
                     }
                 }
             }, observerOptions);
 
-            observer.observe(el);
+            observerRef.current.observe(node);
         });
 
         return () => {
-            window.cancelAnimationFrame(rafId);
-            observer?.disconnect();
+            if (rafId !== null) {
+                window.cancelAnimationFrame(rafId);
+            }
+
+            if (revealTimerRef.current !== null) {
+                window.clearTimeout(revealTimerRef.current);
+                revealTimerRef.current = null;
+            }
+
+            observerRef.current?.disconnect();
+            observerRef.current = null;
         };
-    }, [desktopOptions, mobileOptions, loading]);
+    }, [
+        disabled,
+        loading,
+        node,
+        observerOptions,
+        reveal,
+        waitForLoader,
+    ]);
 
     return [ref, isHidden] as const;
 }
