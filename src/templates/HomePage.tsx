@@ -399,18 +399,20 @@ export default function HomePage({ data }: Props) {
     return (
     <div className='home page' id='home'>
 
-        <div className='opening'>
+        <div className="opening">
             <div className="carousel">
                 <button onClick={prevSlide} className="prev-button">❮</button>
+
                 <div className="carousel-inner">
                     {slides.map((slide, index) => (
                         <div
-                            key={index}
+                            key={`${slide.titleText}-${index}`}
                             className={`slide ${index === currentIndex ? "active" : ""}`}
+                            aria-hidden={index !== currentIndex}
                         >
-                            {currentSlide.type === "video" ? (
+                            {slide.type === "video" ? (
                                 <video
-                                    src={currentSlide.video}
+                                    src={slide.video}
                                     className="slide-image"
                                     autoPlay
                                     loop
@@ -419,39 +421,44 @@ export default function HomePage({ data }: Props) {
                                 />
                             ) : (
                                 <Image
-                                    src={currentSlide.image}
-                                    alt={currentSlide.titleText}
+                                    src={slide.image}
+                                    alt={slide.titleText}
                                     className="slide-image"
-                                    width={1200}
-                                    height={800}
-                                    preload={currentIndex === 0}
-                                    loading={currentIndex === 0 ?"eager" : "lazy"}
+                                    fill
+                                    sizes="100vw"
+                                    {...(index === 0
+                                        ? { priority: true }
+                                        : { loading: "eager" as const })}
                                 />
                             )}
-                            <div className="overlay">
-                                <div className="text-box">
-                                    <div className={`opening_text ${isTitleHidden ? 'hidden' : ''}`} ref={titleRef}>
-                                        <h3>{currentSlide.content}</h3>
-                                    </div>
-                                </div>
-                                <div className={`carousel-nav ${isTitleHidden ? 'hidden' : ''}`}>
-                                    {slides.map((slide, index) => (
-                                        <button
-                                            key={index}
-                                            type="button"
-                                            className={`carousel-nav-item ${index === currentIndex ? "active" : ""}`}
-                                            onClick={() => goToSlide(index)}
-                                        >
-                                            <p>
-                                                {slide.titleText}
-                                            </p>
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
                         </div>
                     ))}
                 </div>
+
+                <div className="carousel-overlay">
+                    <div className="text-box">
+                        <div
+                            ref={titleRef}
+                            className={`opening_text ${isTitleHidden ? "hidden" : ""}`}
+                        >
+                            <h3>{currentSlide.content}</h3>
+                        </div>
+                    </div>
+
+                    <div className={`carousel-nav ${isTitleHidden ? "hidden" : ""}`}>
+                        {slides.map((slide, index) => (
+                            <button
+                                key={index}
+                                type="button"
+                                className={`carousel-nav-item ${index === currentIndex ? "active" : ""}`}
+                                onClick={() => goToSlide(index)}
+                            >
+                                <p>{slide.titleText}</p>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
                 <button onClick={nextSlide} className="next-button">❯</button>
             </div>
         </div>

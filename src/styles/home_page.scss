@@ -126,10 +126,11 @@
 
         .carousel {
             position: relative;
-            z-index: 1;     // <-- karuzela jest warstwą "1"
+            z-index: 1;
             width: 100%;
             height: 94vh;
             overflow: hidden;
+            background: #000;
 
             @include desktop {
                 height: 100vh;
@@ -139,151 +140,153 @@
                 position: relative;
                 width: 100%;
                 height: 100%;
+                overflow: hidden;
             }
 
             .slide {
                 position: absolute;
                 inset: 0;
                 opacity: 0;
+                z-index: 0;
+                pointer-events: none;
                 transition: opacity 0.6s ease;
-                pointer-events: none;     // domyślnie nie klikalne
+                overflow: hidden;
+                background: #000;
+            }
 
-                &.active {
-                    opacity: 1;
-                    pointer-events: auto;   // tylko aktywny slajd przyjmuje eventy
-                    z-index: 1;
+            .slide.active {
+                opacity: 1;
+                z-index: 1;
+                pointer-events: auto;
+            }
+
+            .slide-image {
+                object-fit: cover;
+            }
+
+            .carousel-overlay {
+                position: absolute;
+                inset: 0;
+                z-index: 5;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 2rem;
+                background: rgba(0, 0, 0, .45);
+                color: #fff;
+                pointer-events: none;
+            }
+
+            .text-box {
+                max-width: 1000px;
+                height: 250px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                border-radius: 10px;
+                backdrop-filter: blur(3px);
+                pointer-events: auto;
+            }
+
+            .opening_text {
+                transition: opacity 3s ease;
+                max-width: 800px;
+
+                &.hidden {
+                    opacity: 0;
                 }
 
-                .slide-image {
-                    width: 100%;
-                    height: 100% !important; // nadpisanie globalnego .opening img
-                    object-fit: cover;
-                    display: block;
+                h3 {
+                    text-transform: uppercase;
+                    margin-bottom: 1rem;
+                    color: $white-color;
+
+                    @include desktop {
+                        font-size: 2.5rem;
+                    }
                 }
 
-                .overlay {
-                    position: absolute;
-                    inset: 0;
+                p {
+                    font-size: 1.1rem;
+                    line-height: 1.6;
+                    color: $white-color;
+                }
+
+                .highlight {
+                    color: $main-color;
+                }
+            }
+
+            .carousel-nav {
+                position: absolute;
+                left: 50%;
+                bottom: 100px;
+                transform: translateX(-50%);
+                z-index: 6;
+                transition: opacity 3s ease;
+
+                &.hidden {
+                    opacity: 0;
+                }
+
+                width: min(calc(100% - 2rem), 1100px);
+                display: flex;
+                align-items: flex-end;
+                justify-content: center;
+                gap: clamp(0.75rem, 2vw, 2rem);
+                pointer-events: auto;
+
+                p {
+                    margin: 0;
+                    text-align: center;
+                }
+
+                button {
+                    flex: 1 1 0;
+                    min-width: 0;
+                    padding: 0.75rem 1rem;
+                    background: transparent;
+                    border: none;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    text-align: center;
-                    padding: 2rem;
-                    background: rgba(0,0,0,.45);
-                    color: #fff;
-                    pointer-events: none; // <-- overlay NIE blokuje kliknięć poza tekstem
 
-                    .text-box {
-                        max-width: 1000px;
-                        height: 250px;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        width: 100%;
-                        border-radius: 10px;
-                        backdrop-filter: blur(3px);
-                        pointer-events: auto; // <-- tekst nadal można zaznaczyć, linki kliknąć
+                    p {
+                        color: #ffffff;
+                        white-space: normal;
+                        text-wrap: balance;
+                    }
+                }
 
-                        .opening_text {
-                            transition: opacity 3s ease;
-                            max-width: 800px;
+                .active {
+                    p {
+                        color: $main-color;
+                        font-weight: 700;
+                    }
+                }
 
-                            &.hidden {
-                                opacity: 0;
-                            }
+                @include mobile {
+                    width: auto;
+                    gap: 2rem;
 
-                            h3 {
-                                text-transform: uppercase;
-                                margin-bottom: 1rem;
-                                color: $white-color;
-
-                                @include desktop {
-                                    font-size: 2.5rem;
-                                }
-                            }
-
-                            p {
-                                font-size: 1.1rem;
-                                line-height: 1.6;
-                                color: $white-color;
-                            }
-
-                            .highlight {
-                                color: $main-color;
-                            }
-                        }
+                    p {
+                        display: none;
                     }
 
-                    .carousel-nav {
-                        position: absolute;
-                        left: 50%;
-                        bottom: 100px;
-                        transform: translateX(-50%);
-                        z-index: 5;
-                        transition: opacity 3s ease;
+                    button {
+                        flex: 0 0 auto;
+                        width: 10px;
+                        height: 10px;
+                        min-width: 10px;
+                        padding: 0;
+                        border-radius: 50%;
+                        background-color: #ffffff;
+                    }
 
-                        &.hidden {
-                            opacity: 0;
-                        }
-
-                        width: min(calc(100% - 2rem), 1100px);
-                        display: flex;
-                        align-items: flex-end;
-                        justify-content: center;
-                        gap: clamp(0.75rem, 2vw, 2rem);
-                        pointer-events: auto;
-
-                        p {
-                            margin: 0;
-                            text-align: center;
-                        }
-
-                        button {
-                            flex: 1 1 0;
-                            min-width: 0;
-                            padding: 0.75rem 1rem;
-                            background: transparent;
-                            border: none;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-
-                            p {
-                                color: #ffffff;
-                                white-space: normal;
-                                text-wrap: balance;
-                            }
-                        }
-
-                        .active {
-                            p {
-                                color: $main-color;
-                                font-weight: 700;
-                            }
-                        }
-
-                        @include mobile {
-                            width: auto;
-                            gap: 2rem;
-
-                            p {
-                                display: none;
-                            }
-
-                            button {
-                                flex: 0 0 auto;
-                                width: 10px;
-                                height: 10px;
-                                min-width: 10px;
-                                padding: 0;
-                                border-radius: 50%;
-                                background-color: #ffffff;
-                            }
-
-                            .active {
-                                background-color: $main-color;
-                            }
-                        }
+                    .active {
+                        background-color: $main-color;
                     }
                 }
             }
@@ -294,7 +297,7 @@
                 top: 50%;
                 transform: translateY(-50%);
                 z-index: 10;
-                background: rgba(0,0,0,0.5);
+                background: rgba(0, 0, 0, 0.5);
                 color: $white-color;
                 border: none;
                 padding: 10px 22px;
@@ -309,7 +312,7 @@
                 }
 
                 &:hover {
-                    background: rgba(0,0,0,0.8);
+                    background: rgba(0, 0, 0, 0.8);
                 }
             }
 
