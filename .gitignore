@@ -26,3 +26,5 @@ cms/public/uploads/
 
 # system
 .DS_Store
+
+backups/

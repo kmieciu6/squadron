@@ -4,7 +4,7 @@
   "info": {
     "singularName": "about-page",
     "pluralName": "about-pages",
-    "displayName": "About Page"
+    "displayName": "About"
   },
   "options": {
     "draftAndPublish": true
@@ -35,7 +35,7 @@
       "type": "media",
       "pluginOptions": {
         "i18n": {
-          "localized": true
+          "localized": false
         }
       },
       "multiple": true,
